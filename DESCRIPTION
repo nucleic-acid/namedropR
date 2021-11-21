@@ -1,11 +1,17 @@
 Package: namedropR
 Type: Package
-Title: What the Package Does (Title Case)
+Title: Create Visual Citations to Include in Presentations
 Version: 0.1.0
-Author: Who wrote it
-Maintainer: The package maintainer <yourself@somewhere.net>
-Description: More about what it does (maybe more than one line)
-    Use four spaces when indenting paragraphs within the Description.
-License: What license is it under?
+Author: Christian A. Gebhard <christian.gebhard@posteo.de>
+Maintainer: Christian A. Gebhard <christian.gebhard@posteo.de>
+Description: Creates a 'visual citation' containing the metadata of a scientific paper.
+    A 'visual citation' is a banner containing e.g. title, authors, journal, year of a paper. 
+    The resulting banner can be included in a presentation to back up your claims, 
+    especially when you want to drop an important name, publication, journal.
+    Seen in the wild, such banners are often pixelated screenshots and displayed way too short for the 
+    audience to actually record them. 
+    namedropR can create these banners in high quality and even provide a QR code for the audience to scan.
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
+RoxygenNote: 7.1.2
