@@ -8,6 +8,7 @@
 #' @param year The publication's publication year as string.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param include_qr Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.
+#' @param style A string specifying the desired style for the visual citation. Possible values are: "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user. The custom CSS file must specify the DIV classes "top-row", "title-row" and "author-row".
 
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
@@ -28,7 +29,7 @@
 #' @importFrom xfun base64_uri
 
 
-drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE) {
+drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE, style = "modern") {
 
   # return warnings for missing data
   if (title == "") {
@@ -47,17 +48,9 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
 
-  # style_dependency <- function() {
-  #   htmltools::htmlDependency(
-  #     name = "modern css",
-  #     version = "0.1",
-  #     src = "css/",
-  #     stylesheet = "modern.css"
-  #   )
-  # }
 
-  # style = paste("font-family: 'Helvetica', 'Arial', 'Verdana', sans-serif;font-weight: bold;"),
 
+  css_styles <- get_css_styles(style = "modern")
 
 
 
@@ -69,17 +62,17 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
             class = "visual-citation",
             htmltools::div(
               class = "top-row",
-              style = paste("font-size: 1.3rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal;font-variant: small-caps;color:#ae2746;"),
+              style = css_styles$top_row_style,
               htmltools::tags$span(paste0(journal, " (", year, ")"))
             ),
             htmltools::div(
               class = "title-row",
-              style = paste("font-size: 2rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: bold"),
+              style = css_styles$title_row_style,
               htmltools::tags$span(title)
             ),
             htmltools::div(
               class = "author-row",
-              style = paste("font-size: 1.3rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal"),
+              style = css_styles$author_row_style,
               htmltools::tags$span(authors),
             )
           )

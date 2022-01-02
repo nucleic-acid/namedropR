@@ -27,7 +27,7 @@
 #' @importFrom xfun base64_uri
 #' @import ggplot2
 
-drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3, include_qr = TRUE) {
+drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3, include_qr = TRUE, style = "modern") {
 
 
   # read the bibtex file
@@ -75,7 +75,8 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration
     year = target_ref$year,
     authors = authors_collapsed,
     cite_key = target_ref$key,
-    include_qr = include_qr
+    include_qr = include_qr,
+    style = style
   )
 
   htmltools::html_print(vc_html)
