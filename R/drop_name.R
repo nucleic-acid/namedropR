@@ -26,7 +26,7 @@
 #' @importFrom xfun base64_uri
 #' @import ggplot2
 
-drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_as = "html", max_authors = 3) {
+drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3) {
 
 
   # read the bibtex file
@@ -36,10 +36,10 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_a
   }
 
   # select the target reference entry by key
-  if (is.null(cite_key)) {
-    target_ref <- bib[1]
+  if (cite_key %in% bib$key) {
+    target_ref <- bib[cite_key]
   } else {
-    target_ref <- bib[bib$key == cite_key]
+    stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
   }
 
   print(target_ref$doi)
@@ -48,12 +48,12 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_a
   # if the actual number of authors is less)
   if (max_authors < length(target_ref$author)) {
     # if the author list is cropped, add "et. al."
-    authors_list <- paste0(
+    authors_collapsed <- paste0(
       paste(target_ref$author[1:max_authors], collapse = ", "),
       " et. al."
     )
   } else {
-    authors_list <- paste(paste(target_ref$author, collapse = ", "))
+    authors_collapsed <- paste(target_ref$author, collapse = ", ")
   }
 
   if (!is.null(target_ref$doi)) {
@@ -70,35 +70,13 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_a
                     cite_key = target_ref$key)
   }
 
-  vc <- htmltools::tagList(
-    htmltools::tags$table(
-      htmltools::tags$tr(
-        htmltools::tags$td(
-          htmltools::div(
-            class = "visual-citation",
-            htmltools::div(
-              class = "top-row",
-              htmltools::h2(paste0(target_ref$journal, " (", target_ref$year, ")"))
-            ),
-            htmltools::div(
-              class = "title-row",
-              htmltools::h1(target_ref$title)
-            ),
-            htmltools::div(
-              class = "author-row",
-              htmltools::h3(authors_list),
-            )
-          )
-        ),
-        htmltools::tags$td(
-          htmltools::img(src = xfun::base64_uri(paste0(tempdir(),"/qr_codes/qr_",target_ref$key, ".svg")),
-                         alt = 'qrcode',
-                         style = 'float: center;padding-left:20px;height:150px;width:150px;')
-        )
-      )
-    )
+  vc_html <- drop_html(
+    title = target_ref$title,
+    journal = target_ref$journal,
+    year = target_ref$year,
+    authors = authors_collapsed,
+    cite_key = target_ref$key
   )
 
-
-  return(vc)
+  htmltools::html_print(vc_html)
 }
