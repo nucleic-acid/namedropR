@@ -12,24 +12,23 @@
 #' @examples
 #' \dontrun{
 #' dropped <- drop_name(
-#'  file = "sample_data/sample.bib",
-#'  cite_key = NULL,
-#'  export_as = "html",
-#'  max_authors = 3)
+#'   file = "sample_data/sample.bib",
+#'   cite_key = NULL,
+#'   export_as = "html",
+#'   max_authors = 3
+#' )
 #'
-#'  htmltools::html_print(dropped)
-#'  }
+#' htmltools::html_print(dropped)
+#' }
 #' @export
 #' @importFrom bibtex "read.bib"
-#' @importFrom htmltools div h1 h2 h3
+#' @importFrom htmltools div h1 h2 h3 img
+#' @importFrom qrcode qr_code generate_svg
+#' @importFrom xfun base64_uri
 #' @import ggplot2
 
 drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_as = "html", max_authors = 3) {
 
-  # define required packages
-  # require(bibtex)
-  # require(ggplot2)
-  # requireNamespace(htmltools)
 
   # read the bibtex file
   bib <- bibtex::read.bib(file = file)
@@ -58,27 +57,58 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_a
     authors_list <- paste(paste(target_ref$author, collapse = ", "))
   }
 
+  if (!is.null(target_ref$doi)) {
+  # create QR-Code
+  doi_qr <- qrcode::qr_code(paste0("https://doi.org/", target_ref$doi))
+  # store QR-code in tempdir()
+  qrcode::generate_svg(doi_qr, filename = paste0(tempdir(),"/qr_codes/qr_",target_ref$key, ".svg"), show = FALSE)
 
-  # ref_title = target_ref$title
+  } else if (!is.null(target_ref$url)) {
+    # create QR-Code
+    doi_qr <- qrcode::qr_code(paste0("https://doi.org/", target_ref$url))
+    # store QR-code in tempdir()
+    qrcode::generate_svg(doi_qr, filename = paste0(tempdir(),"/qr_codes/qr_",target_ref$key, ".svg"), show = FALSE)
+  } else {
+    search_string <- paste0("https://scholar.google.com/scholar?as_q=", target_ref$author[1],
+                            "+", target_ref$journal,
+                            "+", target_ref$year)
+    print(search_string)
+    # create QR-Code
+    doi_qr <- qrcode::qr_code(search_string)
+    plot(doi_qr)
+    # store QR-code in tempdir()
+    qrcode::generate_svg(doi_qr, filename = paste0(tempdir(),"/qr_codes/qr_",target_ref$key, ".svg"), show = FALSE)
+  }
 
-  vc <- htmltools::div(
-    class = "visual-citation",
-    htmltools::div(
-      class = "top-row",
-      htmltools::h2(paste0(target_ref$journal, " (", target_ref$year, ")"))
-    ),
-    htmltools::div(
-      class = "title-row",
-      htmltools::h1(target_ref$title)
-    ),
-    htmltools::div(
-      class = "author-row",
-      htmltools::h3(authors_list),
+  vc <- htmltools::tagList(
+    htmltools::tags$table(
+      htmltools::tags$tr(
+        htmltools::tags$td(
+          htmltools::div(
+            class = "visual-citation",
+            htmltools::div(
+              class = "top-row",
+              htmltools::h2(paste0(target_ref$journal, " (", target_ref$year, ")"))
+            ),
+            htmltools::div(
+              class = "title-row",
+              htmltools::h1(target_ref$title)
+            ),
+            htmltools::div(
+              class = "author-row",
+              htmltools::h3(authors_list),
+            )
+          )
+        ),
+        htmltools::tags$td(
+          htmltools::img(src = xfun::base64_uri(paste0(tempdir(),"/qr_codes/qr_",target_ref$key, ".svg")),
+                         alt = 'qrcode',
+                         style = 'float: center;padding-left:20px;height:150px;width:150px;')
+        )
+      )
     )
   )
 
 
   return(vc)
-
 }
-
