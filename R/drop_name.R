@@ -26,13 +26,13 @@
 #' @importFrom bibtex "read.bib"
 #' @importFrom htmltools div h1 h2 h3 img
 #' @importFrom xfun base64_uri
-#' @import ggplot2
+#' @importFrom here here
 
-drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3, include_qr = TRUE, style = "modern") {
+drop_name <- function(bib_file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", output_dir = "visual_citations", export_as = "html", max_authors = 3, include_qr = TRUE, style = "modern") {
 
 
   # read the bibtex file
-  bib <- bibtex::read.bib(file = file)
+  bib <- bibtex::read.bib(file = bib_file)
   if (length(bib) == 0) {
     stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
   }
@@ -80,5 +80,16 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration
     style = style
   )
 
-  htmltools::html_print(vc_html)
+  if(export_as == "html") {
+    if (!dir.exists(here::here(output_dir))) {
+      dir.create(here::here(output_dir))
+    }
+    # htmltools::html_print(vc_html)
+    htmltools::save_html(vc_html, file = here::here(output_dir, paste0(target_ref$key, ".html")))
+  } else if (export_as == "inline") {
+    return(vc_html)
+  } else {
+    stop("Output format unknown")
+  }
+
 }
