@@ -50,7 +50,7 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
 
 
 
-  css_styles <- get_css_styles(style = "modern")
+  css_styles <- get_css_styles(style = style)
 
 
 
