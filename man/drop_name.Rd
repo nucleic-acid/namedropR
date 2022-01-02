@@ -6,9 +6,11 @@
 \usage{
 drop_name(
   file = "sample_data/sample.bib",
-  cite_key = NULL,
+  cite_key = "collaboration_2019_ApJL",
   export_as = "html",
-  max_authors = 3
+  max_authors = 3,
+  include_qr = TRUE,
+  style = "modern"
 )
 }
 \arguments{
@@ -19,6 +21,10 @@ drop_name(
 \item{export_as}{A string specifying the desired output format. For now only supports HTML by using "html".}
 
 \item{max_authors}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
+
+\item{include_qr}{Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.}
+
+\item{style}{A string specifying the desired style for the visual citation. Possible values are: "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user. The custom CSS file must specify the DIV classes "top-row", "title-row" and "author-row".}
 }
 \value{
 A visual citation
