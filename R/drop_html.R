@@ -24,10 +24,8 @@
 #' htmltools::html_print(dropped)
 #' }
 #' @export
-#' @importFrom bibtex "read.bib"
-#' @importFrom htmltools div h1 h2 h3 img
+#' @importFrom htmltools div img tags
 #' @importFrom xfun base64_uri
-#' @import ggplot2
 
 
 drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE) {
@@ -49,6 +47,19 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
 
+  # style_dependency <- function() {
+  #   htmltools::htmlDependency(
+  #     name = "modern css",
+  #     version = "0.1",
+  #     src = "css/",
+  #     stylesheet = "modern.css"
+  #   )
+  # }
+
+  # style = paste("font-family: 'Helvetica', 'Arial', 'Verdana', sans-serif;font-weight: bold;"),
+
+
+
 
   vc <- htmltools::tagList(
     htmltools::tags$table(
@@ -58,15 +69,18 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
             class = "visual-citation",
             htmltools::div(
               class = "top-row",
-              htmltools::h2(paste0(journal, " (", year, ")"))
+              style = paste("font-size: 1.3rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal;font-variant: small-caps;color:#ae2746;"),
+              htmltools::tags$span(paste0(journal, " (", year, ")"))
             ),
             htmltools::div(
               class = "title-row",
-              htmltools::h1(title)
+              style = paste("font-size: 2rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: bold"),
+              htmltools::tags$span(title)
             ),
             htmltools::div(
               class = "author-row",
-              htmltools::h3(authors),
+              style = paste("font-size: 1.3rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal"),
+              htmltools::tags$span(authors),
             )
           )
         ),
