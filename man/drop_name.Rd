@@ -5,8 +5,9 @@
 \title{drop_name}
 \usage{
 drop_name(
-  file = "sample_data/sample.bib",
+  bib_file = "sample_data/sample.bib",
   cite_key = "collaboration_2019_ApJL",
+  output_dir = "visual_citations",
   export_as = "html",
   max_authors = 3,
   include_qr = TRUE,
@@ -14,9 +15,11 @@ drop_name(
 )
 }
 \arguments{
-\item{file}{A .bib file.}
+\item{bib_file}{A .bib file.}
 
 \item{cite_key}{A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.}
+
+\item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
 \item{export_as}{A string specifying the desired output format. For now only supports HTML by using "html".}
 
