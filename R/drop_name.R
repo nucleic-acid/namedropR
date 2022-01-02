@@ -18,7 +18,6 @@ drop_name <- function(file = "data/sample.bib", cite_key = NULL, export_as = "ht
   # define required packages
   require(bibtex)
   require(png)
-  require(ggplot2)
   require(htmltools)
 
   # read the bibtex file
@@ -36,6 +35,19 @@ drop_name <- function(file = "data/sample.bib", cite_key = NULL, export_as = "ht
 
   print(target_ref$doi)
 
+  # obtain the actual number of authors to print (either the supplied max_author or less
+  # if the actual number of authors is less)
+  if (max_authors < length(target_ref$author)) {
+    # if the author list is cropped, add "et. al."
+    authors_list <- paste0(
+      paste(target_ref$author[1:max_authors], collapse = ", "),
+      " et. al."
+    )
+  } else {
+    authors_list <- paste(paste(target_ref$author, collapse = ", "))
+  }
+
+
   # ref_title = target_ref$title
 
   vc <- div(
@@ -50,7 +62,7 @@ drop_name <- function(file = "data/sample.bib", cite_key = NULL, export_as = "ht
     ),
     div(
       class = "author-row",
-      h3(paste(target_ref$author[1:max_authors], collapse = ", ")),
+      h3(authors_list),
     )
   )
 
