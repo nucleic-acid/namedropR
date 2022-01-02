@@ -4,21 +4,32 @@
 #'
 #' @param file A .bib file.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' @param export_as A string specifying the desired output format. For now only supports PNG.
+#' @param export_as A string specifying the desired output format. For now only supports HTML by using "html".
+#' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
 #'
 #' @return A visual citation
 #'
+#' @examples
+#' \dontrun{
+#' dropped <- drop_name(
+#'  file = "sample_data/sample.bib",
+#'  cite_key = NULL,
+#'  export_as = "html",
+#'  max_authors = 3)
+#'
+#'  htmltools::html_print(dropped)
+#'  }
 #' @export
 #' @importFrom bibtex "read.bib"
-#' @importFrom png "png"
+#' @importFrom htmltools div h1 h2 h3
 #' @import ggplot2
 
-drop_name <- function(file = "data/sample.bib", cite_key = NULL, export_as = "html", max_authors = 3) {
+drop_name <- function(file = "sample_data/sample.bib", cite_key = NULL, export_as = "html", max_authors = 3) {
 
   # define required packages
-  require(bibtex)
-  require(png)
-  require(htmltools)
+  # require(bibtex)
+  # require(ggplot2)
+  # requireNamespace(htmltools)
 
   # read the bibtex file
   bib <- bibtex::read.bib(file = file)
@@ -50,25 +61,24 @@ drop_name <- function(file = "data/sample.bib", cite_key = NULL, export_as = "ht
 
   # ref_title = target_ref$title
 
-  vc <- div(
+  vc <- htmltools::div(
     class = "visual-citation",
-    div(
+    htmltools::div(
       class = "top-row",
-      h2(paste0(target_ref$journal, " (", target_ref$year, ")"))
+      htmltools::h2(paste0(target_ref$journal, " (", target_ref$year, ")"))
     ),
-    div(
+    htmltools::div(
       class = "title-row",
-      h1(target_ref$title)
+      htmltools::h1(target_ref$title)
     ),
-    div(
+    htmltools::div(
       class = "author-row",
-      h3(authors_list),
+      htmltools::h3(authors_list),
     )
   )
 
-  vc
 
-  html_print(vc)
+  return(vc)
 
 }
 

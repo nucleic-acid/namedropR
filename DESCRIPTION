@@ -2,8 +2,12 @@ Package: namedropR
 Type: Package
 Title: Create Visual Citations to Include in Presentations
 Version: 0.1.0
-Author: Christian A. Gebhard <christian.gebhard@posteo.de>
-Maintainer: Christian A. Gebhard <christian.gebhard@posteo.de>
+Authors@R: c(
+    person(given = "Christian Alexander",
+           family = "Gebhard",
+           role = c("aut", "cre"),
+           email = "christian.gebhard@posteo.de")
+    )
 Description: Creates a 'visual citation' containing the metadata of a scientific paper.
     A 'visual citation' is a banner containing e.g. title, authors, journal, year of a paper. 
     The resulting banner can be included in a presentation to back up your claims, 
@@ -12,6 +16,10 @@ Description: Creates a 'visual citation' containing the metadata of a scientific
     audience to actually record them. 
     namedropR can create these banners in high quality and even provide a QR code for the audience to scan.
 License: MIT + file LICENSE
+Imports: 
+    ggplot2,
+    bibtex,
+    htmltools
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
