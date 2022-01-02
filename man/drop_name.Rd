@@ -29,11 +29,12 @@ Extracts metadata from a .bib file and exports the visual citation in the specif
 \examples{
 \dontrun{
 dropped <- drop_name(
- file = "sample_data/sample.bib",
- cite_key = NULL,
- export_as = "html",
- max_authors = 3)
+  file = "sample_data/sample.bib",
+  cite_key = NULL,
+  export_as = "html",
+  max_authors = 3
+)
 
- htmltools::html_print(dropped)
- }
+htmltools::html_print(dropped)
+}
 }
