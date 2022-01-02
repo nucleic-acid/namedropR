@@ -7,7 +7,8 @@
 #' @param authors The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).
 #' @param year The publication's publication year as string.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' #'
+#' @param include_qr Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.
+
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
 #' @examples
@@ -29,7 +30,7 @@
 #' @import ggplot2
 
 
-drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", qr_code = TRUE) {
+drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE) {
 
   # return warnings for missing data
   if (title == "") {
@@ -70,7 +71,7 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
           )
         ),
         htmltools::tags$td(
-          if (qr_code) {
+          if (include_qr) {
             htmltools::img(
               src = xfun::base64_uri(paste0(tempdir(), "/qr_codes/qr_", cite_key, ".svg")),
               alt = "qrcode",
@@ -85,3 +86,4 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
   htmltools::html_print(vc)
   return(vc)
 }
+

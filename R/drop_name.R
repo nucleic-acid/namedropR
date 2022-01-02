@@ -6,6 +6,7 @@
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param export_as A string specifying the desired output format. For now only supports HTML by using "html".
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
+#' @param include_qr Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.
 #'
 #' @return A visual citation
 #'
@@ -26,7 +27,7 @@
 #' @importFrom xfun base64_uri
 #' @import ggplot2
 
-drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3) {
+drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL", export_as = "html", max_authors = 3, include_qr = TRUE) {
 
 
   # read the bibtex file
@@ -41,8 +42,6 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration
   } else {
     stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
   }
-
-  print(target_ref$doi)
 
   # obtain the actual number of authors to print (either the supplied max_author or less
   # if the actual number of authors is less)
@@ -75,7 +74,8 @@ drop_name <- function(file = "sample_data/sample.bib", cite_key = "collaboration
     journal = target_ref$journal,
     year = target_ref$year,
     authors = authors_collapsed,
-    cite_key = target_ref$key
+    cite_key = target_ref$key,
+    include_qr = include_qr
   )
 
   htmltools::html_print(vc_html)
