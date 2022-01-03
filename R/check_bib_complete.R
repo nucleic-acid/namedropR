@@ -53,4 +53,6 @@ check_bib_complete <- function(substitute_missing, ref_item) {
       ref_item$author <- ""
     }
   }
+
+  return(ref_item)
 }
