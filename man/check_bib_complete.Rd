@@ -24,4 +24,5 @@ Substitutions are inspired by the APA style guide
 \dontrun{
 check_bib_complete(substitute_missing = FALSE, ref_item = target_ref)
 }
+
 }

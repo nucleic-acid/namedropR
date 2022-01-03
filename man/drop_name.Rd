@@ -5,7 +5,7 @@
 \title{drop_name}
 \usage{
 drop_name(
-  bib_file = "sample.bib",
+  bib_file = "inst/testdata/sample.bib",
   cite_key = "collaboration_2019_ApJL",
   output_dir = "visual_citations",
   export_as = "html",

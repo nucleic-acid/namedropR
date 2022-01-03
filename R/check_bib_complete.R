@@ -14,10 +14,15 @@
 #' \dontrun{
 #' check_bib_complete(substitute_missing = FALSE, ref_item = target_ref)
 #' }
-
-
+#'
 check_bib_complete <- function(substitute_missing, ref_item) {
 
+  # CHECK INPUTS
+  stopifnot(class(substitute_missing) == "logical")
+  stopifnot(class(ref_item) == "bibentry")
+
+
+  # substitute all NULL elements with somewhat meaningful replacements.
   if (substitute_missing) { # if substitute_missing is TRUE
     if (is.null(ref_item$title)) {
       warning(paste0(ref_item$key, ": No Title supplied. Will be substituted with 'No Title'"))

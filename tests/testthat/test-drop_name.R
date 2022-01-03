@@ -8,7 +8,6 @@ test_that("inline = TRUE returns the correct objects", {
 test_that("inline = FALSE returns the correct file path as character", {
   expect_type(drop_name(bib_file = test_bibfile, cite_key = "Eschrich1983", inline = FALSE), "character")
   expect_true(file.exists(drop_name(bib_file = test_bibfile, cite_key = "Eschrich1983", inline = FALSE)))
-  # print(drop_name(bib_file = test_bibfile, cite_key = "Eschrich1983", inline = FALSE))
 })
 
 test_that("inline = FALSE produces the correct output filetypes", {
