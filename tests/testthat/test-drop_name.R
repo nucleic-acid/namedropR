@@ -13,7 +13,9 @@ test_that("inline = FALSE returns the correct file path as character", {
 test_that("inline = FALSE produces the correct output filetypes", {
   expect_equal(readLines(drop_name(bib_file = test_bibfile, cite_key = "Eschrich1983", export_as = "html", inline = FALSE), n = 1),
                "<!DOCTYPE html>")
+  unlink(here::here("visual_citations"), recursive = TRUE)
 })
+
 
 test_that("reading and extracting bibtex information is error prone", {
   expect_error(drop_name(bib_file = "wrong_file_path", cite_key = "Eschrich1983"), "file not found")
