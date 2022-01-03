@@ -50,7 +50,7 @@ drop_html <- function(title, journal, authors, year, cite_key, include_qr, style
   css_styles <- get_css_styles(style = style)
 
 
-
+  # COMPOSE HTML OBJECT
   vc <- htmltools::tagList(
     htmltools::tags$table(
       htmltools::tags$tr(
@@ -74,12 +74,14 @@ drop_html <- function(title, journal, authors, year, cite_key, include_qr, style
             )
           )
         ),
+        # if the QR code should be included, read the temporary svg file from the temporary directory
+        # convert the SVG to base64 and include in the HTML file to keep all in one single file.
         htmltools::tags$td(
           if (include_qr) {
             htmltools::img(
               src = xfun::base64_uri(paste0(tempdir(), "/qr_codes/qr_", cite_key, ".svg")),
               alt = "qrcode",
-              style = "float: center;padding-left:20px;height:150px;width:150px;"
+              style = "float: center;padding-left:20px;height:150px;width:150px;object-fit:contain;"
             )
           }
         )
