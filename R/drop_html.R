@@ -32,19 +32,7 @@
 
 drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE, style = "modern") {
 
-  # return warnings for missing data
-  if (title == "") {
-    warning("No title provided.")
-  }
-  if (journal == "") {
-    warning("No Journal name provided.")
-  }
-  if (authors == "") {
-    warning("No authors provided.")
-  }
-  if (year == "") {
-    warning("No publication year provided.")
-  }
+
   if (cite_key == "") {
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
@@ -91,7 +79,7 @@ drop_html <- function(title = "", journal = "", authors = "", year = "", cite_ke
     )
   )
 
-  htmltools::html_print(vc)
+  # htmltools::html_print(vc)
   return(vc)
 }
 
