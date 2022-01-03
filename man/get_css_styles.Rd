@@ -7,7 +7,9 @@
 get_css_styles(style)
 }
 \arguments{
-\item{style}{A string specifying the desired style for the visual citation.}
+\item{style}{A string specifying the desired style for the visual citation. Possible values are:
+"modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
+This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
 }
 \value{
 A list of inline css styles for each element of the visual citation: top row, title row and author row.

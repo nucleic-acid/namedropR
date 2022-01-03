@@ -27,7 +27,9 @@ drop_name(
 
 \item{include_qr}{Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.}
 
-\item{style}{A string specifying the desired style for the visual citation. Possible values are: "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user. The custom CSS file must specify the DIV classes "top-row", "title-row" and "author-row".}
+\item{style}{A string specifying the desired style for the visual citation. Possible values are:
+"modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
+This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
 }
 \value{
 A visual citation
