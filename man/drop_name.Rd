@@ -5,23 +5,27 @@
 \title{drop_name}
 \usage{
 drop_name(
-  bib_file = "sample_data/sample.bib",
+  bib_file = "sample.bib",
   cite_key = "collaboration_2019_ApJL",
   output_dir = "visual_citations",
   export_as = "html",
+  inline = TRUE,
   max_authors = 3,
   include_qr = TRUE,
-  style = "modern"
+  style = "modern",
+  substitute_missing = TRUE
 )
 }
 \arguments{
-\item{bib_file}{A .bib file.}
+\item{bib_file}{A BibTeX file *.bib.}
 
 \item{cite_key}{A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.}
 
 \item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
 \item{export_as}{A string specifying the desired output format. For now only supports HTML by using "html".}
+
+\item{inline}{If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.}
 
 \item{max_authors}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
 
@@ -30,9 +34,11 @@ drop_name(
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
+
+\item{substitute_missing}{Boolean to specify, whether missing data such as title, journal, year or authors should be substituted (TRUE, default) or left empty (FALSE).}
 }
 \value{
-A visual citation
+A visual citation in the specified output format.
 }
 \description{
 Extracts metadata from a .bib file and exports the visual citation in the specified format.
@@ -40,9 +46,10 @@ Extracts metadata from a .bib file and exports the visual citation in the specif
 \examples{
 \dontrun{
 dropped <- drop_name(
-  file = "sample_data/sample.bib",
-  cite_key = NULL,
+  file = system.file("testdata", "sample.bib", package = "namedropR"),
+  cite_key = "collaboration_2019_ApJL",
   export_as = "html",
+  inline = TRUE,
   max_authors = 3
 )
 

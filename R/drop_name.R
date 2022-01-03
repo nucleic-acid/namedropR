@@ -19,9 +19,10 @@
 #' @examples
 #' \dontrun{
 #' dropped <- drop_name(
-#'   file = "sample_data/sample.bib",
-#'   cite_key = NULL,
+#'   file = system.file("testdata", "sample.bib", package = "namedropR"),
+#'   cite_key = "collaboration_2019_ApJL",
 #'   export_as = "html",
+#'   inline = TRUE,
 #'   max_authors = 3
 #' )
 #'
@@ -30,14 +31,26 @@
 #' @export
 #' @importFrom bibtex "read.bib"
 #' @importFrom htmltools tags save_html
-#' @importFrom xfun base64_uri
+#' @import xfun
+#' @import mime
 #' @importFrom here here
 
-drop_name <- function(bib_file = "sample_data/sample.bib", cite_key = "collaboration_2019_ApJL",
+drop_name <- function(bib_file = "sample.bib", cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations", export_as = "html", inline = TRUE,
                       max_authors = 3,
                       include_qr = TRUE, style = "modern",
                       substitute_missing = TRUE) {
+
+  # CHECK ARGUMENTS
+  stopifnot(class(bib_file) == "character")
+  stopifnot(class(cite_key) == "character")
+  stopifnot(class(output_dir) == "character")
+  stopifnot(class(export_as) == "character")
+  stopifnot(class(inline) == "logical")
+  stopifnot(class(max_authors) == "numeric")
+  stopifnot(class(include_qr) == "logical")
+  stopifnot(class(style) == "character")
+  stopifnot(class(substitute_missing) == "logical")
 
   # READ AND CHECK BIB FILE AND TARGET BIB-ENTRY
   # read the bibtex file if it exists
