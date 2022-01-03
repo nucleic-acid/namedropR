@@ -4,15 +4,7 @@
 \alias{drop_html}
 \title{drop_html}
 \usage{
-drop_html(
-  title = "",
-  journal = "",
-  authors = "",
-  year = "",
-  cite_key = "",
-  include_qr = TRUE,
-  style = "modern"
-)
+drop_html(title, journal, authors, year, cite_key, include_qr, style)
 }
 \arguments{
 \item{title}{The publication's title as string.}
@@ -49,4 +41,5 @@ vc_html <- drop_html(
 
 htmltools::html_print(dropped)
 }
+
 }

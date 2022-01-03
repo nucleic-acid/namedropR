@@ -25,20 +25,28 @@
 #'
 #' htmltools::html_print(dropped)
 #' }
-#' @export
+#'
 #' @importFrom htmltools div img tags
 #' @importFrom xfun base64_uri
 
 
-drop_html <- function(title = "", journal = "", authors = "", year = "", cite_key = "", include_qr = TRUE, style = "modern") {
+drop_html <- function(title, journal, authors, year, cite_key, include_qr, style) {
 
-
+  # CHECK ARGUMENTS
+  stopifnot(class(title) == "character")
+  stopifnot(class(journal) == "character")
+  stopifnot(class(authors) == "character")
+  stopifnot(class(year) == "character")
+  stopifnot(class(cite_key) == "character")
   if (cite_key == "") {
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
 
+  stopifnot(class(include_qr) == "logical")
+  stopifnot(class(style) == "character")
 
 
+  # OBTAIN CSS STYLE
   css_styles <- get_css_styles(style = style)
 
 
