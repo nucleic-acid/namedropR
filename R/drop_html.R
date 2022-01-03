@@ -1,6 +1,6 @@
 #' @title drop_html
 #'
-#' @description Accepts bibliographic information and retuns a htmltools taglist for printing/display.
+#' @description Accepts bibliographic information and returns a htmltools tagList for printing/display.
 #'
 #' @param journal The Journal's name as string.
 #' @param title The publication's title as string.

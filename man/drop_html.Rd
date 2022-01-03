@@ -29,7 +29,7 @@ This custom CSS file must specify styles for <div> classes "top-row", "title-row
 A htmltools taglist containing the visual citation as HTML representation including style.
 }
 \description{
-Accepts bibliographic information and retuns a htmltools taglist for printing/display.
+Accepts bibliographic information and returns a htmltools tagList for printing/display.
 }
 \examples{
 \dontrun{
