@@ -35,7 +35,7 @@
 #' @import mime
 #' @importFrom here here
 
-drop_name <- function(bib_file = "sample.bib", cite_key = "collaboration_2019_ApJL",
+drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations", export_as = "html", inline = TRUE,
                       max_authors = 3,
                       include_qr = TRUE, style = "modern",
@@ -55,7 +55,7 @@ drop_name <- function(bib_file = "sample.bib", cite_key = "collaboration_2019_Ap
   # READ AND CHECK BIB FILE AND TARGET BIB-ENTRY
   # read the bibtex file if it exists
   if (file.exists(bib_file)) {
-    bib <- suppressMessages(bibtex::read.bib(file = bib_file))
+    bib <- bibtex::read.bib(file = bib_file)
   } else {
     stop("BibTeX file not found. Check file path.")
   }
@@ -71,6 +71,14 @@ drop_name <- function(bib_file = "sample.bib", cite_key = "collaboration_2019_Ap
   } else {
     stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
   }
+
+
+  # CHECK COMPLETENESS OF DATA
+  # reassign to target_ref after completing
+  target_ref <- check_bib_complete(
+    substitute_missing = substitute_missing,
+    ref_item = target_ref
+  )
 
   # COLLAPSE AUTHOR LIST
   # Obtain the actual number of authors to print
@@ -113,12 +121,6 @@ drop_name <- function(bib_file = "sample.bib", cite_key = "collaboration_2019_Ap
     )
   }
 
-  # CHECK and ASSURE COMPLETENESS OF DATA
-  # reassign to target_ref after completing
-  target_ref <- check_bib_complete(
-    substitute_missing = substitute_missing,
-    ref_item = target_ref
-  )
 
   # CALL HTML RENDERING FUNCTION
   # passes the completed data to the rendering function with specific options
