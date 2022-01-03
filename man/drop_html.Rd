@@ -17,7 +17,9 @@ drop_html(title, journal, authors, year, cite_key, url, include_qr, style)
 
 \item{cite_key}{A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.}
 
-\item{include_qr}{Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.}
+\item{url}{The URL that should be encoded as QR code.}
+
+\item{include_qr}{Character string specifying the way the QR code should be included. See drop_name() for further information.}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.

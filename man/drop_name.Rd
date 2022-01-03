@@ -29,7 +29,8 @@ drop_name(
 
 \item{max_authors}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
 
-\item{include_qr}{Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.}
+\item{include_qr}{Character string specifying the way the QR code should be included.
+'embed' (default) results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
