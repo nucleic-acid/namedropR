@@ -3,22 +3,20 @@ Type: Package
 Title: Create Visual Citations to Include in Presentations
 Version: 0.9.0
 Authors@R: c(
-    person(given = "Christian Alexander",
+    person(given = c("Christian", "A."),
            family = "Gebhard",
            role = c("aut", "cre"),
-           email = "christian.gebhard@posteo.de")
+           email = "christian.gebhard@posteo.de",
+           comment = c(ORCID = "0000-0002-8792-565X"))
     )
-Description: Provides 'visual citations' containing the metadata of a scientific paper.
-    A 'visual citation' is a banner containing e.g. title, authors, journal, year of a publication.
-    This package can create such banners in high quality based on a *.bib file and 
-    includes a QR code pointing to the DOI for the audience to scan. 
-    The resulting banner can be included in a presentation to back up your claims, 
-    especially when you want to drop an important name, research group, journal,
-    but also to genuinely point the audience to good resources for further reading.
-    Seen in the wild, such banners are often either a low resolution screenshot or 
-    displayed way too short for the audience to actually grasp them.
+Description: Provides 'visual citations' containing the metadata of a scientific paper and a QR code.
+    A 'visual citation' is a banner containing title, authors, journal and year of a publication.
+    This package can create such banners in high quality based on 'BibTeX' and 'BibLaTeX' references
+    and includes a QR code pointing to the DOI.
+    The resulting banner can be included in a presentation to point the audience to good resources for further reading.
     This package is not intended as replacement for proper reference manager packages, 
     but a tool to enrich scientific presentation slides.
+    Styling is possible via predefined designs or via custom CSS.
 License: MIT + file LICENSE
 Imports: 
     htmltools,
