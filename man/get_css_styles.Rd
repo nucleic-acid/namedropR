@@ -19,5 +19,4 @@ If "none" is given, the returned styles are empty strings.
 \examples{
 modern_style <- get_css_styles(style = "modern")
 print(modern_style$title_row_style)
-
 }
