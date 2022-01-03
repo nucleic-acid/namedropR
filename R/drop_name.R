@@ -42,7 +42,7 @@ drop_name <- function(bib_file = "sample_data/sample.bib", cite_key = "collabora
   # READ AND CHECK BIB FILE AND TARGET BIB-ENTRY
   # read the bibtex file if it exists
   if (file.exists(bib_file)) {
-    bib <- bibtex::read.bib(file = bib_file)
+    bib <- suppressMessages(bibtex::read.bib(file = bib_file))
   } else {
     stop("BibTeX file not found. Check file path.")
   }
