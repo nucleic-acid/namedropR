@@ -1,17 +1,16 @@
 #' @title get_css_style
 #'
-#' @description Accepts bibliographic information and retuns a htmltools taglist for printing/display.
+#' @description Provides inline CSS code for three distinct visual citation styles.
+#' If "none" is given, the returned styles are empty strings.
 #'
 #' @param style A string specifying the desired style for the visual citation.
 
-#' @return A list of inline css styles for each element of the visual citation.
+#' @return A list of inline css styles for each element of the visual citation: top row, title row and author row.
 #'
 #' @examples
-#' \dontrun{
-#' css_styles <- get_css_styles(style = "modern")
-#' }
+#' modern_style <- get_css_styles(style = "modern")
+#' print(modern_style$title_row_style)
 #'
-
 
 get_css_styles <- function(style) {
   css_styles <- list()
