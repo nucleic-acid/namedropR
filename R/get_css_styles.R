@@ -10,8 +10,10 @@
 #' @return A list of inline css styles for each element of the visual citation: top row, title row and author row.
 #'
 #' @examples
+#' \dontrun{
 #' modern_style <- get_css_styles(style = "modern")
 #' print(modern_style$title_row_style)
+#' }
 
 
 get_css_styles <- function(style) {

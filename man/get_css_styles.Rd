@@ -19,6 +19,8 @@ Provides inline CSS code for three distinct visual citation styles.
 If "none" is given, the returned styles are empty strings.
 }
 \examples{
+\dontrun{
 modern_style <- get_css_styles(style = "modern")
 print(modern_style$title_row_style)
+}
 }
