@@ -4,7 +4,7 @@
 \alias{drop_html}
 \title{drop_html}
 \usage{
-drop_html(title, journal, authors, year, cite_key, include_qr, style)
+drop_html(title, journal, authors, year, cite_key, url, include_qr, style)
 }
 \arguments{
 \item{title}{The publication's title as string.}

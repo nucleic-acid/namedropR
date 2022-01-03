@@ -7,7 +7,8 @@
 #' @param authors The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).
 #' @param year The publication's publication year as string.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' @param include_qr Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.
+#' @param include_qr Character string specifying the way the QR code should be included. See drop_name() for further information.
+#' @param url The URL that should be encoded as QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
@@ -27,22 +28,22 @@
 #' }
 #'
 #' @importFrom htmltools div img tags
-#' @importFrom xfun base64_uri
 
 
-drop_html <- function(title, journal, authors, year, cite_key, include_qr, style) {
+drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, style) {
 
   # CHECK ARGUMENTS
   stopifnot(class(title) == "character")
   stopifnot(class(journal) == "character")
   stopifnot(class(authors) == "character")
   stopifnot(class(year) == "character")
+  stopifnot(class(url) == "character")
+  stopifnot(class(include_qr) == "character")
   stopifnot(class(cite_key) == "character")
   if (cite_key == "") {
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
 
-  stopifnot(class(include_qr) == "logical")
   stopifnot(class(style) == "character")
 
 
@@ -74,22 +75,29 @@ drop_html <- function(title, journal, authors, year, cite_key, include_qr, style
             )
           )
         ),
-        # if the QR code should be included, read the temporary svg file from the temporary directory
-        # convert the SVG to base64 and include in the HTML file to keep all in one single file.
         htmltools::tags$td(
-          if (include_qr) {
-            htmltools::img(
-              src = xfun::base64_uri(paste0(tempdir(), "/qr_codes/qr_", cite_key, ".svg")),
-              alt = "qrcode",
-              style = "float: center;padding-left:20px;height:150px;width:150px;object-fit:contain;"
-            )
+          if (include_qr == "embed") {
+            if (capabilities("cairo")) {
+              htmltools::plotTag(
+                plot(generate_qr(url = url)),
+                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
+                mimeType = "image/svg+xml"
+              )
+            } else {
+              htmltools::plotTag(
+                plot(generate_qr(url = url)),
+                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                width = 150, height = 150
+              )
+            }
+          } else {
+            message("In this version only embedded QR codes are supported. include_qr values other than 'embed' are ignored.")
           }
         )
       )
     )
   )
 
-  # htmltools::html_print(vc)
   return(vc)
 }
-

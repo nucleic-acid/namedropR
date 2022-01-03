@@ -11,7 +11,7 @@ drop_name(
   export_as = "html",
   inline = TRUE,
   max_authors = 3,
-  include_qr = TRUE,
+  include_qr = "embed",
   style = "modern",
   substitute_missing = TRUE
 )

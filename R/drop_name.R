@@ -8,7 +8,8 @@
 #' @param inline If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
-#' @param include_qr Boolean value, whether to include a QR code (containing the URL to the DOI) next to the visual citation.
+#' @param include_qr Character string specifying the way the QR code should be included.
+#' 'embed' (default) results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
@@ -31,14 +32,12 @@
 #' @export
 #' @importFrom bibtex "read.bib"
 #' @importFrom htmltools tags save_html
-#' @import xfun
-#' @import mime
 #' @importFrom here here
 
 drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations", export_as = "html", inline = TRUE,
                       max_authors = 3,
-                      include_qr = TRUE, style = "modern",
+                      include_qr = "embed", style = "modern",
                       substitute_missing = TRUE) {
 
   # CHECK ARGUMENTS
@@ -48,7 +47,8 @@ drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collabo
   stopifnot(class(export_as) == "character")
   stopifnot(class(inline) == "logical")
   stopifnot(class(max_authors) == "numeric")
-  stopifnot(class(include_qr) == "logical")
+  stopifnot(class(include_qr) == "character")
+  stopifnot(include_qr %in% c("embed", "link", "none"))
   stopifnot(class(style) == "character")
   stopifnot(class(substitute_missing) == "logical")
 
@@ -95,30 +95,22 @@ drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collabo
     authors_collapsed <- paste(target_ref$author, collapse = ", ")
   }
 
-  # COMPOSE URL FOR QR CODE and PASS TO QR-GENERATION
+  # COMPOSE URL FOR QR CODE
   # If bibentry has a DOI number use this, as this is prob. the shortest URL possible.
   # Next option is using the provided URL in the bibentry.
   # If neither is abvailable, a search query for Google Scholar will be passed to the QR code.
+  # This will later be passed on to the HTML rendering function.
   if (!is.null(target_ref$doi)) {
-    generate_qr_svg(
-      url = paste0("https://doi.org/", target_ref$doi),
-      cite_key = target_ref$key
-    )
+    url <- paste0("https://doi.org/", target_ref$doi)
   } else if (!is.null(target_ref$url)) {
-    generate_qr_svg(
-      url = target_ref$url,
-      cite_key = target_ref$key
-    )
+    url <- target_ref$url
   } else {
     search_string <- paste0(
       "https://scholar.google.com/scholar?as_q=", target_ref$author[1],
       "+", target_ref$journal,
       "+", target_ref$year
     )
-    generate_qr_svg(
-      url = search_string,
-      cite_key = target_ref$key
-    )
+    url <- search_string
   }
 
 
@@ -129,6 +121,7 @@ drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collabo
     journal = target_ref$journal,
     year = target_ref$year,
     authors = authors_collapsed,
+    url = url,
     cite_key = target_ref$key,
     include_qr = include_qr,
     style = style
