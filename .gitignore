@@ -3,4 +3,5 @@
 .RData
 .Ruserdata
 sample.bib
+!inst/*/*
 visual_citations/
