@@ -27,7 +27,7 @@
 #' htmltools::html_print(dropped)
 #' }
 #'
-#' @importFrom htmltools div img tags
+#' @import htmltools
 
 
 drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, style) {

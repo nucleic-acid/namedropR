@@ -17,14 +17,12 @@ Description: Creates a 'visual citation' containing the metadata of a scientific
     namedropR can create these banners in high quality and even provide a QR code for the audience to scan.
 License: MIT + file LICENSE
 Imports: 
-    ggplot2,
-    bibtex,
     htmltools,
     qrcode,
-    here
+    here,
+    RefManageR
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.2
-Suggests: 
-    testthat (>= 3.0.0)
+Suggests: testthat (>= 3.0.0), bibtex (>= 0.4.1)
 Config/testthat/edition: 3

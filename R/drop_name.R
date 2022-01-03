@@ -30,7 +30,7 @@
 #' htmltools::html_print(dropped)
 #' }
 #' @export
-#' @importFrom bibtex "read.bib"
+#' @importFrom RefManageR ReadBib
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
 
@@ -55,7 +55,7 @@ drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collabo
   # READ AND CHECK BIB FILE AND TARGET BIB-ENTRY
   # read the bibtex file if it exists
   if (file.exists(bib_file)) {
-    bib <- bibtex::read.bib(file = bib_file)
+    bib <- RefManageR::ReadBib(file = bib_file)
   } else {
     stop("BibTeX file not found. Check file path.")
   }
@@ -71,14 +71,6 @@ drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collabo
   } else {
     stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
   }
-
-
-  # CHECK COMPLETENESS OF DATA
-  # reassign to target_ref after completing
-  target_ref <- check_bib_complete(
-    substitute_missing = substitute_missing,
-    ref_item = target_ref
-  )
 
   # COLLAPSE AUTHOR LIST
   # Obtain the actual number of authors to print
