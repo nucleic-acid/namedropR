@@ -4,7 +4,17 @@
 \alias{drop_html}
 \title{drop_html}
 \usage{
-drop_html(title, journal, authors, year, cite_key, url, include_qr, style)
+drop_html(
+  title,
+  journal,
+  authors,
+  year,
+  cite_key,
+  url,
+  include_qr,
+  output_dir,
+  style
+)
 }
 \arguments{
 \item{title}{The publication's title as string.}
@@ -19,7 +29,13 @@ drop_html(title, journal, authors, year, cite_key, url, include_qr, style)
 
 \item{url}{The URL that should be encoded as QR code.}
 
-\item{include_qr}{Character string specifying the way the QR code should be included. See drop_name() for further information.}
+\item{include_qr}{Character string specifying the way the QR code should be included or if no QR code should be included.
+'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
+'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+'none' creates no QR code.}
+
+\item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.

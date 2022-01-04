@@ -7,7 +7,12 @@
 #' @param authors The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).
 #' @param year The publication's publication year as string.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' @param include_qr Character string specifying the way the QR code should be included. See drop_name() for further information.
+#' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
+#' 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
+#' 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+#' 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+#' 'none' creates no QR code.
+#' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param url The URL that should be encoded as QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
@@ -30,7 +35,7 @@
 #' @import htmltools
 
 
-drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, style) {
+drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style) {
 
   # CHECK ARGUMENTS
   stopifnot(class(title) == "character")
@@ -85,19 +90,45 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
                 mimeType = "image/svg+xml"
               )
             } else {
+              message("Embedding as PNG as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired.")
               htmltools::plotTag(
                 plot(generate_qr(url = url)),
                 alt = paste0("A QR code linking to the paper of ", authors, " ", year),
                 width = 150, height = 150
               )
             }
+          } else if (include_qr == "link_svg") {
+            if (capabilities("cairo")) {
+              if (!dir.exists(here::here(output_dir, "qr"))) {
+                message("qr dir needs to be created")
+                dir.create(here::here(output_dir, "qr"))
+              }
+              htmltools::capturePlot(
+                plot(generate_qr(url = url)),
+                filename = here::here(output_dir, "qr", paste0(cite_key, ".svg")),
+                device = grDevices::svg, width = 2, height = 2
+                )
+              htmltools::tags$img(src = file.path("qr", paste0(cite_key, ".svg")))
+            } else {
+              message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
+            }
+          } else if (include_qr == "link") {
+            if (!dir.exists(here::here(output_dir, "qr"))) {
+              # message("qr dir needs to be created")
+              dir.create(here::here(output_dir, "qr"))
+            }
+            htmltools::capturePlot(
+              plot(generate_qr(url = url)),
+              filename = here::here(output_dir, "qr", paste0(cite_key, "_qr.png")),
+              width = 150, height = 150
+            )
+            htmltools::tags$img(src = file.path("qr", paste0(cite_key, "_qr.png")), alt = "QR code")
           } else {
-            message("In this version only embedded QR codes are supported. include_qr values other than 'embed' are ignored.")
+            message("No QR code will be created.")
           }
         )
       )
     )
   )
 
-  return(vc)
 }

@@ -9,7 +9,7 @@ test_that("Bibliographies are correctly read", {
 })
 
 test_that("inline = TRUE returns the correct objects", {
-  expect_true(any(class(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", export_as = "html", inline = TRUE)) == "shiny.tag.list"))
+  expect_true(any(class(drop_name(bib = test_bibfile, cite_key = "collaboration_2019_ApJL", export_as = "html", inline = TRUE)) == "shiny.tag.list"))
 })
 
 test_that("inline = FALSE returns the correct file path as character", {

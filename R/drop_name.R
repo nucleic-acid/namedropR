@@ -10,8 +10,11 @@
 #' See also 'path_absolute' parameter.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
-#' @param include_qr Character string specifying the way the QR code should be included.
-#' 'embed' (default) results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
+#' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
+#' 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
+#' 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+#' 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+#' 'none' creates no QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
@@ -42,7 +45,7 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       export_as = "html",
                       inline = FALSE,
                       max_authors = 3,
-                      include_qr = "embed",
+                      include_qr = "link",
                       style = "modern",
                       substitute_missing = TRUE,
                       path_absolute = FALSE) {
@@ -54,7 +57,7 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   stopifnot(is.logical(inline))
   stopifnot(is.numeric(max_authors))
   stopifnot(is.character(include_qr))
-  stopifnot(include_qr %in% c("embed", "link", "none"))
+  stopifnot(include_qr %in% c("embed", "link", "link_svg", "none"))
   stopifnot(is.character(style))
   stopifnot(is.logical(substitute_missing))
 
@@ -123,6 +126,11 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
   # CALL HTML RENDERING FUNCTION
   # passes the completed data to the rendering function with specific options
+
+  if (!dir.exists(here::here(output_dir))) {
+    dir.create(here::here(output_dir))
+  }
+
   vc_html <- drop_html(
     title = target_ref$title,
     journal = target_ref$journal,
@@ -131,7 +139,8 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     url = url,
     cite_key = target_ref$key,
     include_qr = include_qr,
-    style = style
+    style = style,
+    output_dir = output_dir
   )
 
   # EXPORT RESULT
@@ -139,9 +148,6 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   if (inline) {
     return(vc_html)
   } else {
-    if (!dir.exists(here::here(output_dir))) {
-      dir.create(here::here(output_dir))
-    }
 
     if (path_absolute) {
       output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))

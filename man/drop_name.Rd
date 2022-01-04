@@ -11,7 +11,7 @@ drop_name(
   export_as = "html",
   inline = FALSE,
   max_authors = 3,
-  include_qr = "embed",
+  include_qr = "link",
   style = "modern",
   substitute_missing = TRUE,
   path_absolute = FALSE
@@ -24,15 +24,19 @@ drop_name(
 
 \item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
-\item{export_as}{A string specifying the desired output format. For now only supports HTML by using "html".}
+\item{export_as}{A string specifying the desired output format. For now only supports HTML by
+using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.}
 
 \item{inline}{If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
 See also 'path_absolute' parameter.}
 
 \item{max_authors}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
 
-\item{include_qr}{Character string specifying the way the QR code should be included.
-'embed' (default) results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.}
+\item{include_qr}{Character string specifying the way the QR code should be included or if no QR code should be included.
+'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
+'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
+'none' creates no QR code.}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
