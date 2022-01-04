@@ -9,13 +9,12 @@ test_that("Bibliographies are correctly read", {
 })
 
 test_that("inline = TRUE returns the correct objects", {
-  expect_true(any(class(drop_name(bib = test_bibfile, cite_key = "collaboration_2019_ApJL", export_as = "html", inline = TRUE)) == "shiny.tag.list"))
+  expect_true(any(class(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", export_as = "html", inline = TRUE)) == "shiny.tag.list"))
 })
 
 test_that("inline = FALSE returns the correct file path as character", {
   expect_type(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", inline = FALSE), "character")
   expect_true(file.exists(here::here(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", inline = FALSE))))
-  unlink(here::here("visual_citations"), recursive = TRUE)
 })
 
 test_that("reading and extracting bibtex information is error tolerant", {
@@ -25,7 +24,7 @@ test_that("reading and extracting bibtex information is error tolerant", {
 })
 
 test_that("input argument types are correct", {
-  expect_error(drop_name(bib = 123, , inline = TRUE))
+  expect_error(drop_name(bib = 123, inline = TRUE))
   expect_error(drop_name(bib = test_bibfile, cite_key = 1234, inline = TRUE))
   expect_error(drop_name(bib = test_bibfile, output_dir = 987, inline = TRUE))
   expect_error(drop_name(bib = test_bibfile, export_as = 1234, inline = TRUE))
@@ -35,3 +34,12 @@ test_that("input argument types are correct", {
   expect_error(drop_name(bib = test_bibfile, style = 987, inline = TRUE))
   expect_error(drop_name(bib = test_bibfile, substitute_missing = "not logical", inline = TRUE))
 })
+
+test_that("backwards compatibility for bibtex", {
+  new_bib <- RefManageR::BibEntry(bibtype = "Article", key = "back1", title = "An Article Title",
+           author = "The Author", journaltitle = "The Journal Title",
+           date = "2014-02-06", pubstate = "forthcoming")
+  expect_type(drop_name(new_bib, cite_key = "back1"), "character")
+})
+
+unlink(here::here("visual_citations"), recursive = TRUE)

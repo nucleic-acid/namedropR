@@ -39,6 +39,7 @@
 #' @importFrom RefManageR ReadBib
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
+#' @importFrom lubridate year ymd
 
 drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations",
@@ -125,12 +126,26 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
 
   # CALL HTML RENDERING FUNCTION
-  # passes the completed data to the rendering function with specific options
-
+  # create output directory, if needed
   if (!dir.exists(here::here(output_dir))) {
     dir.create(here::here(output_dir))
   }
 
+  # provide backwards compatibility for bibtex
+  if (is.null(target_ref$journal)) {
+    target_ref$journal <- ifelse(is.null(target_ref$journaltitle),
+      "",
+      target_ref$journaltitle
+    )
+  }
+  if (is.null(target_ref$year)) {
+    target_ref$year <- ifelse(is.null(target_ref$date),
+      "",
+      lubridate::year(lubridate::ymd(target_ref$date, truncated = 2))
+    )
+  }
+
+  # passes the completed data to the rendering function with specific options
   vc_html <- drop_html(
     title = target_ref$title,
     journal = target_ref$journal,
@@ -148,7 +163,6 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   if (inline) {
     return(vc_html)
   } else {
-
     if (path_absolute) {
       output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))
     } else {
