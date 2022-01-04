@@ -23,7 +23,8 @@ Imports:
     qrcode,
     here,
     RefManageR,
-    lubridate
+    lubridate,
+    webshot
 Encoding: UTF-8
 LazyData: true
 BugReports: https://github.com/nucleic-acid/namedropR/issues

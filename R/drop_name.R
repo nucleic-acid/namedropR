@@ -4,8 +4,10 @@
 #'
 #' @param bib Accepts one of the following: A RefManageR BibEntry object or a file path to a .bib file.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' @param export_as A string specifying the desired output format. For now only supports HTML by
+#' @param export_as A string specifying the desired output format. For now supports PNG and HTML by
 #' using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.
+#' The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
+#' For webshot you need to install phantomJS once (see 'webshot' documentation).
 #' @param inline If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
 #' See also 'path_absolute' parameter.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
@@ -40,6 +42,7 @@
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
 #' @importFrom lubridate year ymd
+#' @importFrom webshot webshot
 
 drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations",
@@ -173,6 +176,17 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
       htmltools::save_html(vc_html, file = here::here(output_path))
     } else if (export_as == "html") {
       write(as.character(vc_html), file = here::here(output_path))
+    } else if (export_as == "png") {
+      if (!webshot::is_phantomjs_installed()) {
+        message("You need to download and install phantomJS to save output as PNG. Try running 'webshot::install_phantomjs()' once.")
+      } else {
+        # renders as "complete" html to get the white background for PNG snapshot.
+        htmltools::save_html(vc_html, file = here::here(output_path))
+        webshot::webshot(output_path, paste0(output_path, ".png"), selector = ".visual-citation", zoom = 2)
+        unlink(output_path)
+        # to point to the png instead return its filepath
+        return(paste0(output_path, ".png"))
+      }
     } else {
       stop("Output format unknown")
     }

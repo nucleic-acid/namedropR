@@ -24,8 +24,10 @@ drop_name(
 
 \item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
-\item{export_as}{A string specifying the desired output format. For now only supports HTML by
-using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.}
+\item{export_as}{A string specifying the desired output format. For now supports PNG and HTML by
+using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.
+The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
+For webshot you need to install phantomJS once (see 'webshot' documentation).}
 
 \item{inline}{If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
 See also 'path_absolute' parameter.}
