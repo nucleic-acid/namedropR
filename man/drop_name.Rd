@@ -5,7 +5,7 @@
 \title{drop_name}
 \usage{
 drop_name(
-  bib_file = "inst/testdata/sample.bib",
+  bib,
   cite_key = "collaboration_2019_ApJL",
   output_dir = "visual_citations",
   export_as = "html",
@@ -17,7 +17,7 @@ drop_name(
 )
 }
 \arguments{
-\item{bib_file}{A BibTeX file *.bib.}
+\item{bib}{Accepts one of the following: A RefManageR BibEntry object or a file path to a .bib file.}
 
 \item{cite_key}{A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.}
 

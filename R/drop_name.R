@@ -2,7 +2,7 @@
 #'
 #' @description Extracts metadata from a .bib file and exports the visual citation in the specified format.
 #'
-#' @param bib_file A BibTeX file *.bib.
+#' @param bib Accepts one of the following: A RefManageR BibEntry object or a file path to a .bib file.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param export_as A string specifying the desired output format. For now only supports HTML by using "html".
 #' @param inline If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
@@ -34,42 +34,50 @@
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
 
-drop_name <- function(bib_file = "inst/testdata/sample.bib", cite_key = "collaboration_2019_ApJL",
+drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       output_dir = "visual_citations", export_as = "html", inline = TRUE,
                       max_authors = 3,
                       include_qr = "embed", style = "modern",
                       substitute_missing = TRUE) {
 
-  # CHECK ARGUMENTS
-  stopifnot(class(bib_file) == "character")
-  stopifnot(class(cite_key) == "character")
-  stopifnot(class(output_dir) == "character")
-  stopifnot(class(export_as) == "character")
-  stopifnot(class(inline) == "logical")
-  stopifnot(class(max_authors) == "numeric")
-  stopifnot(class(include_qr) == "character")
+  # CHECK other ARGUMENTS
+  stopifnot(is.character(cite_key))
+  stopifnot(is.character(output_dir))
+  stopifnot(is.character(export_as))
+  stopifnot(is.logical(inline))
+  stopifnot(is.numeric(max_authors))
+  stopifnot(is.character(include_qr))
   stopifnot(include_qr %in% c("embed", "link", "none"))
-  stopifnot(class(style) == "character")
-  stopifnot(class(substitute_missing) == "logical")
+  stopifnot(is.character(style))
+  stopifnot(is.logical(substitute_missing))
 
-  # READ AND CHECK BIB FILE AND TARGET BIB-ENTRY
-  # read the bibtex file if it exists
-  if (file.exists(bib_file)) {
-    bib <- RefManageR::ReadBib(file = bib_file)
-  } else {
-    stop("BibTeX file not found. Check file path.")
+  # READ AND CHECK BIB FILE or BIBENTRY
+
+  if(missing(bib)) {
+    stop("No bibliography provided. Please check arguments.")
+  }
+
+  if(RefManageR::is.BibEntry(bib)) {
+    bib_file <- bib
+  } else if (is.character(bib)) {
+    if (file.exists(bib)) {
+      bib_file <- RefManageR::ReadBib(file = bib)
+      message("Bibliography file successfully read.")
+    } else {
+      stop("BibTeX file not found. Check file path or pass a BibEntry object to the function.")
+    }
   }
 
   # check if file is empty
-  if (length(bib) == 0) {
-    stop("BibTeX file is empty.")
+  if (length(bib_file) == 0) {
+    stop("Bibliography is empty.")
   }
 
   # select the target reference entry by key
-  if (cite_key %in% bib$key) {
-    target_ref <- bib[cite_key]
+  if (cite_key %in% bib_file$key) {
+    target_ref <- bib_file[cite_key]
   } else {
-    stop("BibTeX entry not found in the supplied file. Please check, that the citation key and the file are correct.")
+    stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
   }
 
   # COLLAPSE AUTHOR LIST
