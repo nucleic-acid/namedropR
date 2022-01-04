@@ -4,7 +4,8 @@
 #'
 #' @param bib Accepts one of the following: A RefManageR BibEntry object or a file path to a .bib file.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
-#' @param export_as A string specifying the desired output format. For now only supports HTML by using "html".
+#' @param export_as A string specifying the desired output format. For now only supports HTML by
+#' using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.
 #' @param inline If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
 #' See also 'path_absolute' parameter.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
@@ -37,10 +38,12 @@
 #' @importFrom here here
 
 drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
-                      output_dir = "visual_citations", export_as = "html",
+                      output_dir = "visual_citations",
+                      export_as = "html",
                       inline = FALSE,
                       max_authors = 3,
-                      include_qr = "embed", style = "modern",
+                      include_qr = "embed",
+                      style = "modern",
                       substitute_missing = TRUE,
                       path_absolute = FALSE) {
 
@@ -57,11 +60,11 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
   # READ AND CHECK BIB FILE or BIBENTRY
 
-  if(missing(bib)) {
+  if (missing(bib)) {
     stop("No bibliography provided. Please check arguments.")
   }
 
-  if(RefManageR::is.BibEntry(bib)) {
+  if (RefManageR::is.BibEntry(bib)) {
     bib_file <- bib
   } else if (is.character(bib)) {
     if (file.exists(bib)) {
@@ -133,22 +136,26 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
   # EXPORT RESULT
   # either returns the rendered object or the path to the stored file
-  if (export_as == "html") {
-    if (inline) {
-      return(vc_html)
-    } else {
-      if (!dir.exists(here::here(output_dir))) {
-        dir.create(here::here(output_dir))
-      }
-      if(path_absolute) {
-        output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))
-      } else {
-        output_path <- file.path(output_dir, paste0(target_ref$key, ".html"))
-      }
-      htmltools::save_html(vc_html, file = here::here(output_path))
-      return(as.character(output_path))
-    }
+  if (inline) {
+    return(vc_html)
   } else {
-    stop("Output format unknown")
+    if (!dir.exists(here::here(output_dir))) {
+      dir.create(here::here(output_dir))
+    }
+
+    if (path_absolute) {
+      output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))
+    } else {
+      output_path <- file.path(output_dir, paste0(target_ref$key, ".html"))
+    }
+
+    if (export_as == "html_full") {
+      htmltools::save_html(vc_html, file = here::here(output_path))
+    } else if (export_as == "html") {
+      write(as.character(vc_html), file = here::here(output_path))
+    } else {
+      stop("Output format unknown")
+    }
+    return(as.character(output_path))
   }
 }
