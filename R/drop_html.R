@@ -60,9 +60,9 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
   vc <- htmltools::tagList(
     htmltools::tags$table(
       htmltools::tags$tr(
+        class = "visual-citation",
         htmltools::tags$td(
           htmltools::div(
-            class = "visual-citation",
             htmltools::div(
               class = "top-row",
               style = css_styles$top_row_style,
@@ -107,7 +107,7 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
                 plot(generate_qr(url = url)),
                 filename = here::here(output_dir, "qr", paste0(cite_key, ".svg")),
                 device = grDevices::svg, width = 2, height = 2
-                )
+              )
               htmltools::tags$img(src = file.path("qr", paste0(cite_key, ".svg")))
             } else {
               message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
@@ -130,5 +130,4 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
       )
     )
   )
-
 }
