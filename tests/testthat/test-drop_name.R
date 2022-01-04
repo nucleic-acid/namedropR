@@ -14,15 +14,9 @@ test_that("inline = TRUE returns the correct objects", {
 
 test_that("inline = FALSE returns the correct file path as character", {
   expect_type(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", inline = FALSE), "character")
-  expect_true(file.exists(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", inline = FALSE)))
-})
-
-test_that("inline = FALSE produces the correct output filetypes", {
-  expect_equal(readLines(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", export_as = "html", inline = FALSE), n = 1),
-               "<!DOCTYPE html>")
+  expect_true(file.exists(here::here(drop_name(bib = test_bibfile, cite_key = "Eschrich1983", inline = FALSE))))
   unlink(here::here("visual_citations"), recursive = TRUE)
 })
-
 
 test_that("reading and extracting bibtex information is error tolerant", {
   expect_error(drop_name(bib = "wrong_file_path", cite_key = "Eschrich1983"), "file not found")
@@ -31,13 +25,13 @@ test_that("reading and extracting bibtex information is error tolerant", {
 })
 
 test_that("input argument types are correct", {
-  expect_error(drop_name(bib = 123))
-  expect_error(drop_name(bib = test_bibfile, cite_key = 1234))
-  expect_error(drop_name(bib = test_bibfile, output_dir = 987))
-  expect_error(drop_name(bib = test_bibfile, export_as = 1234))
+  expect_error(drop_name(bib = 123, , inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, cite_key = 1234, inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, output_dir = 987, inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, export_as = 1234, inline = TRUE))
   expect_error(drop_name(bib = test_bibfile, inline = "not logical"))
-  expect_error(drop_name(bib = test_bibfile, max_authors = "not numeric"))
-  expect_error(drop_name(bib = test_bibfile, include_qr = "not logical"))
-  expect_error(drop_name(bib = test_bibfile, style = 987))
-  expect_error(drop_name(bib = test_bibfile, substitute_missing = "not logical"))
+  expect_error(drop_name(bib = test_bibfile, max_authors = "not numeric", inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, include_qr = "not logical", inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, style = 987, inline = TRUE))
+  expect_error(drop_name(bib = test_bibfile, substitute_missing = "not logical", inline = TRUE))
 })

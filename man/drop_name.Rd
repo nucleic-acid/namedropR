@@ -9,11 +9,12 @@ drop_name(
   cite_key = "collaboration_2019_ApJL",
   output_dir = "visual_citations",
   export_as = "html",
-  inline = TRUE,
+  inline = FALSE,
   max_authors = 3,
   include_qr = "embed",
   style = "modern",
-  substitute_missing = TRUE
+  substitute_missing = TRUE,
+  path_absolute = FALSE
 )
 }
 \arguments{
@@ -25,7 +26,8 @@ drop_name(
 
 \item{export_as}{A string specifying the desired output format. For now only supports HTML by using "html".}
 
-\item{inline}{If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.}
+\item{inline}{If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
+See also 'path_absolute' parameter.}
 
 \item{max_authors}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
 
@@ -37,6 +39,8 @@ drop_name(
 This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
 
 \item{substitute_missing}{Boolean to specify, whether missing data such as title, journal, year or authors should be substituted (TRUE, default) or left empty (FALSE).}
+
+\item{path_absolute}{Boolean to specify, whether the returned output path (when inline = FALSE) is a relative path or an absolute path.}
 }
 \value{
 A visual citation in the specified output format.

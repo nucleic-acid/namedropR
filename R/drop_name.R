@@ -6,6 +6,7 @@
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param export_as A string specifying the desired output format. For now only supports HTML by using "html".
 #' @param inline If TRUE, the output is directly returned. Otherwise the output is stored to disk and a filepath is returned as string.
+#' See also 'path_absolute' parameter.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
 #' @param include_qr Character string specifying the way the QR code should be included.
@@ -14,6 +15,7 @@
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
 #' @param substitute_missing Boolean to specify, whether missing data such as title, journal, year or authors should be substituted (TRUE, default) or left empty (FALSE).
+#' @param path_absolute Boolean to specify, whether the returned output path (when inline = FALSE) is a relative path or an absolute path.
 #'
 #' @return A visual citation in the specified output format.
 #'
@@ -35,10 +37,12 @@
 #' @importFrom here here
 
 drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
-                      output_dir = "visual_citations", export_as = "html", inline = TRUE,
+                      output_dir = "visual_citations", export_as = "html",
+                      inline = FALSE,
                       max_authors = 3,
                       include_qr = "embed", style = "modern",
-                      substitute_missing = TRUE) {
+                      substitute_missing = TRUE,
+                      path_absolute = FALSE) {
 
   # CHECK other ARGUMENTS
   stopifnot(is.character(cite_key))
@@ -136,8 +140,13 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
       if (!dir.exists(here::here(output_dir))) {
         dir.create(here::here(output_dir))
       }
-      htmltools::save_html(vc_html, file = here::here(output_dir, paste0(target_ref$key, ".html")))
-      return(as.character(here::here(output_dir, paste0(target_ref$key, ".html"))))
+      if(path_absolute) {
+        output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))
+      } else {
+        output_path <- file.path(output_dir, paste0(target_ref$key, ".html"))
+      }
+      htmltools::save_html(vc_html, file = here::here(output_path))
+      return(as.character(output_path))
     }
   } else {
     stop("Output format unknown")
