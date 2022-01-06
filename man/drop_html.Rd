@@ -13,7 +13,8 @@ drop_html(
   url,
   include_qr,
   output_dir,
-  style
+  style,
+  use_xaringan = FALSE
 )
 }
 \arguments{
@@ -40,6 +41,10 @@ drop_html(
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
+
+\item{use_xaringan}{Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
+When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
+relative to the rendered presentation, not relative to the visual citation.}
 }
 \value{
 A htmltools taglist containing the visual citation as HTML representation including style.

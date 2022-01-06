@@ -17,6 +17,9 @@
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
+#' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
+#' When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
+#' relative to the rendered presentation, not relative to the visual citation.
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
 #' @examples
@@ -35,7 +38,7 @@
 #' @import htmltools
 
 
-drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style) {
+drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style, use_xaringan = FALSE) {
 
   # CHECK ARGUMENTS
   stopifnot(class(title) == "character")
@@ -55,6 +58,13 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
   # OBTAIN CSS STYLE
   css_styles <- get_css_styles(style = style)
 
+  # define required QR output dir
+
+  if (use_xaringan) {
+    qr_dir <- here::here("qr")
+  } else {
+    qr_dir <- here::here(output_dir, "qr")
+  }
 
   # COMPOSE HTML OBJECT
   vc <- htmltools::tagList(
@@ -99,13 +109,13 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
             }
           } else if (include_qr == "link_svg") {
             if (capabilities("cairo")) {
-              if (!dir.exists(here::here(output_dir, "qr"))) {
-                message("qr dir needs to be created")
-                dir.create(here::here(output_dir, "qr"))
+              if (!dir.exists(qr_dir)) {
+                # message("qr dir needs to be created")
+                dir.create(qr_dir)
               }
               htmltools::capturePlot(
                 plot(generate_qr(url = url)),
-                filename = here::here(output_dir, "qr", paste0(cite_key, ".svg")),
+                filename = here::here(qr_dir, paste0(cite_key, ".svg")),
                 device = grDevices::svg, width = 2, height = 2
               )
               htmltools::tags$img(src = file.path("qr", paste0(cite_key, ".svg")))
@@ -113,13 +123,13 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
               message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
             }
           } else if (include_qr == "link") {
-            if (!dir.exists(here::here(output_dir, "qr"))) {
+            if (!dir.exists(qr_dir)) {
               # message("qr dir needs to be created")
-              dir.create(here::here(output_dir, "qr"))
+              dir.create(qr_dir)
             }
             htmltools::capturePlot(
               plot(generate_qr(url = url)),
-              filename = here::here(output_dir, "qr", paste0(cite_key, "_qr.png")),
+              filename = here::here(qr_dir, paste0(cite_key, "_qr.png")),
               width = 150, height = 150
             )
             htmltools::tags$img(src = file.path("qr", paste0(cite_key, "_qr.png")), alt = "QR code")

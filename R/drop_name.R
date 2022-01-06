@@ -22,7 +22,9 @@
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
 #' @param substitute_missing Boolean to specify, whether missing data such as title, journal, year or authors should be substituted (TRUE, default) or left empty (FALSE).
 #' @param path_absolute Boolean to specify, whether the returned output path (when inline = FALSE) is a relative path or an absolute path.
-#'
+#' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
+#' When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
+#' relative to the rendered presentation, not relative to the visual citation.
 #' @return A visual citation in the specified output format.
 #'
 #' @examples
@@ -52,7 +54,8 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       include_qr = "link",
                       style = "modern",
                       substitute_missing = TRUE,
-                      path_absolute = FALSE) {
+                      path_absolute = FALSE,
+                      use_xaringan = FALSE) {
 
   # CHECK other ARGUMENTS
   stopifnot(is.character(cite_key))
@@ -158,7 +161,8 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     cite_key = target_ref$key,
     include_qr = include_qr,
     style = style,
-    output_dir = output_dir
+    output_dir = output_dir,
+    use_xaringan = use_xaringan
   )
 
   # EXPORT RESULT

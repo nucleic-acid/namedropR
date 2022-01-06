@@ -14,7 +14,8 @@ drop_name(
   include_qr = "link",
   style = "modern",
   substitute_missing = TRUE,
-  path_absolute = FALSE
+  path_absolute = FALSE,
+  use_xaringan = FALSE
 )
 }
 \arguments{
@@ -47,6 +48,10 @@ This custom CSS file must specify styles for <div> classes "top-row", "title-row
 \item{substitute_missing}{Boolean to specify, whether missing data such as title, journal, year or authors should be substituted (TRUE, default) or left empty (FALSE).}
 
 \item{path_absolute}{Boolean to specify, whether the returned output path (when inline = FALSE) is a relative path or an absolute path.}
+
+\item{use_xaringan}{Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
+When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
+relative to the rendered presentation, not relative to the visual citation.}
 }
 \value{
 A visual citation in the specified output format.
