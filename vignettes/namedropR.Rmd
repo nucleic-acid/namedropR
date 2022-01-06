@@ -1,0 +1,155 @@
+---
+title: "namedropR"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{namedropR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+library(namedropR)
+```
+
+# Introduction
+
+When you're preparing a talk for a scientific conference, you might want to point the audience to good literature resources for further reading. 
+
+`namedropR` helps to generate what I call 'visual citations' (VC): a banner containing the article's title, publication year, authors and journal name.
+The package can also attach a QR code for the audience to scan and thus quickly follow your reference for further reading.
+
+The package can be used to create and include these banners "on the fly" e.g. while knitting a `xaringan` presentation or Rmarkdown documents in general. If you're using other presentation software and want to include a VC in the *.pptx file, the package can save the banners as PNG so you can drag-and-drop it onto the slide easily.
+
+# Basic Usage
+
+This package accepts bibliographic information as 'BibTeX' and 'BibLaTeX' references and includes a QR code pointing to the ['DOI'](https://www.doi.org) included in the reference. If the 'DOI' is not available in the bibliography entry, but a 'URL' field instead, this is used. If neither is given, the QR code points to a search call at [scholar.google.com](scholar.google.com) with the available data as search terms.
+
+## Read the Bibliography file
+
+```{r, eval=FALSE}
+library(RefManageR)
+bib_path <- system.file("testdata", "sample.bib", package="namedropR")
+bib <- ReadBib(bib_path)
+
+```
+
+For details on using `RefManageR` please refer to the documentation of that package.
+
+## Create a VC and save to disk
+
+The default output folder is (relative to the working directory) `visual_citations/`. The QR codes are additionally stored in the subdirectory `visual_citations/qr/` and kept, in case one wants to use them separately.
+
+```{r, eval=FALSE}
+# create a visual citation as HTML (default, equivalent to export_as = "html")
+drop_name(bib, cite_key = "Eschrich1983")
+#> [1] "visual_citations/Eschrich1983.html"
+
+# create a visual citation as PNG
+drop_name(bib, cite_key = "Eschrich1983", export_as = "png")
+#> [1] "visual_citations/Eschrich1983.html.png"
+
+```
+
+## Include in Rmarkdown
+
+`drop_name()` by default returns the file path (where the VC was stored) as character string. By default this is a relative path, except the option `path_absolute = TRUE` is passed.
+
+Within an Rmarkdown/HTML presentation the VC can be conveniently included like so:
+
+
+```{r, eval=FALSE}
+# PNG
+knitr::include_graphics(
+  drop_name(bib, cite_key = "Eschrich1983", 
+            export_as = "png", 
+            style = "clean")
+)
+
+# HTML
+htmltools::includeHTML(
+  drop_name(bib,
+    cite_key = "Eschrich1983",
+    export_as = "hmtl",
+    style = "clean",
+    use_xaringan = TRUE
+  )
+)
+```
+
+In both cases, the VC is crated by `drop_name()` and the returned file path is used by htmltools or knitr to find the VC.
+
+**NOTE:** When using `htmltools::includeHTML()`, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via the relative link to the qr-subfolder of the original output path. `use_xaringan = TRUE` handles this by storing the qr code directly in a subfolder of the working directory, so the relative link to the QR code after integration to the knitted output points to the right place.
+
+# Further Options
+
+- `output_dir` specifies the output path (relative to the working directory)
+- `max_authors` specifies how many authors should be printed
+- `include_qr` specifies the creation/implementation of the QR code
+  - `'link'` (default) creates a PNG and links to that in the composed HTML
+  - `'link_svg'` creates a SVG and links to that in the composed HTML
+  - `'embed'` encodes the QR code as base64 and includes it within the HTML document (use with caution, this caused performance issues in Rmarkdown knitting)
+  - `'none'` produces no QR code
+- with `inline = TRUE`, `drop_name()` returns the VC as `htmltools::tagList()` instead of a string. So instead of the file path pointing to the HTML object, the HTML object itself is returned for further processing.
+
+
+# Styling
+
+There are three predefined styles: 'modern' (default), 'classic' and 'clean'. You can easily try them out by setting the `style` argument accordingly:
+
+```{r eval=FALSE}
+drop_name(bib, cite_key = "Eschrich1983", 
+            export_as = "png", 
+            style = "modern")
+
+drop_name(bib, cite_key = "Eschrich1983", 
+            export_as = "png", 
+            style = "classic")
+
+drop_name(bib, cite_key = "Eschrich1983", 
+            export_as = "png", 
+            style = "clean")
+```
+
+If the VC is intended to be included as HTML in a presentation, custom styling via CSS is possible by styling the respective elements.
+
+If  you are not already using a document-wide CSS style-sheet via the YAML header, you can put a CSS chunk before the first VC, where you style the following HTML classes:
+
+```{css, eval = FALSE}
+<!-- Background color -->
+table.visual-citation tr {
+  background: #EEEEEE;
+}
+
+<!-- Journal name and Publication Year -->
+table.visual-citation tr td div.top-row span {
+  font-size: 16px;
+  color: #00CC00;
+  font-family: monospace;
+}
+
+<!-- Title of the Article -->
+table.visual-citation tr td div.title-row span {
+  font-size: 32px;
+  color: #DD00AA;
+  font-style: italic;
+  font-family: serif;
+}
+
+<!-- Authors -->
+table.visual-citation tr td div.author-row span {
+  font-size: 20px;
+  color: #0000DD;
+  font-style: bold;
+  font-family: monospace;
+}
+
+```
+
+**NOTE:** Custom styling is only available for HTML output. For PNG only the three given styles are available.

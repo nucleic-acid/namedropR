@@ -5,3 +5,6 @@
 sample.bib
 !inst/*/*
 visual_citations/
+inst/doc
+/doc/
+/Meta/

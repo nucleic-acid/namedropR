@@ -30,5 +30,10 @@ LazyData: true
 BugReports: https://github.com/nucleic-acid/namedropR/issues
 URL: https://github.com/nucleic-acid/namedropR
 RoxygenNote: 7.1.2
-Suggests: testthat (>= 3.0.0), bibtex (>= 0.4.1)
+Suggests: 
+    testthat (>= 3.0.0),
+    bibtex (>= 0.4.1),
+    knitr,
+    rmarkdown
 Config/testthat/edition: 3
+VignetteBuilder: knitr
