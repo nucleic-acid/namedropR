@@ -59,8 +59,8 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
   # COMPOSE HTML OBJECT
   vc <- htmltools::tagList(
     htmltools::tags$table(
+      class = "visual-citation",
       htmltools::tags$tr(
-        class = "visual-citation",
         htmltools::tags$td(
           htmltools::div(
             htmltools::div(
