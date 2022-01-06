@@ -1,5 +1,7 @@
 # namedropR 0.10.1
 
+* Corrects a typo in the example in the README.
+
 # namedropR 0.10.0
 
 * Added a vignette and proper README

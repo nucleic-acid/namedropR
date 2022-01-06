@@ -37,8 +37,8 @@ resources** for further reading.*
 
 On conferences, such banners are frequently displayed way too short for
 the audience to actually comprehend them (and often in a bad
-resolution). Creating them required manually taking a screenshot and
-placing it on the slide.
+resolution). Creating visual citations requires manually taking a
+screenshot and placing it on the slide.
 
 `namedropR` helps to generate visual citations conveniently (see below),
 in high resolution and with a QR code. This allows the audience to
@@ -47,9 +47,13 @@ looking it up in a reference list at the end of your talk.
 
 ## Basic Usage
 
-This package creates such banners based on ‘BibTeX’ and ‘BibLaTeX’
-references and includes a QR code pointing to the
-[‘DOI’](https://www.doi.org).
+This package accepts bibliographic information as ‘BibTeX’ and
+‘BibLaTeX’ references and includes a QR code pointing to the
+[‘DOI’](https://www.doi.org). If the ‘DOI’ is not available in the
+bibliography entry, but a ‘URL’ field instead, this is used. If neither
+is given, the QR code points to a search call at
+[scholar.google.com](scholar.google.com) with the available data as
+search terms.
 
 ``` r
 bib <- RefManageR::ReadBib(bib_path)
@@ -58,7 +62,7 @@ bib <- RefManageR::ReadBib(bib_path)
 drop_name(bib, cite_key = "SomeAuthor2010", export_as = "png", style = "modern")
 
 # create a visual citation as HTML with 'classic design'
-drop_name(bib, cite_key = "SomeAuthor2010", export_as = "hmtl", style = "classic")
+drop_name(bib, cite_key = "SomeAuthor2010", export_as = "html", style = "classic")
 
 # drop_name() by default returns the file path, 
 # where the visual citation was stored as character string. 
@@ -69,7 +73,7 @@ drop_name(bib, cite_key = "SomeAuthor2010", export_as = "hmtl", style = "classic
 knitr::include_graphics(drop_name(bib, cite_key = "SomeAuthor2010", export_as = "png", style = "clean"))
 
 # HTML
-htmltools::includeHTML(drop_name(bib, cite_key = "SomeAuthor2010", export_as = "hmtl", style = "clean", use_xaringan = TRUE))
+htmltools::includeHTML(drop_name(bib, cite_key = "SomeAuthor2010", export_as = "html", style = "clean", use_xaringan = TRUE))
 ```
 
 Styling is possible via predefined designs or via custom ‘CSS’ to match
