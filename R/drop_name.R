@@ -2,7 +2,9 @@
 #'
 #' @description Extracts metadata from a .bib file and exports the visual citation in the specified format.
 #'
-#' @param bib Accepts one of the following: A RefManageR BibEntry object or a file path to a .bib file.
+#' @param bib Accepts one of the following:
+#' A data.frame or tibble containing the columns YEAR, JOURNAL, AUTHOR, TITLE (all other columns will be dropped) or
+#' a file path to a .bib file.
 #' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param export_as A string specifying the desired output format. For now supports PNG and HTML by
 #' using "html" to include the 'bare' taglist or "html_full" to write a standalone .html file inlcuding <head> etc.
@@ -76,27 +78,45 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   # READ AND CHECK BIB FILE or BIBENTRY
 
   if (missing(bib)) {
-    stop("No bibliography provided. Please check arguments.")
+    stop("No bibliography object or file path provided. Please check arguments.")
   }
 
-  if (RefManageR::is.BibEntry(bib)) {
-    bib_file <- bib
+  if (is.data.frame(bib)) {
+    bib_data <- bib
   } else if (is.character(bib)) {
     if (file.exists(bib)) {
-      bib_file <- RefManageR::ReadBib(file = bib)
+      bib_data <- bib2df::bib2df(file = bib)
       message("Bibliography file successfully read.")
     } else {
-      stop("BibTeX file not found. Check file path or pass a BibEntry object to the function.")
+      stop("BibTeX file not found. Check file path or pass a suitable data.frame/tibble to the function.")
     }
+  } else {
+    stop("Inappropriate type bibliography provided, please pass a data.frame, tibble or file path to a *.bib file.")
   }
 
-  # check if file is empty
-  if (length(bib_file) == 0) {
+  # check if data.frame is empty
+  if (length(bib_data) == 0) {
     stop("Bibliography is empty.")
   }
 
+  # check for required columns
+  required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
+  if (!all(required_cols) %in% colnames(bib_data)) {
+    stop("Required data.frame columns are 'YEAR', 'AUTHOR', 'TITLE', 'JOURNAL', 'BIBTEXKEY' (all uppercase). At least one is missing or misspelled.")
+  }
+
+  # check for duplicate cite_keys
+  if (any(dplyr::count(bib_data, BIBTEXKEY)$n > 1)) {
+    warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
+    clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
+      select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
+  } else {
+    clean_bib <- bib_data %>%
+      select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
+  }
+
   # select the target reference entry by key
-  if (cite_key %in% bib_file$key) {
+  if (cite_key %in% bib_data$BIBTEXKEY) {
     target_ref <- bib_file[cite_key]
   } else {
     stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
