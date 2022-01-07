@@ -1,3 +1,7 @@
+# namedropR 1.0.2
+
+* Minor adjustments to unit tests to avoid build errors
+
 # namedropR 1.0.1
 
 * Minor adjustments to unit tests to avoid build errors
