@@ -61,12 +61,17 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   stopifnot(is.character(cite_key))
   stopifnot(is.character(output_dir))
   stopifnot(is.character(export_as))
+  stopifnot(export_as %in% c("html", "html_full", "png"))
   stopifnot(is.logical(inline))
   stopifnot(is.numeric(max_authors))
+  stopifnot(max_authors >= 0)
   stopifnot(is.character(include_qr))
   stopifnot(include_qr %in% c("embed", "link", "link_svg", "none"))
   stopifnot(is.character(style))
+  # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
   stopifnot(is.logical(substitute_missing))
+  stopifnot(is.logical(path_absolute))
+  stopifnot(is.logical(use_xaringan))
 
   # READ AND CHECK BIB FILE or BIBENTRY
 
@@ -122,6 +127,7 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   } else if (!is.null(target_ref$url)) {
     url <- target_ref$url
   } else {
+    message(paste0(target_ref$key, ": Neither DOI nor URL available. QR will point to scholar.google.com!"))
     search_string <- paste0(
       "https://scholar.google.com/scholar?as_q=", target_ref$author[1],
       "+", target_ref$journal,
@@ -162,7 +168,10 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     include_qr = include_qr,
     style = style,
     output_dir = output_dir,
-    use_xaringan = use_xaringan
+    # if PNG is desired output format, the relative filepath must not
+    # be adapted for later inclusion of the HTML. Therefore use_xaringan
+    # must be ignored, as otherwise the QR will not be included properly
+    use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan)
   )
 
   # EXPORT RESULT
@@ -177,16 +186,65 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     }
 
     if (export_as == "html_full") {
-      htmltools::save_html(vc_html, file = here::here(output_path))
+      tryCatch(
+        expr = {
+          htmltools::save_html(vc_html, file = here::here(output_path))
+        },
+        error = function(e) {
+          message("Could not save the HTML output:")
+          print(e)
+        },
+        warning = function(w) {
+          message("Having difficulties saving the HTML output:")
+          print(w)
+        }
+      )
     } else if (export_as == "html") {
-      write(as.character(vc_html), file = here::here(output_path))
+      tryCatch(
+        expr = {
+          write(as.character(vc_html), file = here::here(output_path))
+        },
+        error = function(e) {
+          message("Could not save the HTML output:")
+          print(e)
+        },
+        warning = function(w) {
+          message("Having difficulties saving the HTML output:")
+          print(w)
+        }
+      )
     } else if (export_as == "png") {
       if (!webshot::is_phantomjs_installed()) {
         message("You need to download and install phantomJS to save output as PNG. Try running 'webshot::install_phantomjs()' once.")
       } else {
         # renders as "complete" html to get the white background for PNG snapshot.
-        htmltools::save_html(vc_html, file = here::here(output_path))
-        webshot::webshot(output_path, paste0(output_path, ".png"), selector = ".visual-citation", zoom = 2)
+        tryCatch(
+          expr = {
+            htmltools::save_html(vc_html, file = here::here(output_path))
+          },
+          error = function(e) {
+            message("Could not save the intermediate HTML output:")
+            print(e)
+          },
+          warning = function(w) {
+            message("Having difficulties saving the intermediate HTML output:")
+            print(w)
+          }
+        )
+
+        tryCatch(
+          expr = {
+            webshot::webshot(output_path, paste0(output_path, ".png"), selector = ".visual-citation", zoom = 2)
+          },
+          error = function(e) {
+            message("Could not take a screenshot of the intermediate HTML.")
+            print(e)
+          },
+          warning = function(w) {
+            message("Having difficulties taking a screenshot of the intermediate HTML output:")
+            print(w)
+          }
+        )
         unlink(output_path)
         # to point to the png instead return its filepath
         return(paste0(output_path, ".png"))
