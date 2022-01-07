@@ -1,3 +1,7 @@
+# namedropR 1.0.1
+
+* Minor adjustments to unit tests to avoid build errors
+
 # namedropR 1.0.0
 
 * Feature complete first version for CRAN submission.
