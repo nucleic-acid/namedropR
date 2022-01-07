@@ -41,18 +41,20 @@
 drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style, use_xaringan = FALSE) {
 
   # CHECK ARGUMENTS
-  stopifnot(class(title) == "character")
-  stopifnot(class(journal) == "character")
-  stopifnot(class(authors) == "character")
-  stopifnot(class(year) == "character")
-  stopifnot(class(url) == "character")
-  stopifnot(class(include_qr) == "character")
-  stopifnot(class(cite_key) == "character")
+  stopifnot(is.character(title))
+  stopifnot(is.character(journal))
+  stopifnot(is.character(authors))
+  stopifnot(is.character(year))
+  stopifnot(is.character(url))
+  stopifnot(is.character(include_qr))
+  stopifnot(is.character(cite_key))
+
   if (cite_key == "") {
     stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
   }
 
-  stopifnot(class(style) == "character")
+  stopifnot(is.character(style))
+  stopifnot(is.logical(use_xaringan))
 
 
   # OBTAIN CSS STYLE
@@ -100,7 +102,7 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
                 mimeType = "image/svg+xml"
               )
             } else {
-              message("Embedding as PNG as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired.")
+              message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired.")
               htmltools::plotTag(
                 plot(generate_qr(url = url)),
                 alt = paste0("A QR code linking to the paper of ", authors, " ", year),
@@ -110,8 +112,19 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
           } else if (include_qr == "link_svg") {
             if (capabilities("cairo")) {
               if (!dir.exists(qr_dir)) {
-                # message("qr dir needs to be created")
-                dir.create(qr_dir)
+                tryCatch(
+                  expr = {
+                    dir.create(qr_dir)
+                  },
+                  error = function(e) {
+                    message("Could not create QR output folder:")
+                    print(e)
+                  },
+                  warning = function(w) {
+                    message("Having difficulties creating QR output folder:")
+                    print(w)
+                  }
+                )
               }
               htmltools::capturePlot(
                 plot(generate_qr(url = url)),
@@ -124,8 +137,19 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
             }
           } else if (include_qr == "link") {
             if (!dir.exists(qr_dir)) {
-              # message("qr dir needs to be created")
-              dir.create(qr_dir)
+              tryCatch(
+                expr = {
+                  dir.create(qr_dir)
+                },
+                error = function(e) {
+                  message("Could not create QR output folder:")
+                  print(e)
+                },
+                warning = function(w) {
+                  message("Having difficulties creating QR output folder:")
+                  print(w)
+                }
+              )
             }
             htmltools::capturePlot(
               plot(generate_qr(url = url)),
