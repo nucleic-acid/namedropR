@@ -29,7 +29,7 @@ The package can be used to create and include these banners "on the fly" e.g. wh
 
 # Basic Usage
 
-This package accepts bibliographic information as 'BibTeX' and 'BibLaTeX' references and includes a QR code pointing to the ['DOI'](https://www.doi.org) included in the reference. If the 'DOI' is not available in the bibliography entry, but a 'URL' field instead, this is used. If neither is given, the QR code points to a search call at [scholar.google.com](scholar.google.com) with the available data as search terms.
+This package accepts bibliographic information as 'BibTeX' and 'BibLaTeX' references and includes a QR code pointing to the ['DOI'](https://www.doi.org) included in the reference. If the 'DOI' is not available in the bibliography entry, but a 'URL' field instead, this is used. If neither is given, the QR code points to a search call at [https://scholar.google.com](https://scholar.google.com) with the available data as search terms.
 
 ## Read the Bibliography file
 

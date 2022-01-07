@@ -52,8 +52,7 @@ This package accepts bibliographic information as ‘BibTeX’ and
 [‘DOI’](https://www.doi.org). If the ‘DOI’ is not available in the
 bibliography entry, but a ‘URL’ field instead, this is used. If neither
 is given, the QR code points to a search call at
-[scholar.google.com](scholar.google.com) with the available data as
-search terms.
+<https://scholar.google.com> with the available data as search terms.
 
 ``` r
 bib <- RefManageR::ReadBib(bib_path)
