@@ -2,8 +2,7 @@
 test_that("Bibliographies are correctly read ", {
   bib_path <- system.file("testdata", "sample.bib", package = "namedropR")
   test_bibfile <- suppressMessages(RefManageR::ReadBib(bib_path))
-  empty_path <- system.file("testdata", "empty.bib", package = "namedropR")
-  empty_bibfile <- RefManageR::ReadBib(empty_path)
+  empty_bibfile <- RefManageR::BibEntry()
   expect_message(drop_name(bib = bib_path, cite_key = "Eschrich1983", inline = TRUE), "Bibliography file successfully read")
   expect_error(drop_name(bib = "wrong_file_path", cite_key = "Eschrich1983"), "file not found")
   expect_error(drop_name(bib = empty_bibfile, cite_key = "Eschrich1983", "is empty"))
