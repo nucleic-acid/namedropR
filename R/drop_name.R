@@ -42,7 +42,8 @@
 #' htmltools::html_print(dropped)
 #' }
 #' @export
-#' @importFrom RefManageR ReadBib
+#' @import bib2df
+#' @import dplyr
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
 #' @importFrom lubridate year ymd
@@ -99,6 +100,36 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     stop("Bibliography is empty.")
   }
 
+  # provide compatibility for bibtex and biblatex fields
+  if ("date" %in% tolower(colnames(bib_data))) {
+    message("One or more references had BibLaTeX field 'date' and were transformed to 'YEAR'.")
+    bib_data <- bib_data %>%
+      mutate(
+        YEAR = ifelse(is.na(YEAR),
+          tryCatch(
+            expr = {
+              lubridate::year(lubridate::ymd(DATE, truncated = 2))
+            },
+            error = function(e) {
+              message("Could not extract Year from one of the references.")
+              print(e)
+            },
+            warning = function(w) {
+              message("Having difficulties extracting the Year from one of the refernces. Resulting output might not be as expected.")
+              print(w)
+            }
+          ),
+          YEAR
+        )
+      )
+  }
+
+  if ("JOURNALTITLE" %in% colnames(bib_data)) {
+    message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
+    bib_data <- bib_data %>%
+      mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
+  }
+
   # check for required columns
   required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
   if (!all(required_cols) %in% colnames(bib_data)) {
@@ -109,18 +140,18 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   if (any(dplyr::count(bib_data, BIBTEXKEY)$n > 1)) {
     warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
     clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
-      select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
+      dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
   } else {
     clean_bib <- bib_data %>%
-      select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
+      dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
   }
 
-  # select the target reference entry by key
-  if (cite_key %in% bib_data$BIBTEXKEY) {
-    target_ref <- bib_file[cite_key]
-  } else {
-    stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
-  }
+  # check if target reference entry is available | will be needed later on. uncommented for the time being.
+  # if (cite_key %in% bib_data$BIBTEXKEY) {
+  #   target_ref <- bib_file[cite_key]
+  # } else {
+  #   stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
+  # }
 
   # COLLAPSE AUTHOR LIST
   # Obtain the actual number of authors to print
@@ -163,19 +194,7 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     dir.create(here::here(output_dir))
   }
 
-  # provide backwards compatibility for bibtex
-  if (is.null(target_ref$journal)) {
-    target_ref$journal <- ifelse(is.null(target_ref$journaltitle),
-      "",
-      target_ref$journaltitle
-    )
-  }
-  if (is.null(target_ref$year)) {
-    target_ref$year <- ifelse(is.null(target_ref$date),
-      "",
-      lubridate::year(lubridate::ymd(target_ref$date, truncated = 2))
-    )
-  }
+
 
   # passes the completed data to the rendering function with specific options
   vc_html <- drop_html(
