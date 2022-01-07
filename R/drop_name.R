@@ -153,20 +153,13 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   #   stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
   # }
 
-  # COLLAPSE AUTHOR LIST
-  # Obtain the actual number of authors to print
-  # (either the supplied max_author or less if the actual number of authors is less).
-  # Collapse the authors list to a single comma separated string in the process:
-  if (max_authors < length(target_ref$author)) {
+  target_ref <- clean_bib %>%
+    filter(BIBTEXTKEY == "cite_key")
 
-    # if the author list is cropped, add "et. al."
-    authors_collapsed <- paste0(
-      paste(target_ref$author[1:max_authors], collapse = ", "),
-      " et. al."
-    )
-  } else {
-    authors_collapsed <- paste(target_ref$author, collapse = ", ")
-  }
+  authors_collapsed <- manage_authors(target_ref$AUTHOR, max_authors = max_authors)
+
+
+
 
   # COMPOSE URL FOR QR CODE
   # If bibentry has a DOI number use this, as this is prob. the shortest URL possible.
