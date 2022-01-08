@@ -42,9 +42,14 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
       }
     )
   } else if (export_as == "html") {
+    # As work_item$vcs is read as a list, it needs to be interpreted as
+    # tag list before converting to character type for writing.
     tryCatch(
       expr = {
-        write(as.character(work_item$vcs), file = here::here(output_path))
+        write(
+          as.character(htmltools::as.tags(work_item$vcs)),
+          file = here::here(output_path)
+        )
       },
       error = function(e) {
         message("Could not save the HTML output:")
