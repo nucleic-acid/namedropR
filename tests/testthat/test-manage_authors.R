@@ -3,7 +3,7 @@ test_that("vectors are returned as single string", {
   expect_true(length(manage_authors(authors = authors, max_authors = 4)) == 1)
 })
 
-test_that("vectors are returned with correct length", {
+test_that("vectors are returned as string with correct length", {
   authors <- c("Doe, J.", "Sample, Simon", "Free, Fred", "Random, Ronald")
   expect_true(nchar(manage_authors(authors = authors, max_authors = 3)) == 42)
 })
