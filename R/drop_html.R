@@ -2,18 +2,12 @@
 #'
 #' @description Accepts bibliographic information and returns a htmltools tagList for printing/display.
 #'
-#' @param journal The Journal's name as string.
-#' @param title The publication's title as string.
-#' @param authors The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).
-#' @param year The publication's publication year as string.
-#' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
 #' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
 #' 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
 #' 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 #' 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 #' 'none' creates no QR code.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
-#' @param url The URL that should be encoded as QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
@@ -24,21 +18,13 @@
 #'
 #' @examples
 #' \dontrun{
-#' vc_html <- drop_html(
-#'   title = bibentry$title,
-#'   cite_key = bibentry$key,
-#'   journal = bibentry$journal,
-#'   year = bibentry$year,
-#'   authors = paste(bibentry$author, collapse = ", ")
-#' )
-#'
-#' htmltools::html_print(dropped)
+#' drop_html(df_row, include_qr = "link", output_dir = "visual_citation/", style = "modern", use_xaringan = FALSE)
 #' }
 #'
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, output_dir, style = "modern", use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE) {
 
   # print(work_item)
   # CHECK ARGUMENTS
@@ -86,7 +72,7 @@ drop_html <- function(work_item, include_qr, output_dir, style = "modern", use_x
   }
 
   # COMPOSE HTML OBJECT
-  vc <- htmltools::tagList(
+  htmltools::tagList(
     htmltools::tags$table(
       class = "visual-citation",
       htmltools::tags$tr(
