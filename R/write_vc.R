@@ -2,18 +2,19 @@
 #'
 #' @description Takes the data from drop_name and writes the actual outputs to the output directory.
 #'
-#'
+#' @param work_item A data.frame or tibble with a single row, passed by drop_name()
+#' @param output_dir A relative path (in regard to the working directory) where the visual citations should be 'dropped'. (type: character)
+#' @param path_absolute A logical parameter specifying, whether eventually a relative or absolute path should be returned.
+#' @param export_as Defines the file format of the returned visual citation (see drop_name() for more).
+#' @return The path to the written file as character.
 #'
 #' @examples
 #' \dontrun{
-#'
+#' # not intended for direct call. Please refer to the documentation of drop_name() for further assistance.
 #' }
 #'
-#' @import bib2df
-#' @import dplyr
 #' @importFrom htmltools tags save_html
 #' @importFrom here here
-#' @importFrom lubridate year ymd
 #' @importFrom webshot webshot
 
 write_vc <- function(work_item, path_absolute, output_dir, export_as) {
