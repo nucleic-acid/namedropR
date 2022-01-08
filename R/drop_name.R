@@ -102,7 +102,7 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
   # provide compatibility for bibtex and biblatex fields
   if ("date" %in% tolower(colnames(bib_data))) {
-    message("One or more references had BibLaTeX field 'date' and were transformed to 'YEAR'.")
+    message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
     bib_data <- bib_data %>%
       mutate(
         YEAR = ifelse(is.na(YEAR),
@@ -132,19 +132,51 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
 
   # check for required columns
   required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
-  if (!all(required_cols) %in% colnames(bib_data)) {
+  if (!all(required_cols %in% colnames(bib_data))) {
     stop("Required data.frame columns are 'YEAR', 'AUTHOR', 'TITLE', 'JOURNAL', 'BIBTEXKEY' (all uppercase). At least one is missing or misspelled.")
   }
+
+  # COMPOSE URL FOR QR CODE
+  # If bib_data has a DOI column, use this as this first.
+  # Next option is using the URL in the bib_data
+  # If neither is available (or missing in some rows), a search query for Google Scholar will be passed to the QR code.
+  # This will later be passed on to the HTML rendering function.
+
+  if ("DOI" %in% colnames(bib_data)) {
+    bib_data <- bib_data %>%
+      mutate(
+        QR = paste0("https://doi.org/", DOI)
+      )
+  }
+
+  if ("URL" %in% colnames(bib_data)) {
+    bib_data <- bib_data %>%
+      mutate(
+        QR = ifelse(
+          is.na(QR),
+          URL,
+          QR
+        )
+      )
+  }
+
+  bib_data <- bib_data %>%
+    mutate(
+      QR = ifelse(
+        is.na(QR),
+        paste("https://scholar.google.com/scholar?as_q=", AUTHOR, JOURNAL, YEAR, collapse = "+"),
+        QR
+      )
+    )
+
 
   # check for duplicate cite_keys
   if (any(dplyr::count(bib_data, BIBTEXKEY)$n > 1)) {
     warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
-    clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
-      dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
-  } else {
-    clean_bib <- bib_data %>%
-      dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY)
   }
+  clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
+    dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY, QR)
+
 
   # check if target reference entry is available | will be needed later on. uncommented for the time being.
   # if (cite_key %in% bib_data$BIBTEXKEY) {
@@ -154,49 +186,36 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   # }
 
   target_ref <- clean_bib %>%
-    filter(BIBTEXTKEY == "cite_key")
+    filter(BIBTEXKEY == cite_key)
 
   authors_collapsed <- manage_authors(target_ref$AUTHOR, max_authors = max_authors)
-
-
-
-
-  # COMPOSE URL FOR QR CODE
-  # If bibentry has a DOI number use this, as this is prob. the shortest URL possible.
-  # Next option is using the provided URL in the bibentry.
-  # If neither is abvailable, a search query for Google Scholar will be passed to the QR code.
-  # This will later be passed on to the HTML rendering function.
-  if (!is.null(target_ref$doi)) {
-    url <- paste0("https://doi.org/", target_ref$doi)
-  } else if (!is.null(target_ref$url)) {
-    url <- target_ref$url
-  } else {
-    message(paste0(target_ref$key, ": Neither DOI nor URL available. QR will point to scholar.google.com!"))
-    search_string <- paste0(
-      "https://scholar.google.com/scholar?as_q=", target_ref$author[1],
-      "+", target_ref$journal,
-      "+", target_ref$year
-    )
-    url <- search_string
-  }
-
 
   # CALL HTML RENDERING FUNCTION
   # create output directory, if needed
   if (!dir.exists(here::here(output_dir))) {
-    dir.create(here::here(output_dir))
+    tryCatch(
+      expr = dir.create(here::here(output_dir)),
+      error = function(e) {
+        message("Could not create the output directory. Check file permissions.")
+        print(e)
+      },
+      warning = function(w) {
+        message("Having difficulties creating the output directory:")
+        print(w)
+      }
+    )
   }
 
 
 
   # passes the completed data to the rendering function with specific options
   vc_html <- drop_html(
-    title = target_ref$title,
-    journal = target_ref$journal,
-    year = target_ref$year,
+    title = target_ref$TITLE,
+    journal = target_ref$JOURNAL,
+    year = target_ref$YEAR,
     authors = authors_collapsed,
-    url = url,
-    cite_key = target_ref$key,
+    url = target_ref$QR,
+    cite_key = target_ref$BIBTEXKEY,
     include_qr = include_qr,
     style = style,
     output_dir = output_dir,
@@ -212,9 +231,9 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     return(vc_html)
   } else {
     if (path_absolute) {
-      output_path <- here::here(output_dir, paste0(target_ref$key, ".html"))
+      output_path <- here::here(output_dir, paste0(target_ref$BIBTEXKEY, ".html"))
     } else {
-      output_path <- file.path(output_dir, paste0(target_ref$key, ".html"))
+      output_path <- file.path(output_dir, paste0(target_ref$BIBTEXKEY, ".html"))
     }
 
     if (export_as == "html_full") {
