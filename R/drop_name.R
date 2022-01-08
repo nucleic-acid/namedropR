@@ -61,7 +61,6 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
                       use_xaringan = FALSE) {
 
   # CHECK other ARGUMENTS
-  stopifnot(is.character(cite_key))
   stopifnot(is.character(output_dir))
   stopifnot(is.character(export_as))
   stopifnot(export_as %in% c("html", "html_full", "png"))
@@ -174,23 +173,13 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
   if (any(dplyr::count(bib_data, BIBTEXKEY)$n > 1)) {
     warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
   }
+
+  # drop rows without BIBTEXKEY and select required columns only:
   clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
+    filter(!is.na(BIBTEXKEY)) %>%
     dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY, QR)
 
 
-  # check if target reference entry is available | will be needed later on. uncommented for the time being.
-  # if (cite_key %in% bib_data$BIBTEXKEY) {
-  #   target_ref <- bib_file[cite_key]
-  # } else {
-  #   stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
-  # }
-
-  target_ref <- clean_bib %>%
-    filter(BIBTEXKEY == cite_key)
-
-  authors_collapsed <- manage_authors(target_ref$AUTHOR, max_authors = max_authors)
-
-  # CALL HTML RENDERING FUNCTION
   # create output directory, if needed
   if (!dir.exists(here::here(output_dir))) {
     tryCatch(
@@ -206,16 +195,43 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     )
   }
 
+  # check if target reference entry is available | will be needed later on. uncommented for the time being.
+  # if (cite_key %in% bib_data$BIBTEXKEY) {
+  #   target_ref <- bib_file[cite_key]
+  # } else {
+  #   stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
+  # }
+
+  # CALL HTML RENDERING FUNCTION
 
 
-  # passes the completed data to the rendering function with specific options
-  vc_html <- drop_html(
-    title = target_ref$TITLE,
-    journal = target_ref$JOURNAL,
-    year = target_ref$YEAR,
-    authors = authors_collapsed,
-    url = target_ref$QR,
-    cite_key = target_ref$BIBTEXKEY,
+  # handle different input options for bibtex keys
+  if (missing(cite_key)) {
+    n_bib <- nrow(clean_bib)
+    message(paste0("No cite_key specified. Working through all ", n_bib, " entries in the bibliography."))
+    work_list <- clean_bib
+  } else if (!is.character(cite_key)) {
+    stop("cite_key must be of type 'caracter'.")
+  } else {
+    n_bib <- length(cite_key)
+    message(paste0(n_bib, " cite_key(s) specified. Working through all of them."))
+    work_list <- clean_bib %>%
+      filter(BIBTEXKEY %in% cite_key)
+  }
+
+  authors_collapsed <- sapply(
+    work_list$AUTHOR, manage_authors, max_authors = max_authors
+  )
+
+  work_list <- work_list %>%
+    mutate(
+      authors_collapsed = authors_collapsed,
+    )
+
+  vcs = apply(
+    work_list,
+    1,
+    drop_html2,
     include_qr = include_qr,
     style = style,
     output_dir = output_dir,
@@ -225,84 +241,20 @@ drop_name <- function(bib, cite_key = "collaboration_2019_ApJL",
     use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan)
   )
 
-  # EXPORT RESULT
-  # either returns the rendered object or the path to the stored file
-  if (inline) {
-    return(vc_html)
+  work_list <- work_list %>%
+    mutate(
+      vcs = vcs
+    )
+
+  if (inline) { # return the dataframe with the html tag list as result
+    return(work_list)
   } else {
-    if (path_absolute) {
-      output_path <- here::here(output_dir, paste0(target_ref$BIBTEXKEY, ".html"))
-    } else {
-      output_path <- file.path(output_dir, paste0(target_ref$BIBTEXKEY, ".html"))
-    }
-
-    if (export_as == "html_full") {
-      tryCatch(
-        expr = {
-          htmltools::save_html(vc_html, file = here::here(output_path))
-        },
-        error = function(e) {
-          message("Could not save the HTML output:")
-          print(e)
-        },
-        warning = function(w) {
-          message("Having difficulties saving the HTML output:")
-          print(w)
-        }
-      )
-    } else if (export_as == "html") {
-      tryCatch(
-        expr = {
-          write(as.character(vc_html), file = here::here(output_path))
-        },
-        error = function(e) {
-          message("Could not save the HTML output:")
-          print(e)
-        },
-        warning = function(w) {
-          message("Having difficulties saving the HTML output:")
-          print(w)
-        }
-      )
-    } else if (export_as == "png") {
-      if (!webshot::is_phantomjs_installed()) {
-        message("You need to download and install phantomJS to save output as PNG. Try running 'webshot::install_phantomjs()' once.")
-      } else {
-        # renders as "complete" html to get the white background for PNG snapshot.
-        tryCatch(
-          expr = {
-            htmltools::save_html(vc_html, file = here::here(output_path))
-          },
-          error = function(e) {
-            message("Could not save the intermediate HTML output:")
-            print(e)
-          },
-          warning = function(w) {
-            message("Having difficulties saving the intermediate HTML output:")
-            print(w)
-          }
-        )
-
-        tryCatch(
-          expr = {
-            webshot::webshot(output_path, paste0(output_path, ".png"), selector = ".visual-citation", zoom = 2)
-          },
-          error = function(e) {
-            message("Could not take a screenshot of the intermediate HTML.")
-            print(e)
-          },
-          warning = function(w) {
-            message("Having difficulties taking a screenshot of the intermediate HTML output:")
-            print(w)
-          }
-        )
-        unlink(output_path)
-        # to point to the png instead return its filepath
-        return(paste0(output_path, ".png"))
-      }
-    } else {
-      stop("Output format unknown")
-    }
-    return(as.character(output_path))
+    file_paths <- apply(work_list, 1, FUN = write_vc,
+          output_dir = output_dir,
+          path_absolute = path_absolute,
+          export_as = export_as
+          )
+  return(file_paths)
   }
+
 }

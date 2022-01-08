@@ -38,20 +38,21 @@
 #' @import htmltools
 
 
-drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, output_dir, style = "modern", use_xaringan = FALSE) {
 
+  print(work_item)
   # CHECK ARGUMENTS
-  stopifnot(is.character(title))
-  stopifnot(is.character(journal))
-  stopifnot(is.character(authors))
-  stopifnot(is.character(year))
-  stopifnot(is.character(url))
-  stopifnot(is.character(include_qr))
-  stopifnot(is.character(cite_key))
-
-  if (cite_key == "") {
-    stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
-  }
+  # stopifnot(is.character(title))
+  # stopifnot(is.character(journal))
+  # stopifnot(is.character(authors))
+  # stopifnot(is.character(year))
+  # stopifnot(is.character(url))
+  # stopifnot(is.character(include_qr))
+  # stopifnot(is.character(cite_key))
+  #
+  # if (cite_key == "") {
+  #   stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
+  # }
 
   stopifnot(is.character(style))
   stopifnot(is.logical(use_xaringan))
@@ -78,17 +79,17 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
             htmltools::div(
               class = "top-row",
               style = css_styles$top_row_style,
-              htmltools::tags$span(paste0(journal, " (", year, ")"))
+              htmltools::tags$span(paste0(work_item$JOURNAL, " (", as.character(work_item$YEAR), ")"))
             ),
             htmltools::div(
               class = "title-row",
               style = css_styles$title_row_style,
-              htmltools::tags$span(title)
+              htmltools::tags$span(work_item$TITLE)
             ),
             htmltools::div(
               class = "author-row",
               style = css_styles$author_row_style,
-              htmltools::tags$span(authors),
+              htmltools::tags$span(work_item$authors_collapsed),
             )
           )
         ),
@@ -97,15 +98,15 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
             if (capabilities("cairo")) {
               htmltools::plotTag(
                 plot(generate_qr(url = url)),
-                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
                 device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
                 mimeType = "image/svg+xml"
               )
             } else {
               message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired.")
               htmltools::plotTag(
-                plot(generate_qr(url = url)),
-                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                plot(generate_qr(url = work_item$QR)),
+                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
                 width = 150, height = 150
               )
             }
@@ -127,11 +128,11 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
                 )
               }
               htmltools::capturePlot(
-                plot(generate_qr(url = url)),
-                filename = here::here(qr_dir, paste0(cite_key, ".svg")),
+                plot(generate_qr(url = work_item$QR)),
+                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
                 device = grDevices::svg, width = 2, height = 2
               )
-              htmltools::tags$img(src = file.path("qr", paste0(cite_key, ".svg")))
+              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
             } else {
               message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
             }
@@ -152,11 +153,11 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
               )
             }
             htmltools::capturePlot(
-              plot(generate_qr(url = url)),
-              filename = here::here(qr_dir, paste0(cite_key, "_qr.png")),
+              plot(generate_qr(url = work_item$QR)),
+              filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
               width = 150, height = 150
             )
-            htmltools::tags$img(src = file.path("qr", paste0(cite_key, "_qr.png")), alt = "QR code")
+            htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
           } else {
             message("No QR code will be created.")
           }
@@ -164,4 +165,6 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
       )
     )
   )
+
+
 }
