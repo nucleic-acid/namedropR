@@ -40,7 +40,7 @@
 
 drop_html <- function(work_item, include_qr, output_dir, style = "modern", use_xaringan = FALSE) {
 
-  print(work_item)
+  # print(work_item)
   # CHECK ARGUMENTS
   # stopifnot(is.character(title))
   # stopifnot(is.character(journal))
@@ -57,12 +57,28 @@ drop_html <- function(work_item, include_qr, output_dir, style = "modern", use_x
   stopifnot(is.character(style))
   stopifnot(is.logical(use_xaringan))
 
+  # SUBSTITUTE MISSING
+  if (is.na(work_item$TITLE)) {
+    warning(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    work_item$TITLE <- "Title missing"
+  }
+  if (is.na(work_item$JOURNAL)) {
+    warning(paste0("Empty JOURNAL in: ", work_item$BIBTEXKEY))
+    work_item$JOURNAL <- "Unkown Journal"
+  }
+  if (is.na(work_item$YEAR)) {
+    warning(paste0("Empty YEAR in: ", work_item$BIBTEXKEY))
+    work_item$YEAR <- "n.d."
+  }
+  if (is.na(work_item$AUTHOR)) {
+    warning(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    work_item$AUTHOR <- "Unknown Author(s)"
+  }
 
   # OBTAIN CSS STYLE
   css_styles <- get_css_styles(style = style)
 
   # define required QR output dir
-
   if (use_xaringan) {
     qr_dir <- here::here("qr")
   } else {
