@@ -72,7 +72,6 @@ drop_name <- function(bib, cite_key,
   stopifnot(include_qr %in% c("embed", "link", "link_svg", "none"))
   stopifnot(is.character(style))
   # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
-  stopifnot(is.logical(substitute_missing))
   stopifnot(is.logical(path_absolute))
   stopifnot(is.logical(use_xaringan))
 
@@ -104,7 +103,7 @@ drop_name <- function(bib, cite_key,
   if ("date" %in% tolower(colnames(bib_data))) {
     message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
     bib_data <- bib_data %>%
-      mutate(
+      dplyr::mutate(
         YEAR = ifelse(is.na(YEAR),
           tryCatch(
             expr = {
@@ -127,7 +126,7 @@ drop_name <- function(bib, cite_key,
   if ("JOURNALTITLE" %in% colnames(bib_data)) {
     message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
     bib_data <- bib_data %>%
-      mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
+      dplyr::mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
   }
 
   # check for required columns
@@ -144,14 +143,14 @@ drop_name <- function(bib, cite_key,
 
   if ("DOI" %in% colnames(bib_data)) {
     bib_data <- bib_data %>%
-      mutate(
+      dplyr::mutate(
         QR = paste0("https://doi.org/", DOI)
       )
   }
 
   if ("URL" %in% colnames(bib_data)) {
     bib_data <- bib_data %>%
-      mutate(
+      dplyr::mutate(
         QR = ifelse(
           is.na(QR),
           URL,
@@ -161,7 +160,7 @@ drop_name <- function(bib, cite_key,
   }
 
   bib_data <- bib_data %>%
-    mutate(
+    dplyr::mutate(
       QR = ifelse(
         is.na(QR),
         paste("https://scholar.google.com/scholar?as_q=", AUTHOR, JOURNAL, YEAR, collapse = "+"),
@@ -177,7 +176,7 @@ drop_name <- function(bib, cite_key,
 
   # drop rows without BIBTEXKEY and select required columns only:
   clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
-    filter(!is.na(BIBTEXKEY)) %>%
+    dplyr::filter(!is.na(BIBTEXKEY)) %>%
     dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY, QR)
 
 
@@ -216,10 +215,10 @@ drop_name <- function(bib, cite_key,
   } else {
     n_bib <- length(cite_key)
     message(paste0(n_bib, " cite_key(s) specified. Working through all of them."))
-    missing_keys <- cite_key[!(cite_key %in% work_list$BIBTEXKEY)]
+    missing_keys <- cite_key[!(cite_key %in% clean_bib$BIBTEXKEY)]
     warning(paste0("The following cite_key items were not found in the provided library: ", missing_keys))
     work_list <- clean_bib %>%
-      filter(BIBTEXKEY %in% cite_key)
+      dplyr::filter(BIBTEXKEY %in% cite_key)
   }
 
   authors_collapsed <- sapply(
@@ -227,7 +226,7 @@ drop_name <- function(bib, cite_key,
   )
 
   work_list <- work_list %>%
-    mutate(
+    dplyr::mutate(
       authors_collapsed = authors_collapsed,
     )
 
@@ -245,7 +244,7 @@ drop_name <- function(bib, cite_key,
   )
 
   work_list <- work_list %>%
-    mutate(
+    dplyr::mutate(
       vcs = vcs
     )
 
