@@ -32,8 +32,9 @@
 #'
 #' # create sample data
 #' bib_tbl <- dplyr::tribble(
-#' ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
-#' "Some title", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022")
+#'   ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
+#'   "Some title", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
+#' )
 #'
 #' # create visual citation
 #' drop_name(
@@ -41,10 +42,9 @@
 #'   cite_key = "Alice2022",
 #'   export_as = "png",
 #'   max_authors = 2,
-#'   style = "clean"
+#'   style = "clean",
 #'   output_dir = tempdir()
-#'   )
-#'
+#' )
 #' @export
 #' @import bib2df
 #' @import dplyr
@@ -85,13 +85,19 @@ drop_name <- function(bib, cite_key,
     bib_data <- bib
   } else if (is.character(bib)) {
     if (file.exists(bib)) {
-      bib_data <- bib2df::bib2df(file = bib)
+      bib_data <- suppressWarnings(bib2df::bib2df(file = bib))
+      if ("YEAR" %in% colnames(bib_data)) {
+        if (!is.character(bib_data$YEAR)) {
+          bib_data$YEAR <- as.character(bib_data$YEAR)
+          message("Years coerced to string format.")
+        }
+      }
       message("Bibliography file successfully read.")
     } else {
       stop("BibTeX file not found. Check file path or pass a suitable data.frame/tibble to the function.")
     }
   } else {
-    stop("Inappropriate type bibliography provided, please pass a data.frame, tibble or file path to a *.bib file.")
+    stop("Inappropriate type of bibliography provided, please pass a data.frame, tibble or file path to a *.bib file.")
   }
 
   # check if data.frame is empty
@@ -99,35 +105,42 @@ drop_name <- function(bib, cite_key,
     stop("Bibliography is empty.")
   }
 
-  # provide compatibility for bibtex and biblatex fields
-  if ("date" %in% tolower(colnames(bib_data))) {
-    message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
-    bib_data <- bib_data %>%
-      dplyr::mutate(
-        YEAR = ifelse(is.na(YEAR),
-          tryCatch(
-            expr = {
-              lubridate::year(lubridate::ymd(DATE, truncated = 2))
-            },
-            error = function(e) {
-              message("Could not extract Year from one of the references.")
-              print(e)
-            },
-            warning = function(w) {
-              message("Having difficulties extracting the Year from one of the refernces. Resulting output might not be as expected.")
-              print(w)
-            }
-          ),
-          YEAR
+  # provide COMPATIBILITY for biblatex fields JOURNALTITLE and DATE
+  if ("DATE" %in% colnames(bib_data)) {
+    parsed_year <- suppressWarnings(lubridate::year(lubridate::ymd(bib_data$DATE, truncated = 2)))
+    if (any(is.na(parsed_year))) {
+      warning("Having difficulties extracting the year from at least one of the refernces' date field. Resulting output might not be as expected. Please make sure your dates comply with BibLaTeX standards 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD'.")
+    }
+    if ("YEAR" %in% colnames(bib_data)) {
+      bib_data <- bib_data %>%
+        dplyr::mutate(
+          YEAR = ifelse(
+            is.na(YEAR),
+            parsed_year,
+            YEAR
+          )
         )
-      )
+    } else {
+      bib_data$YEAR <- parsed_year
+    }
+    # At this point no further error catching is implemented. As of current knowledge lubridate::year()
+    # returns NA, if parsing the string fails. In drop_html() these NAs will be replaced with an empty string.
+    message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
   }
+
 
   if ("JOURNALTITLE" %in% colnames(bib_data)) {
     message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
-    bib_data <- bib_data %>%
-      dplyr::mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
+    if ("JOURNAL" %in% colnames(bib_data)) {
+      bib_data <- bib_data %>%
+        dplyr::mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
+    } else {
+      bib_data <- bib_data %>%
+        dplyr::rename(JOURNAL = JOURNALTITLE)
+    }
   }
+
+  # print(bib_data)
 
   # check for required columns
   required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
@@ -214,15 +227,20 @@ drop_name <- function(bib, cite_key,
     stop("cite_key must be of type 'caracter'.")
   } else {
     n_bib <- length(cite_key)
-    message(paste0(n_bib, " cite_key(s) specified. Working through all of them."))
+    if (n_bib > 1) {
+      message(paste0(n_bib, " cite_key(s) specified. Working through all of them."))
+    }
     missing_keys <- cite_key[!(cite_key %in% clean_bib$BIBTEXKEY)]
-    warning(paste0("The following cite_key items were not found in the provided library: ", missing_keys))
+    if (length(missing_keys) > 0) {
+      warning(paste0("The following cite_key items were not found in the provided library: ", missing_keys))
+    }
     work_list <- clean_bib %>%
       dplyr::filter(BIBTEXKEY %in% cite_key)
   }
 
   authors_collapsed <- sapply(
-    work_list$AUTHOR, manage_authors, max_authors = max_authors
+    work_list$AUTHOR, manage_authors,
+    max_authors = max_authors
   )
 
   work_list <- work_list %>%
@@ -230,7 +248,7 @@ drop_name <- function(bib, cite_key,
       authors_collapsed = authors_collapsed,
     )
 
-  vcs = apply(
+  vcs <- apply(
     work_list,
     1,
     drop_html,
@@ -248,11 +266,11 @@ drop_name <- function(bib, cite_key,
       vcs = vcs
     )
 
-  file_paths <- apply(work_list, 1, FUN = write_vc,
-          output_dir = output_dir,
-          path_absolute = path_absolute,
-          export_as = export_as
-          )
+  file_paths <- apply(work_list, 1,
+    FUN = write_vc,
+    output_dir = output_dir,
+    path_absolute = path_absolute,
+    export_as = export_as
+  )
   return(file_paths)
-
 }
