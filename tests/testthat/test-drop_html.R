@@ -71,15 +71,11 @@ test_that("inputs are correct", {
 
   wrong_year <- dplyr::tribble(
     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~QR,
-    "Some 2022", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2022", 12345, "https://en.wikipedia.org",
+    "Some 2022", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2022", "12345", "https://en.wikipedia.org",
     "Some 2022", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", NA, "https://en.wikipedia.org"
   )
+  # YEAR is alredy checked and converted to character in drop_name()
 
-  expect_error(drop_html(
-    wrong_year[1,],
-    include_qr = "embed",
-    output_dir = tempdir(), style = "modern", use_xaringan = FALSE
-  ))
   expect_warning(drop_html(
     wrong_year[2,],
     include_qr = "embed",

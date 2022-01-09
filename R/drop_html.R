@@ -31,7 +31,6 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
   stopifnot(is.character(work_item$TITLE) | is.na(work_item$TITLE))
   stopifnot(is.character(work_item$JOURNAL) | is.na(work_item$JOURNAL))
   stopifnot(is.character(work_item$authors_collapsed) | is.na(work_item$authors_collapsed))
-  stopifnot(is.character(work_item$YEAR) | is.na(work_item$YEAR))
   stopifnot(is.character(work_item$QR))
   stopifnot(is.character(include_qr))
   stopifnot(is.character(output_dir))
