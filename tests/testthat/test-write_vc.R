@@ -170,14 +170,15 @@ test_that("CSS class is assigned for webshot to find", {
   )
 
 
-  # fails due to PHANTOM ERROR, so catching the error within R seems impossible:
+  # fails due to phantomJS error, so catching the error within R seems impossible:
   expect_output(
-      write_vc(
+      suppressMessages(
+        write_vc(
         work_item = bib_tbl,
         export_as = "png",
         output_dir = tempdir(),
         path_absolute = TRUE
-    ),
+    )),
     "PHANTOM ERROR"
   )
 })
