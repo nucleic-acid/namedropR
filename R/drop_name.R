@@ -101,7 +101,7 @@ drop_name <- function(bib, cite_key,
   }
 
   # check if data.frame is empty
-  if (length(bib_data) == 0) {
+  if (nrow(bib_data) == 0) {
     stop("Bibliography is empty.")
   }
 
