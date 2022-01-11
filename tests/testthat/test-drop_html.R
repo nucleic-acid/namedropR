@@ -63,7 +63,7 @@ test_that("inputs are correct", {
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
 
-  expect_warning(drop_html(
+  expect_message(drop_html(
     wrong_title[2,],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
@@ -76,7 +76,7 @@ test_that("inputs are correct", {
   )
   # YEAR is alredy checked and converted to character in drop_name()
 
-  expect_warning(drop_html(
+  expect_message(drop_html(
     wrong_year[2,],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
@@ -93,7 +93,7 @@ test_that("inputs are correct", {
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
-  expect_warning(drop_html(
+  expect_message(drop_html(
     wrong_authors[2,],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
@@ -110,7 +110,7 @@ test_that("inputs are correct", {
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
-  expect_warning(drop_html(
+  expect_message(drop_html(
     wrong_journal[2,],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE

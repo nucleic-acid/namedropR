@@ -39,19 +39,19 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
 
   # SUBSTITUTE MISSING
   if (is.na(work_item$TITLE)) {
-    warning(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    message(paste0("Empty title in: ", work_item$BIBTEXKEY))
     work_item$TITLE <- "Title missing"
   }
   if (is.na(work_item$JOURNAL)) {
-    warning(paste0("Empty JOURNAL in: ", work_item$BIBTEXKEY))
+    message(paste0("Empty JOURNAL in: ", work_item$BIBTEXKEY))
     work_item$JOURNAL <- "Unkown Journal"
   }
   if (is.na(work_item$YEAR)) {
-    warning(paste0("Empty YEAR in: ", work_item$BIBTEXKEY))
+    message(paste0("Empty YEAR in: ", work_item$BIBTEXKEY))
     work_item$YEAR <- "n.d."
   }
   if (is.na(work_item$authors_collapsed)) {
-    warning(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    message(paste0("Empty title in: ", work_item$BIBTEXKEY))
     work_item$AUTHOR <- "Unknown Author(s)"
   }
 
