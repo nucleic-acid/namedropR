@@ -157,7 +157,11 @@ drop_name <- function(bib, cite_key,
   if ("DOI" %in% colnames(bib_data)) {
     bib_data <- bib_data %>%
       dplyr::mutate(
-        QR = paste0("https://doi.org/", DOI)
+        QR = ifelse(
+          is.na(DOI),
+          NA,
+          paste0("https://doi.org/", DOI)
+        )
       )
   }
 
