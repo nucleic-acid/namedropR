@@ -212,12 +212,6 @@ drop_name <- function(bib, cite_key,
     )
   }
 
-  # check if target reference entry is available | will be needed later on. uncommented for the time being.
-  # if (cite_key %in% bib_data$BIBTEXKEY) {
-  #   target_ref <- bib_file[cite_key]
-  # } else {
-  #   stop(paste0(cite_key, ": entry not found in the supplied bibliography. Please check, that the citation key and the bibliography are correct."))
-  # }
 
   # CALL HTML RENDERING FUNCTION
 
@@ -225,7 +219,7 @@ drop_name <- function(bib, cite_key,
   # handle different input options for bibtex keys
   if (missing(cite_key)) {
     n_bib <- nrow(clean_bib)
-    message(paste0("No cite_key specified. Working through all ", n_bib, " entries in the bibliography."))
+    message(paste0("No cite_key specified. Working through all possible ", n_bib, " entries in the bibliography."))
     work_list <- clean_bib
   } else if (!is.character(cite_key)) {
     stop("cite_key must be of type 'caracter'.")
@@ -240,6 +234,11 @@ drop_name <- function(bib, cite_key,
     }
     work_list <- clean_bib %>%
       dplyr::filter(BIBTEXKEY %in% cite_key)
+  }
+
+  if (nrow(work_list) == 0) {
+    warning("No reference matches the given cite_keys. Please check that citation key(s) are correct.")
+    return("No Visual Citation created.")
   }
 
   authors_collapsed <- sapply(
