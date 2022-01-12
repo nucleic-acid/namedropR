@@ -109,7 +109,7 @@ drop_name <- function(bib, cite_key,
   if ("DATE" %in% colnames(bib_data)) {
     parsed_year <- suppressWarnings(lubridate::year(lubridate::ymd(bib_data$DATE, truncated = 2)))
     if (any(is.na(parsed_year))) {
-      warning("Having difficulties extracting the year from at least one of the refernces' date field. Resulting output might not be as expected. Please make sure your dates comply with BibLaTeX standards 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD'.")
+      warning("Having difficulties extracting the year from at least one of the references' date field. Resulting output might not be as expected. Please make sure your dates comply with BibLaTeX standards 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD'.")
     }
     if ("YEAR" %in% colnames(bib_data)) {
       bib_data <- bib_data %>%
