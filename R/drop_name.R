@@ -92,7 +92,7 @@ drop_name <- function(bib, cite_key,
     bib_data <- bib
   } else if (is.character(bib)) {
     if (file.exists(bib)) {
-      bib_data <- suppressWarnings(bib2df::bib2df(file = bib))
+      bib_data <- suppressMessages(suppressWarnings(bib2df::bib2df(file = bib)))
       if ("YEAR" %in% colnames(bib_data)) {
         if (!is.character(bib_data$YEAR)) {
           bib_data$YEAR <- as.character(bib_data$YEAR)
@@ -115,9 +115,9 @@ drop_name <- function(bib, cite_key,
   # provide COMPATIBILITY for biblatex fields JOURNALTITLE and DATE
   if ("DATE" %in% colnames(bib_data)) {
     parsed_year <- suppressWarnings(lubridate::year(lubridate::ymd(bib_data$DATE, truncated = 2)))
-    if (any(is.na(parsed_year))) {
-      warning("Having difficulties extracting the year from at least one of the references' date field. Resulting output might not be as expected. Please make sure your dates comply with BibLaTeX standards 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD'.")
-    }
+    # if (any(is.na(parsed_year))) {
+    #   warning("Having difficulties extracting the year from at least one of the references' date field. Resulting output might not be as expected. Please make sure your dates comply with BibLaTeX standards 'YYYY', 'YYYY-MM' or 'YYYY-MM-DD'.")
+    # }
     if ("YEAR" %in% colnames(bib_data)) {
       bib_data <- bib_data %>%
         dplyr::mutate(
@@ -132,12 +132,11 @@ drop_name <- function(bib, cite_key,
     }
     # At this point no further error catching is implemented. As of current knowledge lubridate::year()
     # returns NA, if parsing the string fails. In drop_html() these NAs will be replaced with an empty string.
-    message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
+    # message("One or more references had BibLaTeX field 'DATE' and were transformed to 'YEAR'.")
   }
 
 
   if ("JOURNALTITLE" %in% colnames(bib_data)) {
-    message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
     if ("JOURNAL" %in% colnames(bib_data)) {
       bib_data <- bib_data %>%
         dplyr::mutate(JOURNAL = ifelse(is.na(.data$JOURNAL), .data$JOURNALTITLE, .data$JOURNAL))
@@ -145,6 +144,7 @@ drop_name <- function(bib, cite_key,
       bib_data <- bib_data %>%
         dplyr::rename(JOURNAL = .data$JOURNALTITLE)
     }
+    # message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
   }
 
   # print(bib_data)
