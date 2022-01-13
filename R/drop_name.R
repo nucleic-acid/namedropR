@@ -31,9 +31,13 @@
 #' @examples
 #'
 #' # create sample data
+#'
+#' \dontrun{
 #' bib_tbl <- dplyr::tribble(
 #'   ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
-#'   "Some title", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
+#'   "Some title", c("Alice", "Bob", "Charlie"),
+#'   "Journal of Unnecessary R Packages",
+#'   "Alice2022", "2022"
 #' )
 #'
 #' # create visual citation
@@ -45,6 +49,9 @@
 #'   style = "clean",
 #'   output_dir = tempdir()
 #' )
+#'
+#' }
+#'
 #' @export
 #' @import bib2df
 #' @import dplyr
@@ -115,9 +122,9 @@ drop_name <- function(bib, cite_key,
       bib_data <- bib_data %>%
         dplyr::mutate(
           YEAR = ifelse(
-            is.na(YEAR),
+            is.na(.data$YEAR),
             parsed_year,
-            YEAR
+            .data$YEAR
           )
         )
     } else {
@@ -133,10 +140,10 @@ drop_name <- function(bib, cite_key,
     message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
     if ("JOURNAL" %in% colnames(bib_data)) {
       bib_data <- bib_data %>%
-        dplyr::mutate(JOURNAL = ifelse(is.na(JOURNAL), JOURNALTITLE, JOURNAL))
+        dplyr::mutate(JOURNAL = ifelse(is.na(.data$JOURNAL), .data$JOURNALTITLE, .data$JOURNAL))
     } else {
       bib_data <- bib_data %>%
-        dplyr::rename(JOURNAL = JOURNALTITLE)
+        dplyr::rename(JOURNAL = .data$JOURNALTITLE)
     }
   }
 
@@ -158,9 +165,9 @@ drop_name <- function(bib, cite_key,
     bib_data <- bib_data %>%
       dplyr::mutate(
         QR = ifelse(
-          is.na(DOI),
+          is.na(.data$DOI),
           NA,
-          paste0("https://doi.org/", DOI)
+          paste0("https://doi.org/", .data$DOI)
         )
       )
   }
@@ -169,9 +176,9 @@ drop_name <- function(bib, cite_key,
     bib_data <- bib_data %>%
       dplyr::mutate(
         QR = ifelse(
-          is.na(QR),
-          URL,
-          QR
+          is.na(.data$QR),
+          .data$URL,
+          .data$QR
         )
       )
   }
@@ -179,22 +186,22 @@ drop_name <- function(bib, cite_key,
   bib_data <- bib_data %>%
     dplyr::mutate(
       QR = ifelse(
-        is.na(QR),
-        paste("https://scholar.google.com/scholar?as_q=", AUTHOR, JOURNAL, YEAR, collapse = "+"),
-        QR
+        is.na(.data$QR),
+        paste("https://scholar.google.com/scholar?as_q=", .data$AUTHOR, .data$JOURNAL, .data$YEAR, collapse = "+"),
+        .data$QR
       )
     )
 
 
   # check for duplicate cite_keys
-  if (any(dplyr::count(bib_data, BIBTEXKEY)$n > 1)) {
+  if (any(dplyr::count(bib_data, .data$BIBTEXKEY)$n > 1)) {
     warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
   }
 
   # drop rows without BIBTEXKEY and select required columns only:
-  clean_bib <- dplyr::distinct(bib_data, BIBTEXKEY, .keep_all = TRUE) %>%
-    dplyr::filter(!is.na(BIBTEXKEY)) %>%
-    dplyr::select(YEAR, AUTHOR, JOURNAL, TITLE, BIBTEXKEY, QR)
+  clean_bib <- dplyr::distinct(bib_data, .data$BIBTEXKEY, .keep_all = TRUE) %>%
+    dplyr::filter(!is.na(.data$BIBTEXKEY)) %>%
+    dplyr::select(.data$YEAR, .data$AUTHOR, .data$JOURNAL, .data$TITLE, .data$BIBTEXKEY, .data$QR)
 
 
   # create output directory, if needed
@@ -233,7 +240,7 @@ drop_name <- function(bib, cite_key,
       warning(paste0("The following cite_key items were not found in the provided library: ", missing_keys))
     }
     work_list <- clean_bib %>%
-      dplyr::filter(BIBTEXKEY %in% cite_key)
+      dplyr::filter(.data$BIBTEXKEY %in% cite_key)
   }
 
   if (nrow(work_list) == 0) {
