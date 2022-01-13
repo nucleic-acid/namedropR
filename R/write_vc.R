@@ -10,7 +10,8 @@
 #'
 #' @examples
 #' \dontrun{
-#' # not intended for direct call. Please refer to the documentation of drop_name() for further assistance.
+#' # not intended for direct call. Please refer to the documentation
+#' # of drop_name() for further assistance.
 #' }
 #'
 #' @importFrom htmltools tags save_html

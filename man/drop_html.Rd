@@ -7,6 +7,9 @@
 drop_html(work_item, include_qr, output_dir, style, use_xaringan = FALSE)
 }
 \arguments{
+\item{work_item}{A data.frame or tibble with nrow(work_item) == 1 containing the
+data for one reference to create the visual citation.}
+
 \item{include_qr}{Character string specifying the way the QR code should be included or if no QR code should be included.
 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
@@ -31,7 +34,10 @@ Accepts bibliographic information and returns a htmltools tagList for printing/d
 }
 \examples{
 \dontrun{
-drop_html(df_row, include_qr = "link", output_dir = "visual_citation/", style = "modern", use_xaringan = FALSE)
+drop_html(
+  df_row, include_qr = "link", output_dir = "visual_citation/",
+  style = "modern", use_xaringan = FALSE
+  )
 }
 
 }

@@ -23,7 +23,8 @@ Takes the data from drop_name and writes the actual outputs to the output direct
 }
 \examples{
 \dontrun{
-# not intended for direct call. Please refer to the documentation of drop_name() for further assistance.
+# not intended for direct call. Please refer to the documentation
+# of drop_name() for further assistance.
 }
 
 }

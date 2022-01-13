@@ -7,9 +7,9 @@
 manage_authors(authors, max_authors)
 }
 \arguments{
-\item{max_authors}{Maximum number of authors to be returned from the list.}
+\item{authors}{Can be a single string or a list of authors.}
 
-\item{author_list}{Can be a single string or a list of authors.}
+\item{max_authors}{Maximum number of authors to be returned from the list.}
 }
 \value{
 A single string with the desired maximum number of authors.

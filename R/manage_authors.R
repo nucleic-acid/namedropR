@@ -2,7 +2,7 @@
 #'
 #' @description Returns a cleaned and cropped string of authors for the visual citation.
 #'
-#' @param author_list Can be a single string or a list of authors.
+#' @param authors Can be a single string or a list of authors.
 #' @param max_authors Maximum number of authors to be returned from the list.
 #'
 #' @return A single string with the desired maximum number of authors.

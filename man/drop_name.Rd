@@ -59,9 +59,13 @@ Extracts metadata from a .bib file and exports the visual citation in the specif
 \examples{
 
 # create sample data
+
+\dontrun{
 bib_tbl <- dplyr::tribble(
   ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
-  "Some title", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
+  "Some title", c("Alice", "Bob", "Charlie"),
+  "Journal of Unnecessary R Packages",
+  "Alice2022", "2022"
 )
 
 # create visual citation
@@ -73,4 +77,7 @@ drop_name(
   style = "clean",
   output_dir = tempdir()
 )
+
+}
+
 }
