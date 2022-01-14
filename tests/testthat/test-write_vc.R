@@ -118,28 +118,30 @@ test_that("saving as png works as expected", {
 
 
   expect_true(
-    file.exists(write_vc(
-      work_item = bib_tbl,
-      export_as = "png",
-      output_dir = tempdir(),
-      path_absolute = FALSE
-    ))
-  )
-  unlink(tempdir())
-
-  expect_true(
-    file.exists(
-      write_vc(
+    suppressMessages(
+      file.exists(write_vc(
         work_item = bib_tbl,
         export_as = "png",
         output_dir = tempdir(),
-        path_absolute = TRUE
-      )
+        path_absolute = FALSE
+      ))
     )
   )
   unlink(tempdir())
 
-
+  expect_true(
+    suppressMessages(
+      file.exists(
+        write_vc(
+          work_item = bib_tbl,
+          export_as = "png",
+          output_dir = tempdir(),
+          path_absolute = TRUE
+        )
+      )
+    )
+  )
+  unlink(tempdir())
 })
 
 
