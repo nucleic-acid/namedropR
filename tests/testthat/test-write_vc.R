@@ -143,14 +143,15 @@ test_that("saving as png works as expected", {
   expect_false(
     file.exists(
       gsub(
-        "\\.png",
+        ".png",
         "",
         write_vc(
           work_item = bib_tbl,
           export_as = "png",
           output_dir = tempdir(),
-          path_absolute = TRUE
-        )
+          path_absolute = FALSE
+        ),
+        fixed = TRUE
       )
     )
   )
@@ -171,16 +172,17 @@ test_that("CSS class is assigned for webshot to find", {
 
 
   # fails due to phantomJS error, so catching the error within R seems impossible:
-  expect_output(
-      suppressMessages(
+  run1 <- evaluate_promise(
         write_vc(
         work_item = bib_tbl,
         export_as = "png",
         output_dir = tempdir(),
         path_absolute = TRUE
-    )),
-    "PHANTOM ERROR"
+    )
   )
+
+  expect_true(grep("Could not take a screenshot", run1$messages, fixed = TRUE) >= 1)
+  expect_true(grep("PHANTOM ERROR", run1$output, fixed = TRUE) >= 1)
 })
 
 test_that("unknown output format is caught", {
