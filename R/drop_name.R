@@ -31,7 +31,6 @@
 #' @examples
 #'
 #' # create sample data
-#'
 #' \dontrun{
 #' bib_tbl <- dplyr::tribble(
 #'   ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
@@ -49,7 +48,6 @@
 #'   style = "clean",
 #'   output_dir = tempdir()
 #' )
-#'
 #' }
 #'
 #' @export
@@ -257,10 +255,12 @@ drop_name <- function(bib, cite_key,
     dplyr::mutate(
       QR = ifelse(
         is.na(.data$QR),
-        paste0("https://scholar.google.com/scholar?as_q=",
-               .data$authors_collapsed, "+",
-               .data$JOURNAL, "+",
-               .data$YEAR),
+        paste0(
+          "https://scholar.google.com/scholar?as_q=",
+          .data$authors_collapsed, "+",
+          .data$JOURNAL, "+",
+          .data$YEAR
+        ),
         .data$QR
       )
     )

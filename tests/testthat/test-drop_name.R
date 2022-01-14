@@ -15,9 +15,9 @@ test_that("Bibliographies are correctly read ", {
     expect_message(
       drop_name(bib = good_bib, cite_key = "Eschrich1983"),
       "Years coerced to string format."
-      ),
+    ),
     "Bibliography file successfully read."
-    )
+  )
 })
 
 # test_that("compatibility for biblatex works", {
@@ -52,11 +52,10 @@ test_that("all required columns are enforced", {
   missing_cols <- dplyr::tribble(
     ~TITLE, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
     "One", "Three", "Four", "2021", "Six"
-    )
+  )
 
   # Authors missing
   expect_error(drop_name(missing_cols, cite_key = "Four"))
-
 })
 
 

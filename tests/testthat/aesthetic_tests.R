@@ -1,6 +1,6 @@
 # AESTHETIC OUTPUT CHECKS for manual testing
 
-bib_path <- system.file("testdata", "sample.bib", package="namedropR")
+bib_path <- system.file("testdata", "sample.bib", package = "namedropR")
 #
 # ## check both HTML formats
 drop_name(bib_path, export_as = "html", cite_key = "collaboration_2019_ApJL", output_dir = tempdir())

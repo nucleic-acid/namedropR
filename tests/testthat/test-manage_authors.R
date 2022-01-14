@@ -19,4 +19,3 @@ test_that("also lists are accepted", {
   authors_list <- as.list(c("Doe, John", "Sample, Simon", "Fancy, Fred", "Random, Ronald"))
   expect_true(length(manage_authors(authors = authors_list, max_authors = 3)) == 1)
 })
-

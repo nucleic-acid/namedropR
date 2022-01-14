@@ -4,7 +4,7 @@ test_that("an HTML taglist is being returned with all putput options", {
     "Some 2022", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org"
   )
 
-  if(!file.exists(tempdir())) {
+  if (!file.exists(tempdir())) {
     dir.create(tempdir())
   }
 
@@ -46,25 +46,24 @@ test_that("an HTML taglist is being returned with all putput options", {
 })
 
 test_that("inputs are correct", {
-  if(!file.exists(tempdir())) {
+  if (!file.exists(tempdir())) {
     dir.create(tempdir())
   }
 
   wrong_title <- dplyr::tribble(
     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~QR,
     12345, "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org",
-    NA , "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2022", "https://en.wikipedia.org",
-
+    NA, "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2022", "https://en.wikipedia.org",
   )
 
   expect_error(drop_html(
-    wrong_title[1,],
+    wrong_title[1, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
 
   expect_message(drop_html(
-    wrong_title[2,],
+    wrong_title[2, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
@@ -77,7 +76,7 @@ test_that("inputs are correct", {
   # YEAR is alredy checked and converted to character in drop_name()
 
   expect_message(drop_html(
-    wrong_year[2,],
+    wrong_year[2, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
@@ -89,12 +88,12 @@ test_that("inputs are correct", {
   )
 
   expect_error(drop_html(
-    wrong_authors[1,],
+    wrong_authors[1, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
   expect_message(drop_html(
-    wrong_authors[2,],
+    wrong_authors[2, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
@@ -106,16 +105,15 @@ test_that("inputs are correct", {
   )
 
   expect_error(drop_html(
-    wrong_journal[1,],
+    wrong_journal[1, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
   expect_message(drop_html(
-    wrong_journal[2,],
+    wrong_journal[2, ],
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
-
 })
 
 test_that("use_xaringan sets the right folder-structure", {
@@ -126,10 +124,10 @@ test_that("use_xaringan sets the right folder-structure", {
 
   unlink(tempdir())
   if (!file.exists(file.path(tempdir()))) {
-  dir.create(file.path(tempdir()))
+    dir.create(file.path(tempdir()))
   }
   if (!file.exists(file.path(tempdir(), "visual_citations"))) {
-  dir.create(file.path(tempdir(), "visual_citations"))
+    dir.create(file.path(tempdir(), "visual_citations"))
   }
 
   temp_output <- drop_html(
@@ -158,4 +156,3 @@ test_that("use_xaringan sets the right folder-structure", {
 
   unlink(here::here("qr"))
 })
-

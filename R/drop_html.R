@@ -21,9 +21,10 @@
 #' @examples
 #' \dontrun{
 #' drop_html(
-#'   df_row, include_qr = "link", output_dir = "visual_citation/",
+#'   df_row,
+#'   include_qr = "link", output_dir = "visual_citation/",
 #'   style = "modern", use_xaringan = FALSE
-#'   )
+#' )
 #' }
 #'
 #' @import htmltools
@@ -71,22 +72,21 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
   }
 
   if (include_qr != "embed") {
-
-  if (!dir.exists(qr_dir)) {
-    tryCatch(
-      expr = {
-        dir.create(qr_dir)
-      },
-      error = function(e) {
-        message("Could not create QR output folder:")
-        print(e)
-      },
-      warning = function(w) {
-        message("Having difficulties creating QR output folder:")
-        print(w)
-      }
-    )
-  }
+    if (!dir.exists(qr_dir)) {
+      tryCatch(
+        expr = {
+          dir.create(qr_dir)
+        },
+        error = function(e) {
+          message("Could not create QR output folder:")
+          print(e)
+        },
+        warning = function(w) {
+          message("Having difficulties creating QR output folder:")
+          print(w)
+        }
+      )
+    }
   }
 
   # COMPOSE HTML OBJECT
@@ -155,6 +155,4 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
       )
     )
   )
-
-
 }
