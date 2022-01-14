@@ -4,31 +4,11 @@
 \alias{drop_html}
 \title{drop_html}
 \usage{
-drop_html(
-  title,
-  journal,
-  authors,
-  year,
-  cite_key,
-  url,
-  include_qr,
-  output_dir,
-  style,
-  use_xaringan = FALSE
-)
+drop_html(work_item, include_qr, output_dir, style, use_xaringan = FALSE)
 }
 \arguments{
-\item{title}{The publication's title as string.}
-
-\item{journal}{The Journal's name as string.}
-
-\item{authors}{The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).}
-
-\item{year}{The publication's publication year as string.}
-
-\item{cite_key}{A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.}
-
-\item{url}{The URL that should be encoded as QR code.}
+\item{work_item}{A data.frame or tibble with nrow(work_item) == 1 containing the
+data for one reference to create the visual citation.}
 
 \item{include_qr}{Character string specifying the way the QR code should be included or if no QR code should be included.
 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
@@ -54,15 +34,10 @@ Accepts bibliographic information and returns a htmltools tagList for printing/d
 }
 \examples{
 \dontrun{
-vc_html <- drop_html(
-  title = bibentry$title,
-  cite_key = bibentry$key,
-  journal = bibentry$journal,
-  year = bibentry$year,
-  authors = paste(bibentry$author, collapse = ", ")
-)
-
-htmltools::html_print(dropped)
+drop_html(
+  df_row, include_qr = "link", output_dir = "visual_citation/",
+  style = "modern", use_xaringan = FALSE
+  )
 }
 
 }

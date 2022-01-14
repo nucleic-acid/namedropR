@@ -1,3 +1,15 @@
+# namedropR 2.0.1
+
+* Minor fixes to prepare pull request to main
+* Style fixes of code in preparation for release
+
+# namedropR 2.0.0
+
+* Major code changes to eliminate dependency on the orphaned {bibtex} package to allow for CRAN submission.
+* On the down side the package cannot work with BibEntry objects anymore, so the update might break existing user-code. Due to this the version number was increased as a 'major release'. 
+* As new function, bulk handling is now available.
+* The update furthermore improves overall stability and test coverage.
+
 # namedropR 1.0.2
 
 * Minor adjustments to unit tests to avoid build errors

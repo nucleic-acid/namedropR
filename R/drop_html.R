@@ -2,18 +2,14 @@
 #'
 #' @description Accepts bibliographic information and returns a htmltools tagList for printing/display.
 #'
-#' @param journal The Journal's name as string.
-#' @param title The publication's title as string.
-#' @param authors The authors' names as string. If this is a list, it has to be collapsed to a single string (s. example).
-#' @param year The publication's publication year as string.
-#' @param cite_key A string specifying the citation key within the .bib file. If no key is specified, the first entry is used.
+#' @param work_item A data.frame or tibble with nrow(work_item) == 1 containing the
+#' data for one reference to create the visual citation.
 #' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
 #' 'embed' results in a stand alone <img> tag within the HTML object, other options are ignored for the time being.
 #' 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 #' 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 #' 'none' creates no QR code.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
-#' @param url The URL that should be encoded as QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
 #' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
@@ -24,52 +20,77 @@
 #'
 #' @examples
 #' \dontrun{
-#' vc_html <- drop_html(
-#'   title = bibentry$title,
-#'   cite_key = bibentry$key,
-#'   journal = bibentry$journal,
-#'   year = bibentry$year,
-#'   authors = paste(bibentry$author, collapse = ", ")
+#' drop_html(
+#'   df_row,
+#'   include_qr = "link", output_dir = "visual_citation/",
+#'   style = "modern", use_xaringan = FALSE
 #' )
-#'
-#' htmltools::html_print(dropped)
 #' }
 #'
 #' @import htmltools
 
 
-drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE) {
 
+  # print(work_item)
   # CHECK ARGUMENTS
-  stopifnot(is.character(title))
-  stopifnot(is.character(journal))
-  stopifnot(is.character(authors))
-  stopifnot(is.character(year))
-  stopifnot(is.character(url))
+  stopifnot(is.character(work_item$TITLE) | is.na(work_item$TITLE))
+  stopifnot(is.character(work_item$JOURNAL) | is.na(work_item$JOURNAL))
+  stopifnot(is.character(work_item$authors_collapsed) | is.na(work_item$authors_collapsed))
+  stopifnot(is.character(work_item$QR))
   stopifnot(is.character(include_qr))
-  stopifnot(is.character(cite_key))
-
-  if (cite_key == "") {
-    stop("No citation key provided! Check function call to privide the necessary cite_key argument.")
-  }
-
+  stopifnot(is.character(output_dir))
   stopifnot(is.character(style))
   stopifnot(is.logical(use_xaringan))
 
+  # SUBSTITUTE MISSING
+  if (is.na(work_item$TITLE)) {
+    message(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    work_item$TITLE <- "Title missing"
+  }
+  if (is.na(work_item$JOURNAL)) {
+    message(paste0("Empty JOURNAL in: ", work_item$BIBTEXKEY))
+    work_item$JOURNAL <- "Unkown Journal"
+  }
+  if (is.na(work_item$YEAR)) {
+    message(paste0("Empty YEAR in: ", work_item$BIBTEXKEY))
+    work_item$YEAR <- "n.d."
+  }
+  if (is.na(work_item$authors_collapsed)) {
+    message(paste0("Empty title in: ", work_item$BIBTEXKEY))
+    work_item$AUTHOR <- "Unknown Author(s)"
+  }
 
   # OBTAIN CSS STYLE
   css_styles <- get_css_styles(style = style)
 
   # define required QR output dir
-
   if (use_xaringan) {
     qr_dir <- here::here("qr")
   } else {
     qr_dir <- here::here(output_dir, "qr")
   }
 
+  if (include_qr != "embed") {
+    if (!dir.exists(qr_dir)) {
+      tryCatch(
+        expr = {
+          dir.create(qr_dir)
+        },
+        error = function(e) {
+          message("Could not create QR output folder:")
+          print(e)
+        },
+        warning = function(w) {
+          message("Having difficulties creating QR output folder:")
+          print(w)
+        }
+      )
+    }
+  }
+
   # COMPOSE HTML OBJECT
-  vc <- htmltools::tagList(
+  htmltools::tagList(
     htmltools::tags$table(
       class = "visual-citation",
       htmltools::tags$tr(
@@ -78,17 +99,17 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
             htmltools::div(
               class = "top-row",
               style = css_styles$top_row_style,
-              htmltools::tags$span(paste0(journal, " (", year, ")"))
+              htmltools::tags$span(paste0(work_item$JOURNAL, " (", as.character(work_item$YEAR), ")"))
             ),
             htmltools::div(
               class = "title-row",
               style = css_styles$title_row_style,
-              htmltools::tags$span(title)
+              htmltools::tags$span(work_item$TITLE)
             ),
             htmltools::div(
               class = "author-row",
               style = css_styles$author_row_style,
-              htmltools::tags$span(authors),
+              htmltools::tags$span(work_item$authors_collapsed),
             )
           )
         ),
@@ -96,67 +117,37 @@ drop_html <- function(title, journal, authors, year, cite_key, url, include_qr, 
           if (include_qr == "embed") {
             if (capabilities("cairo")) {
               htmltools::plotTag(
-                plot(generate_qr(url = url)),
-                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                plot(generate_qr(url = work_item$QR)),
+                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
                 device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
                 mimeType = "image/svg+xml"
               )
             } else {
-              message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired.")
+              message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
               htmltools::plotTag(
-                plot(generate_qr(url = url)),
-                alt = paste0("A QR code linking to the paper of ", authors, " ", year),
+                plot(generate_qr(url = work_item$QR)),
+                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
                 width = 150, height = 150
               )
             }
           } else if (include_qr == "link_svg") {
             if (capabilities("cairo")) {
-              if (!dir.exists(qr_dir)) {
-                tryCatch(
-                  expr = {
-                    dir.create(qr_dir)
-                  },
-                  error = function(e) {
-                    message("Could not create QR output folder:")
-                    print(e)
-                  },
-                  warning = function(w) {
-                    message("Having difficulties creating QR output folder:")
-                    print(w)
-                  }
-                )
-              }
               htmltools::capturePlot(
-                plot(generate_qr(url = url)),
-                filename = here::here(qr_dir, paste0(cite_key, ".svg")),
+                plot(generate_qr(url = work_item$QR)),
+                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
                 device = grDevices::svg, width = 2, height = 2
               )
-              htmltools::tags$img(src = file.path("qr", paste0(cite_key, ".svg")))
+              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
             } else {
               message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
             }
           } else if (include_qr == "link") {
-            if (!dir.exists(qr_dir)) {
-              tryCatch(
-                expr = {
-                  dir.create(qr_dir)
-                },
-                error = function(e) {
-                  message("Could not create QR output folder:")
-                  print(e)
-                },
-                warning = function(w) {
-                  message("Having difficulties creating QR output folder:")
-                  print(w)
-                }
-              )
-            }
             htmltools::capturePlot(
-              plot(generate_qr(url = url)),
-              filename = here::here(qr_dir, paste0(cite_key, "_qr.png")),
+              plot(generate_qr(url = work_item$QR)),
+              filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
               width = 150, height = 150
             )
-            htmltools::tags$img(src = file.path("qr", paste0(cite_key, "_qr.png")), alt = "QR code")
+            htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
           } else {
             message("No QR code will be created.")
           }
