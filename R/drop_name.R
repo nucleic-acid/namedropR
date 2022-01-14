@@ -176,21 +176,14 @@ drop_name <- function(bib, cite_key,
     bib_data <- bib_data %>%
       dplyr::mutate(
         QR = ifelse(
-          is.na(.data$QR),
+          is.na(.data$QR) & !is.na(.data$URL),
           .data$URL,
           .data$QR
         )
       )
   }
 
-  bib_data <- bib_data %>%
-    dplyr::mutate(
-      QR = ifelse(
-        is.na(.data$QR),
-        paste("https://scholar.google.com/scholar?as_q=", .data$AUTHOR, .data$JOURNAL, .data$YEAR, collapse = "+"),
-        .data$QR
-      )
-    )
+  # the remaining URLs will be created below, after condensing the authors lists
 
 
   # check for duplicate cite_keys
@@ -253,9 +246,23 @@ drop_name <- function(bib, cite_key,
     max_authors = max_authors
   )
 
+
   work_list <- work_list %>%
     dplyr::mutate(
       authors_collapsed = authors_collapsed,
+    )
+
+  # now create QR URLs for remaining missing entries with short author list
+  work_list <- work_list %>%
+    dplyr::mutate(
+      QR = ifelse(
+        is.na(.data$QR),
+        paste0("https://scholar.google.com/scholar?as_q=",
+               .data$authors_collapsed, "+",
+               .data$JOURNAL, "+",
+               .data$YEAR),
+        .data$QR
+      )
     )
 
   vcs <- apply(
