@@ -1,4 +1,7 @@
-# namedropR (development version)
+# namedropR 2.0.1
+
+* Minor fixes to prepare pull request to main
+* Style fixes of code in preparation for release
 
 # namedropR 2.0.0
 
