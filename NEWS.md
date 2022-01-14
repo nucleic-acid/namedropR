@@ -1,3 +1,5 @@
+# namedropR (development version)
+
 # namedropR 2.0.0
 
 * Major code changes to eliminate dependency on the orphaned {bibtex} package to allow for CRAN submission.
