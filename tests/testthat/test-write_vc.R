@@ -158,32 +158,32 @@ test_that("saving as png works as expected", {
   unlink(tempdir())
 })
 
-test_that("CSS class is assigned for webshot to find", {
-  VCS <- htmltools::tagList(
-    htmltools::div(
-      class = "wrong-class",
-      htmltools::span("Lorem_ipsum")
-    )
-  )
-  bib_tbl <- dplyr::tribble(
-    ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~vcs,
-    "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
-  )
-
-
-  # fails due to phantomJS error, so catching the error within R seems impossible:
-  run1 <- evaluate_promise(
-        write_vc(
-        work_item = bib_tbl,
-        export_as = "png",
-        output_dir = tempdir(),
-        path_absolute = TRUE
-    )
-  )
-
-  expect_true(grep("Could not take a screenshot", run1$messages, fixed = TRUE) >= 1)
-  expect_true(grep("PHANTOM ERROR", run1$output, fixed = TRUE) >= 1)
-})
+# test_that("CSS class is assigned for webshot to find", {
+#   VCS <- htmltools::tagList(
+#     htmltools::div(
+#       class = "wrong-class",
+#       htmltools::span("Lorem_ipsum")
+#     )
+#   )
+#   bib_tbl <- dplyr::tribble(
+#     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~vcs,
+#     "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
+#   )
+#
+#
+#   # fails due to phantomJS error, so catching the error within R seems impossible:
+#   run1 <- evaluate_promise(
+#         write_vc(
+#         work_item = bib_tbl,
+#         export_as = "png",
+#         output_dir = tempdir(),
+#         path_absolute = TRUE
+#     )
+#   )
+#
+#   expect_true(grep("Could not take a screenshot", run1$messages) >= 1)
+#   expect_true(grep("PHANTOM ERROR", run1$output) >= 1)
+# })
 
 test_that("unknown output format is caught", {
   VCS <- htmltools::tagList(
