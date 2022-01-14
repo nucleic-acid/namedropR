@@ -59,7 +59,6 @@ Extracts metadata from a .bib file and exports the visual citation in the specif
 \examples{
 
 # create sample data
-
 \dontrun{
 bib_tbl <- dplyr::tribble(
   ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR,
@@ -77,7 +76,6 @@ drop_name(
   style = "clean",
   output_dir = tempdir()
 )
-
 }
 
 }

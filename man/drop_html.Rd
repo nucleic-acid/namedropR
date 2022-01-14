@@ -35,9 +35,10 @@ Accepts bibliographic information and returns a htmltools tagList for printing/d
 \examples{
 \dontrun{
 drop_html(
-  df_row, include_qr = "link", output_dir = "visual_citation/",
+  df_row,
+  include_qr = "link", output_dir = "visual_citation/",
   style = "modern", use_xaringan = FALSE
-  )
+)
 }
 
 }
