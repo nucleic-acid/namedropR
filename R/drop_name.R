@@ -26,6 +26,8 @@
 #' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 #' When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 #' relative to the rendered presentation, not relative to the visual citation.
+#' @param clean_strings Removes curly braces {} from titles and journal names, as they are often present in
+#' BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.
 #' @return A character string with the file path to the created visual citation in the specified output format.
 #'
 #' @examples
@@ -65,7 +67,8 @@ drop_name <- function(bib, cite_key,
                       include_qr = "link",
                       style = "modern",
                       path_absolute = FALSE,
-                      use_xaringan = FALSE) {
+                      use_xaringan = FALSE,
+                      clean_strings = TRUE) {
 
   # CHECK other ARGUMENTS
   stopifnot(is.character(output_dir))
@@ -79,6 +82,7 @@ drop_name <- function(bib, cite_key,
   # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
   stopifnot(is.logical(path_absolute))
   stopifnot(is.logical(use_xaringan))
+  stopifnot(is.logical(clean_strings))
 
   # READ AND CHECK BIB FILE or BIBENTRY
 
@@ -151,6 +155,16 @@ drop_name <- function(bib, cite_key,
   required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
   if (!all(required_cols %in% colnames(bib_data))) {
     stop("Required data.frame columns are 'YEAR', 'AUTHOR', 'TITLE', 'JOURNAL', 'BIBTEXKEY' (all uppercase). At least one is missing or misspelled.")
+  }
+
+  # CLEAN STRINGS
+
+  if (clean_strings) {
+    bib_data <- bib_data %>%
+      dplyr::mutate(
+        TITLE = gsub("\\{|\\}", "", .data$TITLE),
+        JOURNAL = gsub("\\{|\\}", "", .data$JOURNAL)
+      )
   }
 
   # COMPOSE URL FOR QR CODE
