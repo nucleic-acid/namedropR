@@ -1,3 +1,8 @@
+# namedropR 2.0.2
+
+* Slight adjustment to the 'modern' style (journal titles not capitalized anymore)
+* By default curly braces are removed from titles and journal names. This can be prevented by setting clean_strings to FALSE
+
 # namedropR 2.0.1
 
 * Minor fixes to prepare pull request to main
