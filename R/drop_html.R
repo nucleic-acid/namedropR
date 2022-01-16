@@ -30,7 +30,7 @@
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE, compact = FALSE) {
 
   # print(work_item)
   # CHECK ARGUMENTS
