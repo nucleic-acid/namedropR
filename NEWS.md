@@ -1,3 +1,7 @@
+# namedropR 2.1.0
+
+* Implements 'compact' output style. See update vignette for usage.
+
 # namedropR 2.0.2
 
 * Slight adjustment to the 'modern' style (journal titles not capitalized anymore)
