@@ -18,7 +18,7 @@
 get_css_styles <- function(style) {
 
   # check for correct style argument
-  allowed_styles <- c("classic", "modern", "clean", "none")
+  allowed_styles <- c("classic", "modern", "clean", "compact", "none")
 
   if (!style %in% allowed_styles) {
     warning(paste0("Provided CSS style '", style, "' is not defined. No CSS code is returned."))
@@ -45,9 +45,14 @@ get_css_styles <- function(style) {
     css_styles$top_row_style <- ""
     css_styles$title_row_style <- ""
     css_styles$author_row_style <- ""
+  } else if (style == "compact") {
+    css_styles$compact_author_row <- paste("font-size: 1.2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
+    css_styles$compact_year_row <- paste("font-size: 1.2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
   } else {
     stop("Something unexpected happend resolving the CSS style. Check the function call and the supplied style argument.")
   }
+
+
 
   # return the list
   return(css_styles)

@@ -183,7 +183,10 @@ In both cases, the VC is crated by `drop_name()` and the returned file path is u
 
 # Styling
 
-There are three predefined styles: 'modern' (default), 'classic' and 'clean'. You can easily try them out by setting the `style` argument accordingly:
+There are two sizes of VCs: the regular-size and a compact style.
+
+## Regular-Size VC
+There are three predefined styles for the standard size VC: 'modern' (default), 'classic' and 'clean'. You can easily try them out by setting the `style` argument accordingly:
 
 ```{r eval=FALSE}
 drop_name(bib, cite_key = "Hawking1974", 
@@ -234,4 +237,19 @@ table.visual-citation tr td div.author-row span {
 
 ```
 
-**NOTE:** Custom styling is only available for HTML output. For PNG only the three given styles are available. Custom PNG styling is planned for future releases.
+**NOTE:** Custom styling is only available for HTML output in the regular size. For PNG only the three given styles are available. Custom PNG styling is planned for future releases.
+
+## Compact-Size VC
+
+The compact style is intended for less intrusive visual citations. They only contain the first author's last name and the year next to the QR code.
+
+To render a compact VC pass `style = 'compact'` to `drop_name()`:
+
+```{r eval=FALSE}
+drop_name(bib, cite_key = "Hawking1974", 
+            export_as = "png", 
+            style = "compact")
+```
+
+
+

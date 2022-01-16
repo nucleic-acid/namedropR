@@ -30,7 +30,7 @@
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE, compact = FALSE) {
+drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE) {
 
   # print(work_item)
   # CHECK ARGUMENTS
@@ -89,70 +89,139 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
     }
   }
 
-  # COMPOSE HTML OBJECT
-  htmltools::tagList(
-    htmltools::tags$table(
-      class = "visual-citation",
-      htmltools::tags$tr(
-        htmltools::tags$td(
-          htmltools::div(
+  if (style == "compact") {
+
+    # COMPOSE "compact" HTML OBJECT
+
+    htmltools::tagList(
+      htmltools::tags$table(
+        class = "visual-citation",
+        htmltools::tags$tr(
+          htmltools::tags$td(
+              htmltools::div(
+                class = "compact-author-row",
+                style = css_styles$compact_author_row,
+                # to shorten the author row, <br> tags can be included in the string
+                # they are only rendered correctly, if the strings are interpreted via HTML()
+                htmltools::tags$span(htmltools::HTML(work_item$authors_collapsed)),
+              ),
             htmltools::div(
-              class = "top-row",
-              style = css_styles$top_row_style,
-              htmltools::tags$span(paste0(work_item$JOURNAL, " (", as.character(work_item$YEAR), ")"))
-            ),
-            htmltools::div(
-              class = "title-row",
-              style = css_styles$title_row_style,
-              htmltools::tags$span(work_item$TITLE)
-            ),
-            htmltools::div(
-              class = "author-row",
-              style = css_styles$author_row_style,
-              htmltools::tags$span(work_item$authors_collapsed),
+              htmltools::div(
+                class = "compact-year-row",
+                style = css_styles$compact_year_row,
+                htmltools::tags$span(as.character(work_item$YEAR))
+              )
             )
-          )
-        ),
-        htmltools::tags$td(
-          if (include_qr == "embed") {
-            if (capabilities("cairo")) {
-              htmltools::plotTag(
-                plot(generate_qr(url = work_item$QR)),
-                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
-                mimeType = "image/svg+xml"
-              )
-            } else {
-              message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
-              htmltools::plotTag(
-                plot(generate_qr(url = work_item$QR)),
-                alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                width = 150, height = 150
-              )
-            }
-          } else if (include_qr == "link_svg") {
-            if (capabilities("cairo")) {
+          ),
+          htmltools::tags$td(
+            if (include_qr == "embed") {
+              if (capabilities("cairo")) {
+                htmltools::plotTag(
+                  plot(generate_qr(url = work_item$QR)),
+                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+                  device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
+                  mimeType = "image/svg+xml"
+                )
+              } else {
+                message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
+                htmltools::plotTag(
+                  plot(generate_qr(url = work_item$QR)),
+                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+                  width = 150, height = 150
+                )
+              }
+            } else if (include_qr == "link_svg") {
+              if (capabilities("cairo")) {
+                htmltools::capturePlot(
+                  plot(generate_qr(url = work_item$QR)),
+                  filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
+                  device = grDevices::svg, width = 2, height = 2
+                )
+                htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
+              } else {
+                message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
+              }
+            } else if (include_qr == "link") {
               htmltools::capturePlot(
                 plot(generate_qr(url = work_item$QR)),
-                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
-                device = grDevices::svg, width = 2, height = 2
+                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
+                width = 150, height = 150
               )
-              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
+              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
             } else {
-              message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
+              message("No QR code will be created.")
             }
-          } else if (include_qr == "link") {
-            htmltools::capturePlot(
-              plot(generate_qr(url = work_item$QR)),
-              filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
-              width = 150, height = 150
-            )
-            htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
-          } else {
-            message("No QR code will be created.")
-          }
+          )
         )
       )
     )
-  )
+  } else {
+
+    # COMPOSE "long" HTML OBJECT
+    htmltools::tagList(
+      htmltools::tags$table(
+        class = "visual-citation",
+        htmltools::tags$tr(
+          htmltools::tags$td(
+            htmltools::div(
+              htmltools::div(
+                class = "top-row",
+                style = css_styles$top_row_style,
+                htmltools::tags$span(paste0(work_item$JOURNAL, " (", as.character(work_item$YEAR), ")"))
+              ),
+              htmltools::div(
+                class = "title-row",
+                style = css_styles$title_row_style,
+                htmltools::tags$span(work_item$TITLE)
+              ),
+              htmltools::div(
+                class = "author-row",
+                style = css_styles$author_row_style,
+                htmltools::tags$span(work_item$authors_collapsed),
+              )
+            )
+          ),
+          htmltools::tags$td(
+            if (include_qr == "embed") {
+              if (capabilities("cairo")) {
+                htmltools::plotTag(
+                  plot(generate_qr(url = work_item$QR)),
+                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+                  device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
+                  mimeType = "image/svg+xml"
+                )
+              } else {
+                message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
+                htmltools::plotTag(
+                  plot(generate_qr(url = work_item$QR)),
+                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+                  width = 150, height = 150
+                )
+              }
+            } else if (include_qr == "link_svg") {
+              if (capabilities("cairo")) {
+                htmltools::capturePlot(
+                  plot(generate_qr(url = work_item$QR)),
+                  filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
+                  device = grDevices::svg, width = 2, height = 2
+                )
+                htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
+              } else {
+                message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
+              }
+            } else if (include_qr == "link") {
+              htmltools::capturePlot(
+                plot(generate_qr(url = work_item$QR)),
+                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
+                width = 150, height = 150
+              )
+              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
+            } else {
+              message("No QR code will be created.")
+            }
+          )
+        )
+      )
+    )
+  }
 }

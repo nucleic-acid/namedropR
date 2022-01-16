@@ -20,7 +20,9 @@
 #' 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 #' 'none' creates no QR code.
 #' @param style A string specifying the desired style for the visual citation. Possible values are:
-#' "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
+#' "modern", "classic", "clean", "compact" and "none". If "compact" is given, the rendered VC contains
+#' only the last name of the first author and the publication year, next to the QR code.
+#' If "none" is given, the returned html can use a custom css file provided by the user.
 #' This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".
 #' @param path_absolute Boolean to specify, whether the returned output path is a relative path or an absolute path.
 #' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
@@ -173,6 +175,10 @@ drop_name <- function(bib, cite_key,
   # If neither is available (or missing in some rows), a search query for Google Scholar will be passed to the QR code.
   # This will later be passed on to the HTML rendering function.
 
+  # initialize empty QR column
+  bib_data$QR <- NA
+
+  # if DOI is available adapt this to the QR column
   if ("DOI" %in% colnames(bib_data)) {
     bib_data <- bib_data %>%
       dplyr::mutate(
@@ -184,6 +190,7 @@ drop_name <- function(bib, cite_key,
       )
   }
 
+  # if NO DOI but a URL is available adapt this to the QR column
   if ("URL" %in% colnames(bib_data)) {
     bib_data <- bib_data %>%
       dplyr::mutate(
@@ -255,7 +262,8 @@ drop_name <- function(bib, cite_key,
 
   authors_collapsed <- sapply(
     work_list$AUTHOR, manage_authors,
-    max_authors = max_authors
+    max_authors = max_authors,
+    style = style
   )
 
 
@@ -271,7 +279,7 @@ drop_name <- function(bib, cite_key,
         is.na(.data$QR),
         paste0(
           "https://scholar.google.com/scholar?as_q=",
-          .data$authors_collapsed, "+",
+          sub("[];<].*", "", .data$authors_collapsed), "+",
           .data$JOURNAL, "+",
           .data$YEAR
         ),

@@ -40,10 +40,13 @@ the audience to actually comprehend them (and often in a bad
 resolution). Creating visual citations requires manually taking a
 screenshot and placing it on the slide.
 
+<img src="man/figures/hawking_1973.png" align="left" alt="A compact visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." width="15%" style="box-shadow: 5px 5px 6px grey;margin-right: 15px"/>
+
 `namedropR` helps to generate visual citations conveniently (see below),
 in high resolution and with a QR code. This allows the audience to
 follow the reference *while you are talking about it*, instead of
-looking it up in a reference list at the end of your talk.
+looking it up in a reference list at the end of your talk.  
+There is also a less intrusive, compact style, as seen on the left.
 
 ## Basic Usage
 
@@ -60,8 +63,8 @@ bib_path <- "path/to/bibliography_file.bib"
 # create a visual citation as PNG with 'modern' design
 drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", style = "modern")
 
-# create a visual citation as HTML with 'classic design'
-drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "html", style = "classic")
+# create a visual citation as HTML with 'compact' design
+drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "html", style = "compact")
 
 # drop_name() by default returns the file path, 
 # where the visual citation was stored as character string. 

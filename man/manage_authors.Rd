@@ -4,12 +4,14 @@
 \alias{manage_authors}
 \title{manage_authors}
 \usage{
-manage_authors(authors, max_authors)
+manage_authors(authors, max_authors, style = "any")
 }
 \arguments{
 \item{authors}{Can be a single string or a list of authors.}
 
 \item{max_authors}{Maximum number of authors to be returned from the list.}
+
+\item{style}{Takes the user specified style. Only relevant for "compact" mode. Ignored otherwise.}
 }
 \value{
 A single string with the desired maximum number of authors.

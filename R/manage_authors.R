@@ -4,6 +4,7 @@
 #'
 #' @param authors Can be a single string or a list of authors.
 #' @param max_authors Maximum number of authors to be returned from the list.
+#' @param style Takes the user specified style. Only relevant for "compact" mode. Ignored otherwise.
 #'
 #' @return A single string with the desired maximum number of authors.
 #'
@@ -13,7 +14,7 @@
 #' manage_authors(article_authors, max_authors = 2)
 #' }
 #'
-manage_authors <- function(authors, max_authors) {
+manage_authors <- function(authors, max_authors, style = "any") {
   stopifnot(any(is.character(authors), is.list(authors)))
   stopifnot(is.numeric(max_authors))
 
@@ -24,17 +25,28 @@ manage_authors <- function(authors, max_authors) {
     authors <- unlist(authors)
   }
 
+  if (style == "compact") {
+    max_authors <- 1
+  }
+
   # if many authors are passed, crop the list according to option max_authors
   if (max_authors < length(authors)) {
 
     # if the author list is cropped, add "et. al."
-    authors <- paste0(
-      paste(authors[1:max_authors],
-        collapse = "; "
-      ),
-      " et. al."
-    )
-    # print(authors)
+    # in "compact" style, the et. al. goes to a new line
+    if (style == "compact") {
+      authors <- paste0(
+        sub(",.*", "", authors[1:max_authors]),
+        "<br>et. al."
+      )
+    } else {
+      authors <- paste0(
+        paste(authors[1:max_authors],
+          collapse = "; "
+        ),
+        " et. al."
+      )
+    }
   } else {
     # if there are less authors than the desired maximum, just paste them together
     authors <- paste(authors[1:length(authors)], collapse = "; ")
