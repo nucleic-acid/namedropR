@@ -1,3 +1,9 @@
+# namedropR 2.1.1
+
+* Removes examples from not-exported functions to fulfill CRAN reviewer comment
+* Adds and improves test coverage for additional input situations.
+* Minor style adjustments for compact and clean style.
+
 # namedropR 2.1.0
 
 * Implements 'compact' output style. See update vignette for usage.
