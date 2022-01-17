@@ -18,15 +18,6 @@
 #' relative to the rendered presentation, not relative to the visual citation.
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
-#' @examples
-#' \dontrun{
-#' drop_html(
-#'   df_row,
-#'   include_qr = "link", output_dir = "visual_citation/",
-#'   style = "modern", use_xaringan = FALSE
-#' )
-#' }
-#'
 #' @import htmltools
 
 

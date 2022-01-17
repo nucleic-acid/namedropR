@@ -7,11 +7,6 @@
 #'
 #' @return The encoded QR code as matrix.
 #'
-#' @examples
-#' \dontrun{
-#' generate_qr("https://doi.org/10.1007/bf00396886")
-#' }
-#'
 #' @importFrom qrcode qr_code
 
 

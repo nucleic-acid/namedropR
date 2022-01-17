@@ -16,9 +16,3 @@ The encoded QR code as matrix.
 Generates a QR code from a supplied string and return as a plot object.
 This is a wrapper function around qrcode::qr_code().
 }
-\examples{
-\dontrun{
-generate_qr("https://doi.org/10.1007/bf00396886")
-}
-
-}

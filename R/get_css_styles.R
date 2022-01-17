@@ -9,11 +9,6 @@
 #'
 #' @return A list of inline css styles for each element of the visual citation: top row, title row and author row.
 #'
-#' @examples
-#' \dontrun{
-#' modern_style <- get_css_styles(style = "modern")
-#' print(modern_style$title_row_style)
-#' }
 #'
 get_css_styles <- function(style) {
 
@@ -39,15 +34,15 @@ get_css_styles <- function(style) {
     css_styles$author_row_style <- paste("font-size: 1.1rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#479BC5;")
   } else if (style == "clean") {
     css_styles$top_row_style <- paste("font-size: 1rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#479BC5;")
-    css_styles$title_row_style <- paste("font-size: 2.5rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: lighter;text-transform: uppercase;")
+    css_styles$title_row_style <- paste("font-size: 2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: lighter;text-transform: uppercase;")
     css_styles$author_row_style <- paste("font-size: 1.5rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;")
   } else if (style == "none") {
     css_styles$top_row_style <- ""
     css_styles$title_row_style <- ""
     css_styles$author_row_style <- ""
   } else if (style == "compact") {
-    css_styles$compact_author_row <- paste("font-size: 1.2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
-    css_styles$compact_year_row <- paste("font-size: 1.2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
+    css_styles$compact_author_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
+    css_styles$compact_year_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
   } else {
     stop("Something unexpected happend resolving the CSS style. Check the function call and the supplied style argument.")
   }

@@ -32,13 +32,3 @@ A htmltools taglist containing the visual citation as HTML representation includ
 \description{
 Accepts bibliographic information and returns a htmltools tagList for printing/display.
 }
-\examples{
-\dontrun{
-drop_html(
-  df_row,
-  include_qr = "link", output_dir = "visual_citation/",
-  style = "modern", use_xaringan = FALSE
-)
-}
-
-}

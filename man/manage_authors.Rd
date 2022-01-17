@@ -19,10 +19,3 @@ A single string with the desired maximum number of authors.
 \description{
 Returns a cleaned and cropped string of authors for the visual citation.
 }
-\examples{
-\dontrun{
-article_authors <- c("Anna", "John", "Simon")
-manage_authors(article_authors, max_authors = 2)
-}
-
-}

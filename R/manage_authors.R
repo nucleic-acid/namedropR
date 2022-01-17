@@ -8,12 +8,6 @@
 #'
 #' @return A single string with the desired maximum number of authors.
 #'
-#' @examples
-#' \dontrun{
-#' article_authors <- c("Anna", "John", "Simon")
-#' manage_authors(article_authors, max_authors = 2)
-#' }
-#'
 manage_authors <- function(authors, max_authors, style = "any") {
   stopifnot(any(is.character(authors), is.list(authors)))
   stopifnot(is.numeric(max_authors))
