@@ -17,4 +17,3 @@ drop_name(bib_path, export_as = "png", style = "invalid", cite_key = "Eschrich19
 drop_name(bib_path, export_as = "png", style = "compact", cite_key = "collaboration_2019_ApJL", output_dir = here::here(tempdir(), "compact_style"))
 drop_name(bib_path, export_as = "html", style = "compact", cite_key = "Eschrich1983", output_dir = here::here(tempdir(), "compact_style"))
 drop_name(bib_path, export_as = "html_full", style = "compact", cite_key = "HAWKING_noDOI", output_dir = here::here(tempdir(), "compact_style"))
-

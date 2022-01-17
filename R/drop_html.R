@@ -89,13 +89,13 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
         class = "visual-citation",
         htmltools::tags$tr(
           htmltools::tags$td(
-              htmltools::div(
-                class = "compact-author-row",
-                style = css_styles$compact_author_row,
-                # to shorten the author row, <br> tags can be included in the string
-                # they are only rendered correctly, if the strings are interpreted via HTML()
-                htmltools::tags$span(htmltools::HTML(work_item$authors_collapsed)),
-              ),
+            htmltools::div(
+              class = "compact-author-row",
+              style = css_styles$compact_author_row,
+              # to shorten the author row, <br> tags can be included in the string
+              # they are only rendered correctly, if the strings are interpreted via HTML()
+              htmltools::tags$span(htmltools::HTML(work_item$authors_collapsed)),
+            ),
             htmltools::div(
               htmltools::div(
                 class = "compact-year-row",

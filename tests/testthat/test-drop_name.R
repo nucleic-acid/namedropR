@@ -20,6 +20,18 @@ test_that("Bibliographies are correctly read ", {
   )
 })
 
+test_that("compact mode returns a correct file path", {
+  slim_bib <- dplyr::tribble(
+    ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE,
+    "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
+  )
+
+  expect_equal(
+    drop_name(bib = slim_bib, cite_key = "Alice2022", output_dir = tempdir(), style = "compact"),
+    paste0(tempdir(), "/Alice2022.html")
+  )
+})
+
 test_that("biblatex files produce an output", {
   bib_tbl <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNALTITLE, ~BIBTEXKEY, ~DATE, ~URL,
@@ -28,7 +40,20 @@ test_that("biblatex files produce an output", {
   expect_equal(
     drop_name(bib = bib_tbl, cite_key = "Alice2022", output_dir = tempdir()),
     paste0(tempdir(), "/Alice2022.html")
+  )
+
+  bib_tbl2 <- dplyr::tribble(
+    ~TITLE, ~AUTHOR, ~JOURNALTITLE, ~BIBTEXKEY, ~DATE, ~YEAR, ~URL,
+    "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022-01-01", NA, "https://en.wikipedia.org",
+    "Some 2023", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2023", NA, "2023", "https://en.wikipedia.org"
+  )
+  expect_equal(
+    suppressMessages(drop_name(bib = bib_tbl2, output_dir = tempdir())),
+    c(
+      paste0(tempdir(), "/Alice2022.html"),
+      paste0(tempdir(), "/Alice2023.html")
     )
+  )
 })
 
 test_that("missing DOI and URL columns are properly handled", {
