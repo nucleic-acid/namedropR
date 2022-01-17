@@ -156,7 +156,7 @@ drop_name <- function(bib, cite_key,
   # check for required columns
   required_cols <- c("YEAR", "AUTHOR", "TITLE", "JOURNAL", "BIBTEXKEY")
   if (!all(required_cols %in% colnames(bib_data))) {
-    stop("Required data.frame columns are 'YEAR', 'AUTHOR', 'TITLE', 'JOURNAL', 'BIBTEXKEY' (all uppercase). At least one is missing or misspelled.")
+    stop("Required data.frame columns are 'YEAR' (or 'DATE'), 'AUTHOR', 'TITLE', 'JOURNAL', 'BIBTEXKEY' (all uppercase). At least one is missing or misspelled.")
   }
 
   # CLEAN STRINGS
