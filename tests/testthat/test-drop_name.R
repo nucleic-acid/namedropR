@@ -20,33 +20,28 @@ test_that("Bibliographies are correctly read ", {
   )
 })
 
-# test_that("compatibility for biblatex works", {
-#   bib_tbl <- dplyr::tribble(
-#     ~TITLE, ~AUTHOR, ~JOURNALTITLE, ~BIBTEXKEY, ~YEAR, ~DOI,
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org"
-#   )
-#   expect_message(drop_name(bib = bib_tbl, cite_key = "Alice2022"), "BibLaTeX field 'JOURNALTITLE")
-#
-#   bib_tbl <- dplyr::tribble(
-#     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE, ~DOI,
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org"
-#   )
-#   expect_message(drop_name(bib = bib_tbl, cite_key = "Alice2022"), "BibLaTeX field 'DATE")
-# })
+test_that("biblatex files produce an output", {
+  bib_tbl <- dplyr::tribble(
+    ~TITLE, ~AUTHOR, ~JOURNALTITLE, ~BIBTEXKEY, ~DATE, ~URL,
+    "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org"
+  )
+  expect_equal(
+    drop_name(bib = bib_tbl, cite_key = "Alice2022", output_dir = tempdir()),
+    paste0(tempdir(), "/Alice2022.html")
+    )
+})
 
-# test_that("DATEs are read correctly and errors are caught", {
-#   date_variants <- dplyr::tribble(
-#     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE, ~DOI,
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022-10-29", "https://en.wikipedia.org",
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022-11", "https://en.wikipedia.org",
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org",
-#     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "August 206", "https://en.wikipedia.org"
-#   )
-#   expect_message(drop_name(bib = date_variants[1,], cite_key = "Alice2022"), "BibLaTeX field 'DATE")
-#   expect_message(drop_name(bib = date_variants[2,], cite_key = "Alice2022"), "BibLaTeX field 'DATE")
-#   expect_message(drop_name(bib = date_variants[3,], cite_key = "Alice2022"), "BibLaTeX field 'DATE")
-#   expect_warning(suppressMessages(drop_name(bib = date_variants[4,], cite_key = "Alice2022")))
-# })
+test_that("missing DOI and URL columns are properly handled", {
+  slim_bib <- dplyr::tribble(
+    ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE,
+    "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
+  )
+
+  expect_equal(
+    drop_name(bib = slim_bib, cite_key = "Alice2022", output_dir = tempdir()),
+    paste0(tempdir(), "/Alice2022.html")
+  )
+})
 
 test_that("all required columns are enforced", {
   missing_cols <- dplyr::tribble(
@@ -57,16 +52,6 @@ test_that("all required columns are enforced", {
   # Authors missing
   expect_error(drop_name(missing_cols, cite_key = "Four"))
 })
-
-
-# test_that("QR-URL generation is properly handled", {
-#   qr_variants <- dplyr::tribble(
-#     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE, ~DOI, ~URL,
-#     "Some 2022", "Alice", "JoURP", "hasDOI", "2022-10-29", "10.fancyDOI/something", "https://en.wikipedia.org",
-#     "Some 2022", "Alice", "JoURP", "noDOI", "2022-11", NA, "https://en.wikipedia.org",
-#     "Some 2022", "Alice", "JoURP", "noDOInoURL", "2022", NA, NA
-#   )
-#   })
 
 
 
