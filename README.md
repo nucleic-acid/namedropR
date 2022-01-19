@@ -7,6 +7,7 @@
 
 [![CRAN
 status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.org/package=namedropR)
+[![R-CMD-check](https://github.com/nucleic-acid/namedropR/workflows/R-CMD-check/badge.svg)](https://github.com/nucleic-acid/namedropR/actions)
 <!-- badges: end -->
 
 `namedropR` provides ‘visual citations’ containing the metadata of a
