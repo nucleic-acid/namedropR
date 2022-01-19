@@ -4,6 +4,9 @@
 # namedropR
 
 <!-- badges: start -->
+
+[![CRAN
+status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.org/package=namedropR)
 <!-- badges: end -->
 
 `namedropR` provides ‘visual citations’ containing the metadata of a
