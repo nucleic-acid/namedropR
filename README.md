@@ -15,6 +15,12 @@ scientific paper and a ‘QR’ code.
 
 ## Installation
 
+To install, simply run:
+
+``` r
+install.packages("namedropR")
+```
+
 You can install the development version of namedropR from
 [GitHub](https://github.com/) with:
 
