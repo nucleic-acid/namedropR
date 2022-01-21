@@ -18,6 +18,7 @@ knitr::opts_chunk$set(
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.org/package=namedropR)
 [![R-CMD-check](https://github.com/nucleic-acid/namedropR/workflows/R-CMD-check/badge.svg)](https://github.com/nucleic-acid/namedropR/actions)
+[![Total Downloads](https://cranlogs.r-pkg.org/badges/grand-total/namedropR)](https://CRAN.R-project.org/package=namedropR)
 <!-- badges: end -->
 
 `namedropR` provides 'visual citations' containing the metadata of a scientific paper and a 'QR' code.
