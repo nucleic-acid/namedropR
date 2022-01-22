@@ -15,11 +15,11 @@ test_that("Checking warning messages are in place", {
 })
 
 test_that("style table has unique names", {
-  style_df <- read.csv(here::here("inst", "styles", "styles.csv"))
+  style_df <- readr::read_csv(system.file("styles", "styles.csv", package = "namedropR"), show_col_types = FALSE)
   expect_false(any(dplyr::count(style_df, .data$style_name)$n > 1))
 })
 
 test_that("no style masks the 'compact' style", {
-  style_df <- read.csv(here::here("inst", "styles", "styles.csv"))
+  style_df <- readr::read_csv(system.file("styles", "styles.csv", package = "namedropR"), show_col_types = FALSE)
   expect_false(any("compact" %in% style_df$style_name))
 })

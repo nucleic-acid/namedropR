@@ -9,6 +9,8 @@
 #'
 #' @return A list of inline css styles for each element of the visual citation: top row, title row and author row.
 #'
+#' @importFrom readr read_csv
+#' @importFrom dplyr filter
 #'
 get_css_styles <- function(style) {
 
@@ -16,7 +18,8 @@ get_css_styles <- function(style) {
   stopifnot(is.character(style))
 
   # read style table
-  allowed_styles <- read.csv(here::here("inst", "styles", "styles.csv"))
+  allowed_styles <- readr::read_csv(system.file("styles", "styles.csv", package = "namedropR"), show_col_types = FALSE)
+
   # print(allowed_styles)
 
   # initiate empty list
