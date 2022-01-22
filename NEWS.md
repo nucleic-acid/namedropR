@@ -1,3 +1,8 @@
+# namedropR 2.2.0
+
+* Styles are now stored in a separate csv. This allows for easier addition of styles.
+* Allows user specification of QR code size.
+
 # namedropR 2.1.1
 
 * Removes examples from not-exported functions to fulfill CRAN reviewer comment
