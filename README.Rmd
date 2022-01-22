@@ -93,6 +93,11 @@ drop_name(bib_path, export_as = "png", style = "clean")
 
 Styling is possible via predefined designs or via custom 'CSS' to match the design of the HTML presentation like e.g. 'xaringan' or 'revealJS' (see the vignette for more options).
 
+## How to contribute
+If you have ideas for Visual Citation styles and think, everyone should be able to use them, feel free to [open an issue](https://github.com/nucleic-acid/namedropR/issues) and describe the style or provide the CSS code, if you have one already.
+
+If you want to speed things up, you can fork the project to create a pull request. Please also open an issue, so we can have a discussion, if needed. See the [readme](https://github.com/nucleic-acid/namedropR/tree/main/inst/styles/readme.md) for details.
+
 ## Notes
 - This package is not intended as replacement for proper reference manager packages, but a tool to enrich scientific presentation slides. Hence the functionality is quite limited to this specific use case.
 - previous versions (before v2.0) allowed passing `RefManageR::BibEntry()` objects. This option was removed to eliminate dependency on the orphaned `{bibtex}` package. This might break code for users of initial releases of the package, but was needed to allow for CRAN submission.

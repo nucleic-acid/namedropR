@@ -100,6 +100,19 @@ Styling is possible via predefined designs or via custom ‘CSS’ to match
 the design of the HTML presentation like e.g. ‘xaringan’ or ‘revealJS’
 (see the vignette for more options).
 
+## How to contribute
+
+If you have ideas for Visual Citation styles and think, everyone should
+be able to use them, feel free to [open an
+issue](https://github.com/nucleic-acid/namedropR/issues) and describe
+the style or provide the CSS code, if you have one already.
+
+If you want to speed things up, you can fork the project to create a
+pull request. Please also open an issue, so we can have a discussion, if
+needed. See the
+[readme](https://github.com/nucleic-acid/namedropR/tree/main/inst/styles/readme.md)
+for details.
+
 ## Notes
 
 -   This package is not intended as replacement for proper reference
