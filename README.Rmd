@@ -98,6 +98,10 @@ If you have ideas for Visual Citation styles and think, everyone should be able 
 
 If you want to speed things up, you can fork the project to create a pull request. Please also open an issue, so we can have a discussion, if needed. See the [readme](https://github.com/nucleic-acid/namedropR/tree/main/inst/styles/readme.md) for details.
 
+## Code of Conduct
+  
+Please note that the namedropR project is released with a [Contributor Code of Conduct](https://contributor-covenant.org/version/2/0/CODE_OF_CONDUCT.html). By contributing to this project, you agree to abide by its terms.
+
 ## Notes
 - This package is not intended as replacement for proper reference manager packages, but a tool to enrich scientific presentation slides. Hence the functionality is quite limited to this specific use case.
 - previous versions (before v2.0) allowed passing `RefManageR::BibEntry()` objects. This option was removed to eliminate dependency on the orphaned `{bibtex}` package. This might break code for users of initial releases of the package, but was needed to allow for CRAN submission.
