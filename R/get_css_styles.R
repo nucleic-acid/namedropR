@@ -26,8 +26,8 @@ get_css_styles <- function(style) {
   css_styles <- list()
 
   if (style == "compact") {
-    css_styles$compact_author_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
-    css_styles$compact_year_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
+    css_styles$compact_author_row <- paste("font-size: 2.2vw;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
+    css_styles$compact_year_row <- paste("font-size: 2.2vw;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
 
     # return the compact style list at this point
     return(css_styles)
