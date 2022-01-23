@@ -67,6 +67,7 @@ drop_name <- function(bib, cite_key,
                       export_as = "html",
                       max_authors = 3,
                       include_qr = "link",
+                      qr_size = 250,
                       style = "modern",
                       path_absolute = FALSE,
                       use_xaringan = FALSE,
@@ -80,6 +81,11 @@ drop_name <- function(bib, cite_key,
   stopifnot(max_authors >= 0)
   stopifnot(is.character(include_qr))
   stopifnot(include_qr %in% c("embed", "link", "link_svg", "none"))
+  stopifnot(is.numeric(qr_size))
+  if (qr_size < 150) {
+    warning("QR size must be at least 150px. This will now be set as size.")
+    qr_size <- 150
+  }
   stopifnot(is.character(style))
   # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
   stopifnot(is.logical(path_absolute))
@@ -297,7 +303,8 @@ drop_name <- function(bib, cite_key,
     # if PNG is desired output format, the relative filepath must not
     # be adapted for later inclusion of the HTML. Therefore use_xaringan
     # must be ignored, as otherwise the QR will not be included properly
-    use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan)
+    use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan),
+    qr_size = qr_size
   )
 
   work_list <- work_list %>%
