@@ -11,6 +11,8 @@ drop_name(
   export_as = "html",
   max_authors = 3,
   include_qr = "link",
+  qr_size = 250,
+  vc_width = 600,
   style = "modern",
   path_absolute = FALSE,
   use_xaringan = FALSE,
@@ -40,6 +42,11 @@ For webshot you need to install phantomJS once (see 'webshot' documentation).}
 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 'none' creates no QR code.}
+
+\item{qr_size}{Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.}
+
+\item{vc_width}{Specifies the width of the text part of the visual citation in px.
+This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "compact" and "none". If "compact" is given, the rendered VC contains

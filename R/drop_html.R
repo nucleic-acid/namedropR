@@ -16,12 +16,16 @@
 #' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 #' When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 #' relative to the rendered presentation, not relative to the visual citation.
+#' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
+#' @param vc_width Specifies the width of the text part of the visual citation in px.
+#' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
+
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, qr_size, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, qr_size = 250, vc_width = 600, output_dir, style, use_xaringan = FALSE) {
 
   # print(work_item)
   # CHECK ARGUMENTS
@@ -156,6 +160,7 @@ drop_html <- function(work_item, include_qr, qr_size, output_dir, style, use_xar
         htmltools::tags$tr(
           htmltools::tags$td(
             htmltools::div(
+              style = paste0("width:", vc_width, "px"),
               htmltools::div(
                 class = "top-row",
                 style = css_styles$top_row_style,
