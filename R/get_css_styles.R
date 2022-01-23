@@ -9,45 +9,46 @@
 #'
 #' @return A list of inline css styles for each element of the visual citation: top row, title row and author row.
 #'
+#' @importFrom readr read_csv
+#' @importFrom dplyr filter
 #'
 get_css_styles <- function(style) {
 
-  # check for correct style argument
-  allowed_styles <- c("classic", "modern", "clean", "compact", "none")
+  # check for correct style argument class
+  stopifnot(is.character(style))
 
-  if (!style %in% allowed_styles) {
-    warning(paste0("Provided CSS style '", style, "' is not defined. No CSS code is returned."))
-    style <- "none"
-  }
+  # read style table
+  allowed_styles <- readr::read_csv(system.file("styles", "styles.csv", package = "namedropR"), show_col_types = FALSE)
+
+  # print(allowed_styles)
 
   # initiate empty list
   css_styles <- list()
 
-  # assign inline CSS strings to the respective list items according to the style argument
-  if (style == "classic") {
-    css_styles$top_row_style <- paste("font-size: 1.3rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal;font-variant: small-caps;color:#e72e00;")
-    css_styles$title_row_style <- paste("font-size: 2rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: bold")
-    css_styles$author_row_style <- paste("font-size: 1.1rem;font-family: 'Palatino', 'Georgia', 'Times New Roman', serif;font-weight: normal")
-  } else if (style == "modern") {
-    css_styles$top_row_style <- paste("font-size: 1.2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: lighter;")
-    css_styles$title_row_style <- paste("font-size: 2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#1A3399;")
-    css_styles$author_row_style <- paste("font-size: 1.1rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#479BC5;")
-  } else if (style == "clean") {
-    css_styles$top_row_style <- paste("font-size: 1rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#479BC5;")
-    css_styles$title_row_style <- paste("font-size: 2rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: lighter;text-transform: uppercase;")
-    css_styles$author_row_style <- paste("font-size: 1.5rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;")
+  if (style == "compact") {
+    css_styles$compact_author_row <- paste("font-size: 2.2vw;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
+    css_styles$compact_year_row <- paste("font-size: 2.2vw;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
+
+    # return the compact style list at this point
+    return(css_styles)
+  }
+
+  if (style %in% allowed_styles$style_name) {
+    allowed_styles <- dplyr::filter(allowed_styles, .data$style_name == style)
+    # assign inline CSS strings to the respective list items according to the style argument
+    css_styles$top_row_style <- allowed_styles$top_row
+    css_styles$title_row_style <- allowed_styles$title_row
+    css_styles$author_row_style <- allowed_styles$author_row
   } else if (style == "none") {
     css_styles$top_row_style <- ""
     css_styles$title_row_style <- ""
     css_styles$author_row_style <- ""
-  } else if (style == "compact") {
-    css_styles$compact_author_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: bold;color:#000000;text-align: right;")
-    css_styles$compact_year_row <- paste("font-size: 1.3rem;font-family: 'Noto Sans', 'Arial', 'Helvetica', sans-serif;font-weight: normal;color:#000000;text-align: right")
   } else {
-    stop("Something unexpected happend resolving the CSS style. Check the function call and the supplied style argument.")
+    warning(paste0("This is not the style you are looking for...(*waves hand*). Provided CSS style '", style, "' is not defined. No CSS style is returned."))
+    css_styles$top_row_style <- ""
+    css_styles$title_row_style <- ""
+    css_styles$author_row_style <- ""
   }
-
-
 
   # return the list
   return(css_styles)
