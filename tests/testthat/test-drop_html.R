@@ -1,4 +1,4 @@
-test_that("an HTML taglist is being returned with all putput options", {
+test_that("an HTML taglist is being returned with all output options", {
   bib_tbl <- dplyr::tribble(
     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~QR,
     "Some 2022", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2022", "2022", "https://en.wikipedia.org"
@@ -60,13 +60,13 @@ test_that("inputs are correct", {
 
   expect_error(drop_html(
     wrong_title[1, ],
-    include_qr = "embed",
+    include_qr = "link",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
 
   expect_message(drop_html(
     wrong_title[2, ],
-    include_qr = "embed",
+    include_qr = "link",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
 
