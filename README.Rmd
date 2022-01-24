@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# namedropR <img src="man/figures/logo.png" align="right" width="120" />
+# namedropR <img src="man/figures/logo.png" align="right" width="240" />
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.org/package=namedropR)

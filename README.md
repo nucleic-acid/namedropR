@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# namedropR <img src="man/figures/logo.png" align="right" width="120" />
+# namedropR <img src="man/figures/logo.png" align="right" width="240" />
 
 <!-- badges: start -->
 
