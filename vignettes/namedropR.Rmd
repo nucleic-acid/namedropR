@@ -14,7 +14,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-```{r setup}
+```{r setup, eval=FALSE}
 library(namedropR)
 ```
 
@@ -38,20 +38,18 @@ The package allows for two input options: a `data.frame`/`tibble` containing the
 You can pass the path to your *.bib file to `drop_name()`. The function will read the bibliography, select the needed columns and create the visual citation:
 
 ```{r, eval=FALSE}
-bib_path <- system.file("testdata", "sample.bib", package="namedropR")
+bib_path <- system.file("testdata", "sample.bib", package = "namedropR")
 namedropR::drop_name(bib_path)
-
 ```
 
 When repeatedly "dropping" single citations from the same bibliography, it is recommended to read the bibliography once and pass the generated data.frame to `drop_name()` function:
 
 ```{r, eval=FALSE}
 library(bib2df)
-bib_path <- system.file("testdata", "sample.bib", package="namedropR")
+bib_path <- system.file("testdata", "sample.bib", package = "namedropR")
 bib <- bib2df::bib2df(bib_path)
 
 namedropR::drop_name(bib)
-
 ```
 
 
@@ -79,22 +77,25 @@ To save the output to a custom location there are a few options:
 ```{r, eval=FALSE}
 
 # using the temporary directory tempdir()
-drop_name(bib, 
-          output_dir = tempdir(), 
-          export_as = "png", 
-          cite_key = "Hawking1974")
+drop_name(bib,
+  output_dir = tempdir(),
+  export_as = "png",
+  cite_key = "Hawking1974"
+)
 
 # by passing a relative path
-drop_name(bib, 
-          output_dir = "my_custom_folder", 
-          export_as = "png", 
-          cite_key = "Hawking1974")
+drop_name(bib,
+  output_dir = "my_custom_folder",
+  export_as = "png",
+  cite_key = "Hawking1974"
+)
 
 # by passing an absolute path
-drop_name(bib, 
-          output_dir = "/home/user_name/some/project/path", 
-          export_as = "png", 
-          cite_key = "Hawking1974")
+drop_name(bib,
+  output_dir = "/home/user_name/some/project/path",
+  export_as = "png",
+  cite_key = "Hawking1974"
+)
 
 # (note: if passing an absolute path, the path must already exist!)
 ```
@@ -102,10 +103,11 @@ drop_name(bib,
 It is also possible to obtain the absolute file path as returned string, by passing `path_absolute = TRUE`:
 
 ```{r, eval=FALSE}
-drop_name(bib, 
-          export_as = "png", 
-          path_absolute = TRUE,
-          cite_key = "Hawking1974")
+drop_name(bib,
+  export_as = "png",
+  path_absolute = TRUE,
+  cite_key = "Hawking1974"
+)
 #> [1] ""/home/user_name/some/project/path/Hawking1974.html.png"
 ```
 
@@ -118,23 +120,26 @@ If no cite_key is specified, all bibliography entries are being dropped:
 drop_name(bib)
 
 #> No cite_key specified. Working through all possible 5 entries in the bibliography.
-#> [1] "visual_citations/Eschrich1983.html"           
+#> [1] "visual_citations/Eschrich1983.html"
 #> [2] "visual_citations/collaboration_2019_ApJL.html"
-#> [3] "visual_citations/Hawking1974.html"          
-#> [4] "visual_citations/Hawking1975.html"          
-#> [5] "visual_citations/Hawking1976.html"  
+#> [3] "visual_citations/Hawking1974.html"
+#> [4] "visual_citations/Hawking1975.html"
+#> [5] "visual_citations/Hawking1976.html"
 ```
 
 To select just some of the references in a larger bibliography, you can pass a vector containing some cite_keys as well:
 
 ```{r, eval=FALSE}
-drop_name(bib, 
-          cite_key = c("Hawking1974", 
-                       "Eschrich1983", 
-                       "collaboration_2019_ApJL"))
+drop_name(bib,
+  cite_key = c(
+    "Hawking1974",
+    "Eschrich1983",
+    "collaboration_2019_ApJL"
+  )
+)
 
 #> 3 cite_key(s) specified. Working through all of them.
-#> [1] "visual_citations/Hawking1974.html"           
+#> [1] "visual_citations/Hawking1974.html"
 #> [2] "visual_citations/Eschrich1983.html"
 #> [3] "visual_citations/collaboration_2019_ApJL.html"
 ```
@@ -150,9 +155,11 @@ Within an Rmarkdown/HTML presentation the VC can be conveniently included like s
 ```{r, eval=FALSE}
 # PNG
 knitr::include_graphics(
-  drop_name(bib, cite_key = "Hawking1974", 
-            export_as = "png", 
-            style = "clean")
+  drop_name(bib,
+    cite_key = "Hawking1974",
+    export_as = "png",
+    style = "clean"
+  )
 )
 
 # HTML
@@ -170,38 +177,80 @@ In both cases, the VC is crated by `drop_name()` and the returned file path is u
 
 **NOTE:** When using `htmltools::includeHTML()`, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via the relative link to the qr-subfolder of the original output path. `use_xaringan = TRUE` handles this by storing the qr code directly in a subfolder of the working directory, so the relative link to the QR code after integration to the knitted output points to the right place.
 
-# Further Options
-
-- `output_dir` specifies the output path (relative to the working directory)
-- `max_authors` specifies how many authors should be printed
-- `include_qr` specifies the creation/implementation of the QR code
-  - `'link'` (default) creates a PNG and links to that in the composed HTML
-  - `'link_svg'` creates a SVG and links to that in the composed HTML
-  - `'embed'` encodes the QR code as base64 and includes it within the HTML document (use with caution, this caused *severe* performance issues in Rmarkdown knitting)
-  - `'none'` produces no QR code
-
-
 # Styling
 
-There are two sizes of VCs: the regular-size and a compact style.
+There are two sizes of VCs: the regular-size and a compact size.
 
-## Regular-Size VC
+## Predefined Styles
 There are three predefined styles for the standard size VC: 'modern' (default), 'classic' and 'clean'. You can easily try them out by setting the `style` argument accordingly:
 
 ```{r eval=FALSE}
-drop_name(bib, cite_key = "Hawking1974", 
-            export_as = "png", 
-            style = "modern")
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "modern"
+)
 
-drop_name(bib, cite_key = "Hawking1974", 
-            export_as = "png", 
-            style = "classic")
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "classic"
+)
 
-drop_name(bib, cite_key = "Hawking1974", 
-            export_as = "png", 
-            style = "clean")
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "clean"
+)
+
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "fancy"
+)
+
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "newspaper"
+)
 ```
 
+More styles might be added / contributed in the future. For a list of all styles, see the packages [`styles.csv`](https://github.com/nucleic-acid/namedropR/blob/main/inst/styles/styles.csv)
+
+## Changing the size of the elements
+
+It is possible to adapt the width of the text area and the size of the QR code to one's needs. To achieve this you simply specify the size of each in pixels:
+
+```{r, eval=FALSE}
+
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "newspaper",
+  # default size is 250, minimum is 150:
+  qr_size = 150,
+  # default width of the text area is 600
+  vc_width = 1100
+)
+```
+
+
+## Compact-Size VC
+
+The compact style is intended for less intrusive visual citations. They only contain the first author's last name and the year next to the QR code.
+
+To render a compact VC pass `style = 'compact'` to `drop_name()`:
+
+```{r eval=FALSE}
+drop_name(bib,
+  cite_key = "Hawking1974",
+  export_as = "png",
+  style = "compact"
+)
+```
+
+## Custom Styling via CSS
 If the VC is intended to be included as HTML in a presentation, custom styling via CSS is possible by styling the respective elements.
 
 If  you are not already using a document-wide CSS style-sheet via the YAML header, you can put a CSS chunk before the first VC, where you style the following HTML classes:
@@ -237,19 +286,16 @@ table.visual-citation tr td div.author-row span {
 
 ```
 
-**NOTE:** Custom styling is only available for HTML output in the regular size. For PNG only the three given styles are available. Custom PNG styling is planned for future releases.
-
-## Compact-Size VC
-
-The compact style is intended for less intrusive visual citations. They only contain the first author's last name and the year next to the QR code.
-
-To render a compact VC pass `style = 'compact'` to `drop_name()`:
-
-```{r eval=FALSE}
-drop_name(bib, cite_key = "Hawking1974", 
-            export_as = "png", 
-            style = "compact")
-```
+**NOTE:** Custom styling is only available for HTML output in the regular size. For PNG only the predefined styles are available. Custom PNG might be planned for future releases.
 
 
 
+# Further Options
+
+- `output_dir` specifies the output path (relative to the working directory)
+- `max_authors` specifies how many authors should be printed
+- `include_qr` specifies the creation/implementation of the QR code
+  - `'link'` (default) creates a PNG and links to that in the composed HTML
+  - `'link_svg'` creates a SVG and links to that in the composed HTML
+  - `'embed'` encodes the QR code as base64 and includes it within the HTML document (use with caution, this caused *severe* performance issues in Rmarkdown knitting)
+  - `'none'` produces no QR code
