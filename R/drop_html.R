@@ -16,12 +16,16 @@
 #' @param use_xaringan Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 #' When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 #' relative to the rendered presentation, not relative to the visual citation.
+#' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
+#' @param vc_width Specifies the width of the text part of the visual citation in px.
+#' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
+
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, qr_size = 250, vc_width = 600, output_dir, style, use_xaringan = FALSE) {
 
   # print(work_item)
   # CHECK ARGUMENTS
@@ -30,6 +34,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
   stopifnot(is.character(work_item$authors_collapsed) | is.na(work_item$authors_collapsed))
   stopifnot(is.character(work_item$QR))
   stopifnot(is.character(include_qr))
+  stopifnot(is.numeric(qr_size))
   stopifnot(is.character(output_dir))
   stopifnot(is.character(style))
   stopifnot(is.logical(use_xaringan))
@@ -110,7 +115,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
                 htmltools::plotTag(
                   plot(generate_qr(url = work_item$QR)),
                   alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
+                  device = grDevices::svg, width = qr_size, height = qr_size, pixelratio = 1 / 72,
                   mimeType = "image/svg+xml"
                 )
               } else {
@@ -118,7 +123,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
                 htmltools::plotTag(
                   plot(generate_qr(url = work_item$QR)),
                   alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  width = 150, height = 150
+                  width = qr_size, height = qr_size
                 )
               }
             } else if (include_qr == "link_svg") {
@@ -136,7 +141,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
               htmltools::capturePlot(
                 plot(generate_qr(url = work_item$QR)),
                 filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
-                width = 150, height = 150
+                width = qr_size, height = qr_size
               )
               htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
             } else {
@@ -155,6 +160,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
         htmltools::tags$tr(
           htmltools::tags$td(
             htmltools::div(
+              style = paste0("width:", vc_width, "px"),
               htmltools::div(
                 class = "top-row",
                 style = css_styles$top_row_style,
@@ -163,7 +169,10 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
               htmltools::div(
                 class = "title-row",
                 style = css_styles$title_row_style,
-                htmltools::tags$span(work_item$TITLE)
+                htmltools::tags$span(
+                  # style = paste0("display:inline-block;width:", qr_size*5, "px !important"),
+                    work_item$TITLE
+                  )
               ),
               htmltools::div(
                 class = "author-row",
@@ -178,7 +187,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
                 htmltools::plotTag(
                   plot(generate_qr(url = work_item$QR)),
                   alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  device = grDevices::svg, width = 150, height = 150, pixelratio = 1 / 72,
+                  device = grDevices::svg, width = qr_size, height = qr_size, pixelratio = 1 / 72,
                   mimeType = "image/svg+xml"
                 )
               } else {
@@ -186,7 +195,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
                 htmltools::plotTag(
                   plot(generate_qr(url = work_item$QR)),
                   alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  width = 150, height = 150
+                  width = qr_size, height = qr_size
                 )
               }
             } else if (include_qr == "link_svg") {
@@ -204,7 +213,7 @@ drop_html <- function(work_item, include_qr, output_dir, style, use_xaringan = F
               htmltools::capturePlot(
                 plot(generate_qr(url = work_item$QR)),
                 filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
-                width = 150, height = 150
+                width = qr_size, height = qr_size
               )
               htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
             } else {

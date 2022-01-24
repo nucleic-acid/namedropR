@@ -30,6 +30,9 @@
 #' relative to the rendered presentation, not relative to the visual citation.
 #' @param clean_strings Removes curly braces {} from titles and journal names, as they are often present in
 #' BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.
+#' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
+#' @param vc_width Specifies the width of the text part of the visual citation in px.
+#' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
 #' @return A character string with the file path to the created visual citation in the specified output format.
 #'
 #' @examples
@@ -67,6 +70,8 @@ drop_name <- function(bib, cite_key,
                       export_as = "html",
                       max_authors = 3,
                       include_qr = "link",
+                      qr_size = 250,
+                      vc_width = 600,
                       style = "modern",
                       path_absolute = FALSE,
                       use_xaringan = FALSE,
@@ -80,6 +85,15 @@ drop_name <- function(bib, cite_key,
   stopifnot(max_authors >= 0)
   stopifnot(is.character(include_qr))
   stopifnot(include_qr %in% c("embed", "link", "link_svg", "none"))
+  stopifnot(is.numeric(qr_size))
+  if (qr_size < 150) {
+    warning("QR size must be at least 150px. This will now be set as size.")
+    qr_size <- 150
+  }
+  stopifnot(vc_width > 0)
+  if (vc_width < 200) {
+    message("You specified a fairly small 'vc_width'. If you want to have a compact visual citation, the 'compact' style might be handy.")
+  }
   stopifnot(is.character(style))
   # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
   stopifnot(is.logical(path_absolute))
@@ -297,7 +311,9 @@ drop_name <- function(bib, cite_key,
     # if PNG is desired output format, the relative filepath must not
     # be adapted for later inclusion of the HTML. Therefore use_xaringan
     # must be ignored, as otherwise the QR will not be included properly
-    use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan)
+    use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan),
+    qr_size = qr_size,
+    vc_width = vc_width
   )
 
   work_list <- work_list %>%

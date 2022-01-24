@@ -4,7 +4,15 @@
 \alias{drop_html}
 \title{drop_html}
 \usage{
-drop_html(work_item, include_qr, output_dir, style, use_xaringan = FALSE)
+drop_html(
+  work_item,
+  include_qr,
+  qr_size = 250,
+  vc_width = 600,
+  output_dir,
+  style,
+  use_xaringan = FALSE
+)
 }
 \arguments{
 \item{work_item}{A data.frame or tibble with nrow(work_item) == 1 containing the
@@ -15,6 +23,11 @@ data for one reference to create the visual citation.}
 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML <img> tag links to this file then.
 'none' creates no QR code.}
+
+\item{qr_size}{Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.}
+
+\item{vc_width}{Specifies the width of the text part of the visual citation in px.
+This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
 
 \item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
