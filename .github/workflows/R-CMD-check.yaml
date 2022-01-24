@@ -31,6 +31,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - name: Install system dependencies on macOS
+        if: runner.os == 'macOS'
+        run: |
+          # XQuartz is needed for cairo / SVG handling
+          brew install xquartz
+
       - uses: r-lib/actions/setup-pandoc@v1
 
       - uses: r-lib/actions/setup-r@v1
@@ -44,3 +50,4 @@ jobs:
           extra-packages: rcmdcheck
 
       - uses: r-lib/actions/check-r-package@v1
+
