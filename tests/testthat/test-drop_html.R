@@ -17,14 +17,16 @@ test_that("an HTML taglist is being returned with all putput options", {
     class(htmltools::tagList())
   )
 
-  expect_equal(
-    class(drop_html(
-      work_item = bib_tbl, include_qr = "link_svg",
-      output_dir = tempdir(), style = "modern",
-      use_xaringan = FALSE
-    )),
-    class(htmltools::tagList())
-  )
+  if (capabilities("cairo")) {
+    expect_equal(
+      class(drop_html(
+        work_item = bib_tbl, include_qr = "link_svg",
+        output_dir = tempdir(), style = "modern",
+        use_xaringan = FALSE
+      )),
+      class(htmltools::tagList())
+    )
+  }
 
   expect_equal(
     class(drop_html(
