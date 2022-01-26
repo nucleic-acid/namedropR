@@ -113,7 +113,7 @@ the style or provide the CSS code, if you have one already.
 If you want to speed things up, you can fork the project to create a
 pull request. Please also open an issue, so we can have a discussion, if
 needed. See the
-[readme](https://github.com/nucleic-acid/namedropR/tree/main/inst/styles/readme.md)
+[readme](https://github.com/nucleic-acid/namedropR/blob/main/inst/styles/readme.md)
 for details.
 
 ## Code of Conduct
