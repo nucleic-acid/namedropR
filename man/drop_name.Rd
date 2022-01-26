@@ -26,12 +26,13 @@ drop_name(
 
 \item{cite_key}{If given, either a character string or a vector of strings are accepted.
 Specifies the reference items within the bibliography for which visual citations should be created.
-If no key is specified, a visual citation is created for ALL reference items within the bibliography.}
+If no key is specified, a visual citation is created for ALL reference items within the bibliography.
+In other words, either one, many or no BibTeX citation keys can be specified.}
 
 \item{output_dir}{A string specifying the relative path, where the rendered output files should be stored.}
 
 \item{export_as}{A string specifying the desired output format. For now supports PNG and HTML.
-Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file inlcuding <head> etc.
+Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file including <head> etc.
 The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
 For webshot you need to install phantomJS once (see 'webshot' documentation).}
 
@@ -49,10 +50,11 @@ For webshot you need to install phantomJS once (see 'webshot' documentation).}
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
 
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
-"modern", "classic", "clean", "compact" and "none". If "compact" is given, the rendered VC contains
+"modern", "classic", "clean", "fancy", "newspaper", "compact" and "none".
+If "compact" is given, the rendered VC contains
 only the last name of the first author and the publication year, next to the QR code.
 If "none" is given, the returned html can use a custom css file provided by the user.
-This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
+This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row". (see vignette)}
 
 \item{path_absolute}{Boolean to specify, whether the returned output path is a relative path or an absolute path.}
 
