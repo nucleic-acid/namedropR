@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# namedropR <img src="man/figures/logo.png" align="right" width="200" />
+# namedropR <img src="man/figures/logo.png" align="right" width="150" />
 
 <!-- badges: start -->
 
@@ -71,6 +71,9 @@ is given, the QR code points to a search call at
 
 ``` r
 bib_path <- "path/to/bibliography_file.bib"
+
+# load the package
+library('namedropR')
 
 # create a visual citation as PNG with 'modern' design
 drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", style = "modern")

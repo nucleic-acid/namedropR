@@ -13,7 +13,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-# namedropR <img src="man/figures/logo.png" align="right" width="200" />
+# namedropR <img src="man/figures/logo.png" align="right" width="150" />
 
 <!-- badges: start -->
 [![CRAN status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.org/package=namedropR)
@@ -65,6 +65,9 @@ This package accepts bibliographic information as 'BibTeX' and 'BibLaTeX' refere
 
 ``` r
 bib_path <- "path/to/bibliography_file.bib"
+
+# load the package
+library('namedropR')
 
 # create a visual citation as PNG with 'modern' design
 drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", style = "modern")
