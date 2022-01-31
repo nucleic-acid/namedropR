@@ -175,7 +175,7 @@ htmltools::includeHTML(
 
 In both cases, the VC is crated by `drop_name()` and the returned file path is used by htmltools or knitr to find the VC.
 
-**NOTE:** When using `htmltools::includeHTML()`, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via the relative link to the qr-subfolder of the original output path. `use_xaringan = TRUE` handles this by storing the qr code directly in a subfolder of the working directory, so the relative link to the QR code after integration to the knitted output points to the right place.
+For details of all options and ways to drop names, please see the detailed vignette for using `{namedropR}` in an Rmarkdown environment.
 
 # Styling
 

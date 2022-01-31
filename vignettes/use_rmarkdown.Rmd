@@ -139,15 +139,33 @@ If you are experienced in 'CSS' there should be no limits in how the embedded im
 
 ## Using raw HTML
 
-Of course, it is possible to manually write the `<img>` tag, as Rmarkdown can read and interpret raw HTML.
+Of course, it is possible to manually write the `<img>` tag, as Rmarkdown can read and interpret raw 'HTML'.
 The previous, styled example could be written as:
 
 ```{html, eval=FALSE}
-<div style="box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;">                
+<div style="box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;">
   <img src="path/to/fantastic1998.html.png"/>
 </div>
 ```
 
-# 
+# Embedding as HTML
 
+The second format supported by `namedropR` is 'HTML'. While this doesn't provide raster graphics (that could be used in other places as well), this reduces the file size of the rendered document, as they only consist of 'HTML' code. Another advantage is the possibility to apply custom 'CSS' to the 'visual citation' itself, not just the way it is embedded. For details of custom CSS styles, please refer to the main vignette.
+
+Embedding a 'visual citation' as 'HTML' can be achieved like so:
+
+```{r, eval=FALSE}
+htmltools::includeHTML(
+  drop_name(bib,
+    cite_key = "active2021",
+    export_as = "hmtl",
+    use_xaringan = TRUE
+  )
+)
+```
+
+**NOTE 1:** When using `htmltools::includeHTML()`, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via a relative link to the QR-subfolder of the *original* output path. `use_xaringan = TRUE` handles this by storing the QR code directly in a subfolder of the working directory, so the relative link to the QR code (after integration of the 'VC' to the knitted output points to the right place.
+
+**NOTE 2:**
+This relative path management should be necessary for all Rmarkdown HTML documents, not only xaringan slides. The options name is a result of the initial focus of this package.
 
