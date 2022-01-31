@@ -1,0 +1,153 @@
+---
+title: "Use in Rmarkdown"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Use in Rmarkdown}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+
+# Setting up the package and the data
+
+The package can be loaded in a code chunk within the Rmarkdown file:
+
+```{r setup}
+library(namedropR)
+```
+
+## A sample Bibliography
+
+As sample references we'll use three fictional BibTeX entries stored in a file called 'library.bib'.
+
+<details>
+
+<summary>see sample entries in 'library.bib'</summary>
+
+```
+@article{doe2024,
+  title = {When Inspiration Meets Passion: Translating Ideas into Practice},
+  author = {Doe, John and Sample, Anne},
+  year = {2024},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+@article{active2021,
+  title = {Where Frustration Meets Essentiality: An Introduction to Unit Testing},
+  author = {Active, Alice and Boring, Bob},
+  year = {2021},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+@article{fantastic1998,
+  title = {Why Writing Packages Matters: Sharing is Caring},
+  author = {Fantastic, Flora and Curious, Claire},
+  year = {1998},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+```
+
+</details>
+
+The file can be read and converted to a tibble using the {bib2df} package like this:
+ 
+```{r, message=FALSE, warning=FALSE}
+# load required packages
+library(bib2df)
+library(dplyr)
+
+# read the file
+bib_file <- system.file("testdata", "library.bib", package = "namedropR")
+bib <- bib2df::bib2df(bib_file) %>% 
+  select(BIBTEXKEY, AUTHOR, YEAR, TITLE, JOURNAL, URL)
+
+```
+
+Let's have a glimpse of the the resulting tibble:
+
+```{r}
+dplyr::glimpse(bib)
+```
+
+The references are successfully read to a tibble for further usage.
+
+**Note:** It is possible to directly pass the *.bib file to the drop_name() function which reads and extracts the necessary data. However, when the bibliography is large and visual citations are rendered frequently, there might be significant performance improvements by reading the bibliography only once (like above) and pass the tibble to drop_name().
+
+# Embedding as PNG
+
+`drop_name()` can either create raster graphics in the form of 'PNG' files or 'HTML' files. When 'PNG' is the desired output, there are three ways to embed the rendered 'visual citations'.
+
+## Using the `{knitr}` package
+
+One way of embedding *visual citations* as PNG is `knitr::include_graphics()`.
+
+```{r, eval=FALSE}
+knitr::include_graphics(drop_name(bib, cite_key = "doe2021", export_as = "png"))
+```
+
+Using `{knitr}` has the advantage, that it works well with 'bulk dropping'. This means, that you can pass the entire bibliography (or a subset thereof) to the function and knitr embeds all resulting PNG files one after another, using one line of code:
+
+```{r, eval=FALSE}
+# all entries
+knitr::include_graphics(drop_name(bib, export_as = "png"))
+
+# some entries
+knitr::include_graphics(drop_name(bib, cite_key = c("doe2021", "fantastic1998") export_as = "png"))
+
+```
+
+## Using the `{htmltools}` package
+
+Another way to embed PNG 'visual citations' is `htmltools::img()`, which creates an HTML `<img>` tag that points to the PNG file:
+
+```{r, eval=FALSE}
+htmltools::img(
+  src = drop_name(bib, cite_key = "active2021", style = "classic", export_as = "png")
+  )
+```
+
+In the above example we pass the output of `drop_name()`, which is the file path to the rendered 'visual citation' as source string of the `<img>` tag.
+
+<br>
+
+With `htmltools::img()` 'bulk dropping' is *not* possible, but there is another **significant advantage:** It is possible to style the embedded image further using 'CSS' code. One idea could be to draw a frame / border around the image, another is drawing a tiny shadow around the 'visual citation', to give it the impression of floating slightly above the document or slide.
+
+The 'CSS' style needs to be applied to a `<div>` tag around the actual `<img>` tag:
+
+```{r, eval=FALSE}
+htmltools::div(
+  style = "box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;",
+  htmltools::img(src = drop_name(bib, cite_key = "fantastic1998", export_as = "png"))
+)
+```
+
+The above example draws a thin light-gray border around the 'visual citation' and a shadow at the 
+bottom and right edges, which gives a floating impression in the rendered document.
+
+If you are experienced in 'CSS' there should be no limits in how the embedded image should be set apart from the surrounding content.
+
+## Using raw HTML
+
+Of course, it is possible to manually write the `<img>` tag, as Rmarkdown can read and interpret raw HTML.
+The previous, styled example could be written as:
+
+```{html, eval=FALSE}
+<div style="box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;">                
+  <img src="path/to/fantastic1998.html.png"/>
+</div>
+```
+
+# 
+
+
