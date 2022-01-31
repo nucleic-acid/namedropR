@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.2</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -47,6 +47,12 @@
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../reference/index.html">Reference</a>
+</li>
+<li class="nav-item dropdown">
+  <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
+  <div class="dropdown-menu" aria-labelledby="dropdown-articles">
+    <a class="dropdown-item" href="../articles/use_rmarkdown.html">Use in Rmarkdown</a>
+  </div>
 </li>
 <li class="nav-item">
   <a class="nav-link" href="../news/index.html">Changelog</a>
@@ -214,7 +220,7 @@
   <span class="op">)</span>
 <span class="op">)</span></code></pre></div>
 <p>In both cases, the VC is crated by <code><a href="../reference/drop_name.html">drop_name()</a></code> and the returned file path is used by htmltools or knitr to find the VC.</p>
-<p><strong>NOTE:</strong> When using <code><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">htmltools::includeHTML()</a></code>, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via the relative link to the qr-subfolder of the original output path. <code>use_xaringan = TRUE</code> handles this by storing the qr code directly in a subfolder of the working directory, so the relative link to the QR code after integration to the knitted output points to the right place.</p>
+<p>For details of all options and ways to drop names, please see the detailed vignette for using <a href="https://github.com/nucleic-acid/namedropR" class="external-link">namedropR</a> in an Rmarkdown environment.</p>
 </div>
 <div class="section level2">
 <h2 id="styling">Styling<a class="anchor" aria-label="anchor" href="#styling"></a>
