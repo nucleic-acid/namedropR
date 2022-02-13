@@ -1,3 +1,10 @@
+# namedropR 2.2.3
+
+* Fixes inconsistent documentation and presentation in the Readme.
+* Fixes style options that resulted in sub-optimal readability of the rendered citations.
+* Adds sample render images for the predefined styles in the readme.
+* Slight adjustment to the DESCRIPTION title.
+
 # namedropR 2.2.2
 
 * Adds a {pkgdown} website to the repository to make the documentation more accessible.

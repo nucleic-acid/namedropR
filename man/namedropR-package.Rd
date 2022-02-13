@@ -4,7 +4,7 @@
 \name{namedropR-package}
 \alias{namedropR}
 \alias{namedropR-package}
-\title{namedropR: Create Visual Citations to Include in Presentations}
+\title{namedropR: Create Visual Citations for Presentation Slides}
 \description{
 \if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
 
