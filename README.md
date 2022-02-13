@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# namedropR <img src="man/figures/logo.png" align="right" width="150" />
+# namedropR <img src="man/figures/logo.png" align="right" width="150"/>
 
 <!-- badges: start -->
 
@@ -10,6 +10,7 @@ status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.
 [![R-CMD-check](https://github.com/nucleic-acid/namedropR/workflows/R-CMD-check/badge.svg)](https://github.com/nucleic-acid/namedropR/actions)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/namedropR)](https://CRAN.R-project.org/package=namedropR)
+
 <!-- badges: end -->
 
 `namedropR` provides ‘visual citations’ containing the metadata of a
@@ -36,7 +37,7 @@ devtools::install_github("nucleic-acid/namedropR")
 A ‘visual citation’ is a banner containing an article’s title, authors,
 journal and year of a publication (s. example below).
 
-<img src="man/figures/collaboration_2019_ApJL.png" align="right" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." width="500" style="box-shadow: 8px 8px 6px grey;"/>
+<img src="man/figures/collaboration_2019_ApJL.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 8px 8px 6px grey;"/>
 
 One might want to include this in a presentation
 
@@ -52,7 +53,7 @@ the audience to actually comprehend them (and often in a bad
 resolution). Creating visual citations requires manually taking a
 screenshot and placing it on the slide.
 
-<img src="man/figures/hawking_1973.png" align="left" alt="A compact visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." width="130" style="box-shadow: 5px 5px 6px grey;margin-right: 15px"/>
+<img src="man/figures/hawking_1973.png" alt="A compact visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="left" width="130" style="box-shadow: 5px 5px 6px grey;margin-right: 15px"/>
 
 `namedropR` helps to generate visual citations conveniently (see below),
 in high resolution and with a QR code. This allows the audience to
@@ -75,33 +76,94 @@ bib_path <- "path/to/bibliography_file.bib"
 # load the package
 library('namedropR')
 
+drop_name(bib_path, cite_key = "SomeAuthor2010")
+```
+
+`drop_name()` by default returns the file path, where the visual
+citation was stored as character string. Within an Rmarkdown/HTML
+presentation you can render the VC and directly pass the path to
+`{htmltools}` to include the banner:
+
+``` r
+# PNG
+htmltools::img(
+  src = drop_name(
+    bib_path,
+    cite_key = "SomeAuthor2010",
+    export_as = "png"
+  )
+)
+
+# HTML (note the recommended option use_xaringan, see documentation for details)
+htmltools::includeHTML(
+  drop_name(
+    bib_path,
+    cite_key = "SomeAuthor2010",
+    export_as = "html",
+    use_xaringan = TRUE
+  )
+)
+```
+
+To **bulk-create** VCs to include in another kind of document /
+presentation slides you can pass a vector of citation keys or pass no
+keys at all to render some or all bibliography entries respectively:
+
+``` r
+drop_name(
+  bib_path,
+  cite_key = c("SomeAuthor2010", "SomeOther2011", "YetAnother2012"),
+  export_as = "png",
+  style = "clean"
+)
+#> renders the three specified banners
+
+drop_name(
+  bib_path,
+  export_as = "png",
+  style = "clean"
+)
+#> renders all entries within the specified bibliography file
+```
+
+## Options
+
+It is possible to specify output format (HTML or PNG), style, size of
+the QR code and much more. See the vignettes for all options.
+
+These are some frequently used options:
+
+``` r
 # create a visual citation as PNG with 'modern' design
 drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", style = "modern")
 
 # create a visual citation as HTML with 'compact' design
 drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "html", style = "compact")
 
-# drop_name() by default returns the file path, 
-# where the visual citation was stored as character string. 
-# Within an Rmarkdown/HTML presentation you can create and 
-# include the banner conveniently like so:
+# set a smaller QR code size, default is 250 (pixels)
+drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", qr_size = 150)
 
-# PNG
-knitr::include_graphics(drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", style = "clean"))
-
-# HTML
-htmltools::includeHTML(drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "html", style = "clean", use_xaringan = TRUE))
-
-# To bulk-create VCs to include in another kind of document / presentation slides you can pass a vector of citation keys or pass no keys at all to render some or all bibliography entries respectively:
-
-drop_name(bib_path, cite_key = c("SomeAuthor2010", "SomeOther2011", "YetAnother2012"), export_as = "png", style = "clean")
-
-drop_name(bib_path, export_as = "png", style = "clean")
+# set a wider text area for long titles or long author lists, default is 600 (pixels)
+drop_name(bib_path, cite_key = "SomeAuthor2010", export_as = "png", vc_width = 800)
 ```
 
-Styling is possible via predefined designs or via custom ‘CSS’ to match
-the design of the HTML presentation like e.g. ‘xaringan’ or ‘revealJS’
-(see the vignette for more options).
+## Styles
+
+These are the currently predefined styles:
+
+| Name      | Example                                                                                                                                                                                                       |
+|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| modern    | <img src="man/figures/modern.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/>    |
+| modern_bw | <img src="man/figures/modern_bw.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/> |
+| classic   | <img src="man/figures/classic.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/>   |
+| fancy     | <img src="man/figures/fancy.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/>     |
+| clean     | <img src="man/figures/clean.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/>     |
+| newspaper | <img src="man/figures/newspaper.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"/> |
+| compact   | <img src="man/figures/compact.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="left" width="180" style="box-shadow: 4px 4px 3px grey;"/>    |
+
+Styling is possible via these predefined designs or via custom ‘CSS’
+e.g. to match the design of the HTML presentation like e.g. ‘xaringan’
+or ‘revealJS’ (see the vignette for more options).
 
 ## How to contribute
 
