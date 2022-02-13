@@ -13,7 +13,7 @@
     Styling is possible via predefined designs or via custom CSS.
     This package is not intended as replacement for proper reference manager packages, 
     but a tool to enrich scientific presentation slides.">
-<title>Create Visual Citations to Include in Presentations • namedropR</title>
+<title>Create Visual Citations for Presentation Slides • namedropR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="apple-touch-icon.png">
@@ -24,7 +24,7 @@
 <link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
 <script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
-<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Visual Citations to Include in Presentations">
+<!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Visual Citations for Presentation Slides">
 <meta property="og:description" content="Provides visual citations containing the metadata of a scientific paper and a QR code.
     A visual citation is a banner containing title, authors, journal and year of a publication.
     This package can create such banners based on BibTeX and BibLaTeX references
@@ -47,7 +47,7 @@
     
     <a class="navbar-brand me-2" href="index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.2</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.3</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -97,6 +97,7 @@
 </div>
 <!-- badges: start -->
 
+<!-- badges: end -->
 <p><code>namedropR</code> provides ‘visual citations’ containing the metadata of a scientific paper and a ‘QR’ code.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -113,7 +114,7 @@
 <h2 id="visual-citations">Visual Citations<a class="anchor" aria-label="anchor" href="#visual-citations"></a>
 </h2>
 <p>A ‘visual citation’ is a banner containing an article’s title, authors, journal and year of a publication (s. example below).</p>
-<p><img src="reference/figures/collaboration_2019_ApJL.png" align="right" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." width="500" style="box-shadow: 8px 8px 6px grey;"></p>
+<p><img src="reference/figures/collaboration_2019_ApJL.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 8px 8px 6px grey;"></p>
 <p>One might want to include this in a presentation</p>
 <ul>
 <li>to back up one’s claims,</li>
@@ -122,7 +123,7 @@
 </ul>
 <p><em>Some might even use this to genuinely <strong>point the audience to good resources</strong> for further reading.</em></p>
 <p>On conferences, such banners are frequently displayed way too short for the audience to actually comprehend them (and often in a bad resolution). Creating visual citations requires manually taking a screenshot and placing it on the slide.</p>
-<p><img src="reference/figures/hawking_1973.png" align="left" alt="A compact visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." width="130" style="box-shadow: 5px 5px 6px grey;margin-right: 15px"></p>
+<p><img src="reference/figures/hawking_1973.png" alt="A compact visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="left" width="130" style="box-shadow: 5px 5px 6px grey;margin-right: 15px"></p>
 <p><code>namedropR</code> helps to generate visual citations conveniently (see below), in high resolution and with a QR code. This allows the audience to follow the reference <em>while you are talking about it</em>, instead of looking it up in a reference list at the end of your talk.<br>
 There is also a less intrusive, compact style, as seen on the left.</p>
 </div>
@@ -136,29 +137,103 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <span class="co"># load the package</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">'namedropR'</a></span><span class="op">)</span>
 
-<span class="co"># create a visual citation as PNG with 'modern' design</span>
+<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span><span class="op">)</span></code></pre></div>
+<p><code><a href="reference/drop_name.html">drop_name()</a></code> by default returns the file path, where the visual citation was stored as character string. Within an Rmarkdown/HTML presentation you can render the VC and directly pass the path to <a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a> to include the banner:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># PNG</span>
+<span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span>
+  src <span class="op">=</span> <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
+    <span class="va">bib_path</span>,
+    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,
+    export_as <span class="op">=</span> <span class="st">"png"</span>
+  <span class="op">)</span>
+<span class="op">)</span>
+
+<span class="co"># HTML (note the recommended option use_xaringan, see documentation for details)</span>
+<span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span>
+  <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
+    <span class="va">bib_path</span>,
+    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,
+    export_as <span class="op">=</span> <span class="st">"html"</span>,
+    use_xaringan <span class="op">=</span> <span class="cn">TRUE</span>
+  <span class="op">)</span>
+<span class="op">)</span></code></pre></div>
+<p>To <strong>bulk-create</strong> VCs to include in another kind of document / presentation slides you can pass a vector of citation keys or pass no keys at all to render some or all bibliography entries respectively:</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
+  <span class="va">bib_path</span>,
+  cite_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SomeAuthor2010"</span>, <span class="st">"SomeOther2011"</span>, <span class="st">"YetAnother2012"</span><span class="op">)</span>,
+  export_as <span class="op">=</span> <span class="st">"png"</span>,
+  style <span class="op">=</span> <span class="st">"clean"</span>
+<span class="op">)</span>
+<span class="co">#&gt; renders the three specified banners</span>
+
+<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
+  <span class="va">bib_path</span>,
+  export_as <span class="op">=</span> <span class="st">"png"</span>,
+  style <span class="op">=</span> <span class="st">"clean"</span>
+<span class="op">)</span>
+<span class="co">#&gt; renders all entries within the specified bibliography file</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a>
+</h2>
+<p>It is possible to specify output format (HTML or PNG), style, size of the QR code and much more. See the vignettes for all options.</p>
+<p>These are some frequently used options:</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># create a visual citation as PNG with 'modern' design</span>
 <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"modern"</span><span class="op">)</span>
 
 <span class="co"># create a visual citation as HTML with 'compact' design</span>
 <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"html"</span>, style <span class="op">=</span> <span class="st">"compact"</span><span class="op">)</span>
 
-<span class="co"># drop_name() by default returns the file path, </span>
-<span class="co"># where the visual citation was stored as character string. </span>
-<span class="co"># Within an Rmarkdown/HTML presentation you can create and </span>
-<span class="co"># include the banner conveniently like so:</span>
+<span class="co"># set a smaller QR code size, default is 250 (pixels)</span>
+<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, qr_size <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>
 
-<span class="co"># PNG</span>
-<span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"clean"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># HTML</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"html"</span>, style <span class="op">=</span> <span class="st">"clean"</span>, use_xaringan <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># To bulk-create VCs to include in another kind of document / presentation slides you can pass a vector of citation keys or pass no keys at all to render some or all bibliography entries respectively:</span>
-
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SomeAuthor2010"</span>, <span class="st">"SomeOther2011"</span>, <span class="st">"YetAnother2012"</span><span class="op">)</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"clean"</span><span class="op">)</span>
-
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"clean"</span><span class="op">)</span></code></pre></div>
-<p>Styling is possible via predefined designs or via custom ‘CSS’ to match the design of the HTML presentation like e.g. ‘xaringan’ or ‘revealJS’ (see the vignette for more options).</p>
+<span class="co"># set a wider text area for long titles or long author lists, default is 600 (pixels)</span>
+<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, vc_width <span class="op">=</span> <span class="fl">800</span><span class="op">)</span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="styles">Styles<a class="anchor" aria-label="anchor" href="#styles"></a>
+</h2>
+<p>These are the currently predefined styles:</p>
+<table class="table">
+<thead><tr class="header">
+<th>Name</th>
+<th>Example</th>
+</tr></thead>
+<tbody>
+<tr class="odd">
+<td>modern</td>
+<td><img src="reference/figures/modern.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="even">
+<td>modern_bw</td>
+<td><img src="reference/figures/modern_bw.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="odd">
+<td>classic</td>
+<td><img src="reference/figures/classic.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="even">
+<td>fancy</td>
+<td><img src="reference/figures/fancy.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="odd">
+<td>clean</td>
+<td><img src="reference/figures/clean.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="even">
+<td>newspaper</td>
+<td><img src="reference/figures/newspaper.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="right" width="500" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+<tr class="odd">
+<td>compact</td>
+<td><img src="reference/figures/compact.png" alt="A visual citation pointing to a scientific paper. Scan with a QR code scanner to follow the URL." align="left" width="180" style="box-shadow: 4px 4px 3px grey;"></td>
+</tr>
+</tbody>
+</table>
+<p>Styling is possible via these predefined designs or via custom ‘CSS’ e.g. to match the design of the HTML presentation like e.g. ‘xaringan’ or ‘revealJS’ (see the vignette for more options).</p>
 </div>
 <div class="section level2">
 <h2 id="how-to-contribute">How to contribute<a class="anchor" aria-label="anchor" href="#how-to-contribute"></a>
