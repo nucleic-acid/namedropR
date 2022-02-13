@@ -1,7 +1,7 @@
 ## Test environments
-- R-hub windows-x86_64-devel (r-devel)
-- R-hub ubuntu-gcc-release (r-release)
-- R-hub fedora-clang-devel (r-devel)
+- R-hub Windows Server 2022, R-devel, 64 bit (r-devel)
+- R-hub Ubuntu Linux 20.04.1 LTS, R-release, GCC (r-release)
+- R-hub Fedora Linux, R-devel, clang, gfortran (r-devel)
 
 ## R CMD check results
 
