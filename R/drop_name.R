@@ -77,7 +77,16 @@ drop_name <- function(bib, cite_key,
                       style = "modern",
                       path_absolute = FALSE,
                       use_xaringan = FALSE,
-                      clean_strings = TRUE) {
+                      clean_strings = TRUE,
+                      author_size,
+                      author_font,
+                      author_color,
+                      title_size,
+                      title_font,
+                      title_color,
+                      journal_size,
+                      journal_font,
+                      journal_color) {
 
   # CHECK other ARGUMENTS
   stopifnot(is.character(output_dir))
