@@ -29,7 +29,7 @@ get_css_styles <- function(style, custom_style = list()) {
   allowed_styles <- readr::read_csv(system.file("styles", "styles.csv", package = "namedropR"), show_col_types = FALSE)
 
   # print(allowed_styles)
-  print(custom_style)
+  # print(custom_style)
 
   # initiate empty list
   css_styles <- list()

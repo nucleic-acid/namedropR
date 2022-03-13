@@ -12,11 +12,13 @@ drop_name(
   max_authors = 3,
   include_qr = "link",
   qr_size = 250,
+  qr_color = "#000000",
   vc_width = 600,
   style = "modern",
   path_absolute = FALSE,
   use_xaringan = FALSE,
-  clean_strings = TRUE
+  clean_strings = TRUE,
+  ...
 )
 }
 \arguments{
@@ -46,6 +48,8 @@ For webshot you need to install phantomJS once (see 'webshot' documentation).}
 
 \item{qr_size}{Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.}
 
+\item{qr_color}{Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".}
+
 \item{vc_width}{Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
 
@@ -64,6 +68,10 @@ relative to the rendered presentation, not relative to the visual citation.}
 
 \item{clean_strings}{Removes curly braces {} from titles and journal names, as they are often present in
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.}
+
+\item{...}{Allows for custom style arguments within. Supported are: author_size, author_font,
+author_weight, author_color, title_size, title_font, title_weight, title_color,
+journal_size, journal_font, journal_weight, journal_color}
 }
 \value{
 A character string with the file path to the created visual citation in the specified output format.

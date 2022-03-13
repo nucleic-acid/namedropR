@@ -33,6 +33,7 @@
 #' @param clean_strings Removes curly braces {} from titles and journal names, as they are often present in
 #' BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.
 #' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
+#' @param qr_color Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
 #' @param ... Allows for custom style arguments within. Supported are: author_size, author_font,
@@ -69,6 +70,7 @@
 #' @importFrom here here
 #' @importFrom lubridate year ymd
 #' @importFrom webshot webshot
+#' @importFrom stringr str_detect
 
 drop_name <- function(bib, cite_key,
                       output_dir = "visual_citations",
@@ -76,6 +78,7 @@ drop_name <- function(bib, cite_key,
                       max_authors = 3,
                       include_qr = "link",
                       qr_size = 250,
+                      qr_color = "#000000",
                       vc_width = 600,
                       style = "modern",
                       path_absolute = FALSE,
@@ -98,6 +101,12 @@ drop_name <- function(bib, cite_key,
     warning("QR size must be at least 150px. This will now be set as size.")
     qr_size <- 150
   }
+  stopifnot(is.character(qr_color))
+  if (!stringr::str_detect(qr_color, pattern = "^#[A-Fa-f\\d]{6}$")) {
+    warning("QR color code does not match requirements. This needs to be a 6 digit hex code, like '#AA12FC'. Black will be used instead.")
+    qr_color <- "#000000"
+  }
+
   stopifnot(vc_width > 0)
   if (vc_width < 200) {
     message("You specified a fairly small 'vc_width'. If you want to have a compact visual citation, the 'compact' style might be handy.")
@@ -321,6 +330,7 @@ drop_name <- function(bib, cite_key,
     # must be ignored, as otherwise the QR will not be included properly
     use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan),
     qr_size = qr_size,
+    qr_color = qr_color,
     vc_width = vc_width,
     style_args = style_args
   )

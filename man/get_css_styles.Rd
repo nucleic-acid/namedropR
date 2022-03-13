@@ -4,12 +4,14 @@
 \alias{get_css_styles}
 \title{get_css_style}
 \usage{
-get_css_styles(style)
+get_css_styles(style, custom_style = list())
 }
 \arguments{
 \item{style}{A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for <div> classes "top-row", "title-row" and "author-row".}
+
+\item{custom_style}{Style arguments passed by drop_html(). Can be specified in function call of drop_name().}
 }
 \value{
 A list of inline css styles for each element of the visual citation: top row, title row and author row.
