@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -68,11 +68,13 @@
   max_authors <span class="op">=</span> <span class="fl">3</span>,
   include_qr <span class="op">=</span> <span class="st">"link"</span>,
   qr_size <span class="op">=</span> <span class="fl">250</span>,
+  qr_color <span class="op">=</span> <span class="st">"#000000"</span>,
   vc_width <span class="op">=</span> <span class="fl">600</span>,
   style <span class="op">=</span> <span class="st">"modern"</span>,
   path_absolute <span class="op">=</span> <span class="cn">FALSE</span>,
   use_xaringan <span class="op">=</span> <span class="cn">FALSE</span>,
-  clean_strings <span class="op">=</span> <span class="cn">TRUE</span>
+  clean_strings <span class="op">=</span> <span class="cn">TRUE</span>,
+  <span class="va">...</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -104,6 +106,8 @@ For webshot you need to install phantomJS once (see 'webshot' documentation).</p
 'none' creates no QR code.</p></dd>
 <dt>qr_size</dt>
 <dd><p>Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.</p></dd>
+<dt>qr_color</dt>
+<dd><p>Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".</p></dd>
 <dt>vc_width</dt>
 <dd><p>Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px</p></dd>
@@ -123,6 +127,10 @@ relative to the rendered presentation, not relative to the visual citation.</p><
 <dt>clean_strings</dt>
 <dd><p>Removes curly braces  from titles and journal names, as they are often present in
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the  are needed.</p></dd>
+<dt>...</dt>
+<dd><p>Allows for custom style arguments within. Supported are: author_size, author_font,
+author_weight, author_color, title_size, title_font, title_weight, title_color,
+journal_size, journal_font, journal_weight, journal_color</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

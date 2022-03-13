@@ -12,7 +12,7 @@ If "none" is given, the returned styles are empty strings.'><meta property="og:i
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -63,7 +63,7 @@ If "none" is given, the returned styles are empty strings.</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_css_styles</span><span class="op">(</span><span class="va">style</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">get_css_styles</span><span class="op">(</span><span class="va">style</span>, custom_style <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -72,6 +72,8 @@ If "none" is given, the returned styles are empty strings.</p>
 <dd><p>A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for &lt;div&gt; classes "top-row", "title-row" and "author-row".</p></dd>
+<dt>custom_style</dt>
+<dd><p>Style arguments passed by drop_html(). Can be specified in function call of drop_name().</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>

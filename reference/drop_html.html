@@ -10,7 +10,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.2.3</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -64,10 +64,12 @@
   <span class="va">work_item</span>,
   <span class="va">include_qr</span>,
   qr_size <span class="op">=</span> <span class="fl">250</span>,
+  qr_color <span class="op">=</span> <span class="st">"#000000"</span>,
   vc_width <span class="op">=</span> <span class="fl">600</span>,
   <span class="va">output_dir</span>,
   <span class="va">style</span>,
-  use_xaringan <span class="op">=</span> <span class="cn">FALSE</span>
+  use_xaringan <span class="op">=</span> <span class="cn">FALSE</span>,
+  style_args <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="op">)</span>
 <span class="op">)</span></code></pre></div>
     </div>
 
@@ -84,6 +86,8 @@ data for one reference to create the visual citation.</p></dd>
 'none' creates no QR code.</p></dd>
 <dt>qr_size</dt>
 <dd><p>Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.</p></dd>
+<dt>qr_color</dt>
+<dd><p>Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00".</p></dd>
 <dt>vc_width</dt>
 <dd><p>Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px</p></dd>
@@ -97,6 +101,8 @@ This custom CSS file must specify styles for &lt;div&gt; classes "top-row", "tit
 <dd><p>Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 relative to the rendered presentation, not relative to the visual citation.</p></dd>
+<dt>style_args</dt>
+<dd><p>Custom style arguments can be passed by drop_name for individual styles. These are passed on to ge_css_styles().</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
