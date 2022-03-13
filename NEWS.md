@@ -1,3 +1,9 @@
+# namedropR 2.3.0
+
+* Adds option to specify QR code color.
+* Adds several options to adjust stylistic elements like font, color, size and weight for title, journal and authors.
+* Adjusts predefined styles to allow for custom style editing.
+
 # namedropR 2.2.3
 
 * Fixes inconsistent documentation and presentation in the Readme.
