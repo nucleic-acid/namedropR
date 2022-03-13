@@ -35,6 +35,9 @@
 #' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
+#' @param ... Allows for custom style arguments within. Supported are: author_size, author_font,
+#' author_weight, author_color, title_size, title_font, title_weight, title_color,
+#' journal_size, journal_font, journal_weight, journal_color
 #' @return A character string with the file path to the created visual citation in the specified output format.
 #'
 #' @examples
@@ -78,15 +81,9 @@ drop_name <- function(bib, cite_key,
                       path_absolute = FALSE,
                       use_xaringan = FALSE,
                       clean_strings = TRUE,
-                      author_size,
-                      author_font,
-                      author_color,
-                      title_size,
-                      title_font,
-                      title_color,
-                      journal_size,
-                      journal_font,
-                      journal_color) {
+                      ...) {
+
+  style_args <- list(...)
 
   # CHECK other ARGUMENTS
   stopifnot(is.character(output_dir))
@@ -324,7 +321,8 @@ drop_name <- function(bib, cite_key,
     # must be ignored, as otherwise the QR will not be included properly
     use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan),
     qr_size = qr_size,
-    vc_width = vc_width
+    vc_width = vc_width,
+    style_args = style_args
   )
 
   work_list <- work_list %>%

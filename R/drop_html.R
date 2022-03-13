@@ -19,13 +19,14 @@
 #' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
+#' @param style_args Custom style arguments can be passed by drop_name for individual styles. These are passed on to ge_css_styles().
 
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
 #' @import htmltools
 
 
-drop_html <- function(work_item, include_qr, qr_size = 250, vc_width = 600, output_dir, style, use_xaringan = FALSE) {
+drop_html <- function(work_item, include_qr, qr_size = 250, vc_width = 600, output_dir, style, use_xaringan = FALSE, style_args = list()) {
 
   # print(work_item)
   # CHECK ARGUMENTS
@@ -58,7 +59,7 @@ drop_html <- function(work_item, include_qr, qr_size = 250, vc_width = 600, outp
   }
 
   # OBTAIN CSS STYLE
-  css_styles <- get_css_styles(style = style)
+  css_styles <- get_css_styles(style = style, custom_style = style_args)
 
   # define required QR output dir
   if (use_xaringan) {
