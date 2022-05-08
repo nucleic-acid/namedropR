@@ -10,6 +10,8 @@ status](https://www.r-pkg.org/badges/version/namedropR)](https://CRAN.R-project.
 [![R-CMD-check](https://github.com/nucleic-acid/namedropR/workflows/R-CMD-check/badge.svg)](https://github.com/nucleic-acid/namedropR/actions)
 [![Total
 Downloads](https://cranlogs.r-pkg.org/badges/grand-total/namedropR)](https://CRAN.R-project.org/package=namedropR)
+[![Monthly
+Downloads](https://cranlogs.r-pkg.org/badges/namedropR)](https://CRAN.R-project.org/package=namedropR)
 
 <!-- badges: end -->
 
