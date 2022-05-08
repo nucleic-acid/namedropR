@@ -1,0 +1,149 @@
+---
+title: "Custom Styling"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Custom Styling}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Setting up the package and the data
+
+The package can be loaded in a code chunk within the Rmarkdown file:
+
+```{r setup}
+library(namedropR)
+```
+
+As sample references we'll use three fictional BibTeX entries stored in a file called 'library.bib'.
+
+<details>
+
+<summary><i>see sample entries in 'library.bib'</i></summary>
+
+```
+@article{doe2024,
+  title = {When Inspiration Meets Passion: Translating Ideas into Practice},
+  author = {Doe, John and Sample, Anne},
+  year = {2024},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+@article{active2021,
+  title = {Where Frustration Meets Essentiality: An Introduction to Unit Testing},
+  author = {Active, Alice and Boring, Bob},
+  year = {2021},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+@article{fantastic1998,
+  title = {Why Writing Packages Matters: Sharing is Caring},
+  author = {Fantastic, Flora and Curious, Claire},
+  year = {1998},
+  journal = {Journal of Unneccessary R Packages},
+  url = {https://nucleic-acid.github.io/namedropR/},
+}
+
+```
+
+The file can be read and converted to a tibble using the {bib2df} package like this:
+ 
+```{r, message=FALSE, warning=FALSE}
+# load required packages
+library(bib2df)
+library(dplyr)
+
+# read the file
+bib_file <- system.file("testdata", "library.bib", package = "namedropR")
+bib <- bib2df::bib2df(bib_file) %>% 
+  select(BIBTEXKEY, AUTHOR, YEAR, TITLE, JOURNAL, URL)
+
+```
+
+</details>
+
+## Custom Font Styling Options
+
+You can provide the following arguments to `drop_name()` to specify custom style elements:
+
+- author_font, author_size, author_weigth, author_color
+- title_font, title_size, title_weigth, title_color
+- journal_font, journal_size, journal_weigth, journal_color
+
+These options accept CSS values as strings, such as e.g. 
+
+- \*_weight = "bold"/"normal"/"lighter" (depending on what the specified font allows)
+- \*_color needs to be specified as hex code *including* the hashtag, e.g. `#FF00AA`
+- \*_size is any valid CSS font size parameter, like e.g. "14pt" or "1,75rem".
+- \*_font has to be given with the correct name, e.g. "Open Sans", "Playfair Display", "Arial", etc.
+
+## Overriding Predefined Style Elements
+If you want to specify *all* options, you can do so (see final example below). To avoid long function calls, you can also chose one of the predefined styles and *override* the style of selected items to match your taste:
+
+```{r, eval=FALSE}
+namedropR::drop_name(
+  bib,
+  cite_key = "fantastic1998",
+  export_as = "png",
+  style = "clean", 
+  author_color = "FF00FF",
+  title_font = "Playfair Display"
+)
+
+```
+
+
+### Notes
+**Note:** The fonts are not being loaded by the function call. {namedropR} assumes, you have the fonts installed. This requires you to install the desired font on your system before. If the renderer doesn't find the font on your system, a default font is used.
+
+**Note:** Similarly incorrect CSS options do not throw any errors, but may result in unexpected behaviour / styling, mostly falling back to defaults. Please check, whether your custom options work on single bibliography items before bulk-styling many.
+
+## QR Code Styling
+
+You can specify the QR code size (as integer, representing the width in pixels) and the foreground color as hex code.
+
+```{r eval=FALSE}
+namedropR::drop_name(
+  bib,
+  cite_key = "fantastic1998",
+  export_as = "png",
+  style = "modern",
+  qr_size = 150,
+  qr_color = "#AAAAAA"
+)
+```
+
+## Complete Example
+An example using all possible custom styling options would be:
+
+```{r eval=FALSE}
+namedropR::drop_name(
+  bib,
+  cite_key = "fantastic1998",
+  export_as = "png",
+  author_color = "#FF0000",
+  author_weight = "normal",
+  author_size = "12pt",
+  author_font = "Roboto",
+  title_color = "#00FF00",
+  title_weight = "bold",
+  title_size = "2.5rem",
+  title_font = "Playfair Display",
+  journal_color = "#0000FF",
+  journal_weight = "bold",
+  journal_size = "8pt",
+  journal_font = "Fira Sans",
+  qr_size = 150,
+  qr_color = "#AAAAAA"
+)
+```
+
