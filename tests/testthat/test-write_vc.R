@@ -102,50 +102,6 @@ test_that("saving as html works as expected", {
   unlink(tempdir())
 })
 
-test_that("saving as png works as expected", {
-  VCS <- htmltools::tagList(
-    htmltools::div(
-      class = "visual-citation",
-      htmltools::span("Lorem_ipsum")
-    )
-  )
-  bib_tbl <- dplyr::tribble(
-    ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~vcs,
-    "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
-  )
-
-  # writes a file
-
-
-  expect_true(
-    suppressMessages(
-      file.exists(write_vc(
-        work_item = bib_tbl,
-        export_as = "png",
-        output_dir = tempdir(),
-        path_absolute = FALSE
-      ))
-    )
-  )
-  unlink(tempdir())
-
-  expect_true(
-    suppressMessages(
-      file.exists(
-        write_vc(
-          work_item = bib_tbl,
-          export_as = "png",
-          output_dir = tempdir(),
-          path_absolute = TRUE
-        )
-      )
-    )
-  )
-  unlink(tempdir())
-})
-
-
-
 test_that("unknown output format is caught", {
   VCS <- htmltools::tagList(
     htmltools::div(
