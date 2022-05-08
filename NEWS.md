@@ -1,3 +1,8 @@
+# namedropR 2.3.2
+
+* Fixes failing test due to tempdir access problems on win devel.
+* Changes git install snippet in README.md to use {remotes} instead of {devtools}
+
 # namedropR 2.3.1
 
 * Adds documentation / vignette for new styling options
