@@ -43,7 +43,7 @@ This custom CSS file must specify styles for <div> classes "top-row", "title-row
 When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 relative to the rendered presentation, not relative to the visual citation.}
 
-\item{style_args}{Custom style arguments can be passed by drop_name for individual styles. These are passed on to ge_css_styles().}
+\item{style_args}{Custom style arguments can be passed by drop_name for individual styles. These are passed on to get_css_styles(). Style arguments are combinations of 'author_', 'title_', 'journal_' with either one of: 'font', 'size', 'weight' and 'color'. E.g. 'author_weight = "bold"'.}
 }
 \value{
 A htmltools taglist containing the visual citation as HTML representation including style.
