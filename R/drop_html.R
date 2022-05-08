@@ -20,7 +20,7 @@
 #' @param qr_color Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00".
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
-#' @param style_args Custom style arguments can be passed by drop_name for individual styles. These are passed on to ge_css_styles().
+#' @param style_args Custom style arguments can be passed by drop_name for individual styles. These are passed on to get_css_styles(). Style arguments are combinations of 'author_', 'title_', 'journal_' with either one of: 'font', 'size', 'weight' and 'color'. E.g. 'author_weight = "bold"'.
 
 #' @return A htmltools taglist containing the visual citation as HTML representation including style.
 #'
