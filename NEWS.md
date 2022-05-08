@@ -1,3 +1,9 @@
+# namedropR 2.3.1
+
+* Adds documentation / vignette for new styling options
+* changes lazy data loading to false (no relevant datasets are included)
+* tested with R 4.2
+
 # namedropR 2.3.0
 
 * Adds option to specify QR code color.

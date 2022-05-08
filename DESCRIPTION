@@ -1,7 +1,7 @@
 Package: namedropR
 Type: Package
 Title: Create Visual Citations for Presentation Slides
-Version: 2.3.0
+Version: 2.3.1
 Authors@R: c(
     person(given = c("Christian", "A."),
            family = "Gebhard",
