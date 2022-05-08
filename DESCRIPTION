@@ -29,7 +29,7 @@ Imports:
     readr,
     stringr
 Encoding: UTF-8
-LazyData: true
+LazyData: false
 BugReports: https://github.com/nucleic-acid/namedropR/issues
 URL: https://github.com/nucleic-acid/namedropR
 RoxygenNote: 7.1.2
