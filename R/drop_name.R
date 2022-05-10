@@ -346,5 +346,6 @@ drop_name <- function(bib, cite_key,
     path_absolute = path_absolute,
     export_as = export_as
   )
+
   return(file_paths)
 }
