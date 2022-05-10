@@ -92,10 +92,40 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
       )
       unlink(output_file)
       # to point to the png instead return its filepath
-      return(paste0(output_file, ".png"))
+
+      return_path_png <- ifelse(
+          path_absolute,
+          paste0(output_file, ".png"),
+          file.path(
+            output_dir,
+            paste0(
+             sub(
+              pattern = "^[\\/]",
+              replacement = "",
+              sub(normalizePath(output_dir), replacement = "", output_file)
+            ),
+            ".png"
+            )
+          )
+        )
+      return(return_path_png)
     }
   } else {
     stop("Output format unknown")
   }
-  return(as.character(output_file))
+
+  return_path_html <- ifelse(
+    path_absolute,
+    normalizePath(output_file),
+    file.path(
+      output_dir,
+      sub(
+        pattern = "^[\\/]",
+        replacement = "",
+        sub(normalizePath(output_dir), replacement = "", output_file)
+      )
+    )
+  )
+
+  return(return_path_html)
 }
