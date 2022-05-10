@@ -248,9 +248,9 @@ drop_name <- function(bib, cite_key,
 
 
   # create output directory, if needed
-  if (!dir.exists(here::here(output_dir))) {
+  if (!dir.exists(output_dir)) {
     tryCatch(
-      expr = dir.create(here::here(output_dir)),
+      expr = dir.create(output_dir, recursive = TRUE),
       error = function(e) {
         message("Could not create the output directory. Check file permissions.")
         print(e)

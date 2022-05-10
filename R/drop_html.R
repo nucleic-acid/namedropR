@@ -72,16 +72,16 @@ drop_html <- function(work_item,
 
   # define required QR output dir
   if (use_xaringan) {
-    qr_dir <- here::here("qr")
+    qr_dir <- file.path(normalizePath("."), "qr") # qr folder on same level as output folder
   } else {
-    qr_dir <- here::here(output_dir, "qr")
+    qr_dir <- file.path(normalizePath(output_dir), "qr") # qr folder as subfolder of output folder
   }
 
   if (include_qr != "embed") {
     if (!dir.exists(qr_dir)) {
       tryCatch(
         expr = {
-          dir.create(qr_dir)
+          dir.create(qr_dir, recursive = TRUE)
         },
         error = function(e) {
           message("Could not create QR output folder:")

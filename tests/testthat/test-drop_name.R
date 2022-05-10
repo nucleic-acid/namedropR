@@ -145,20 +145,20 @@ test_that("use_xaringan creates the correct folders (qr/ in working dir)", {
     "Title1", c("Alice1", "Bob1", "Charlie1"), "JoURP1", "Alice2021", "2021", "someDOI1",
   )
   # remove possibly preexisting folders
-  unlink(here::here("visual_citations"), recursive = TRUE)
-  unlink(here::here("qr"), recursive = TRUE)
+  unlink(normalizePath("visual_citations"), recursive = TRUE)
+  unlink(normalizePath("qr"), recursive = TRUE)
 
   drop_name(bib = sample_data, export_as = "html", cite_key = "Alice2021", use_xaringan = TRUE)
-  expect_true(dir.exists(here::here("visual_citations")))
-  expect_true(dir.exists(here::here("qr")))
+  expect_true(dir.exists(normalizePath("visual_citations")))
+  expect_true(dir.exists(normalizePath("qr")))
 
-  unlink(here::here("visual_citations"), recursive = TRUE)
-  unlink(here::here("qr"), recursive = TRUE)
+  unlink(normalizePath("visual_citations"), recursive = TRUE)
+  unlink(normalizePath("qr"), recursive = TRUE)
 
   drop_name(bib = sample_data, export_as = "html_full", cite_key = "Alice2021", use_xaringan = TRUE)
-  expect_true(dir.exists(here::here("visual_citations")))
-  expect_true(dir.exists(here::here("qr")))
+  expect_true(dir.exists(normalizePath("visual_citations")))
+  expect_true(dir.exists(normalizePath("qr")))
 
-  unlink(here::here("visual_citations"), recursive = TRUE)
-  unlink(here::here("qr"), recursive = TRUE)
+  unlink(normalizePath("visual_citations"), recursive = TRUE)
+  unlink(normalizePath("qr"), recursive = TRUE)
 })
