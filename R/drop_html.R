@@ -32,7 +32,8 @@ drop_html <- function(work_item,
                       qr_size = 250,
                       qr_color = "#000000",
                       vc_width = 600,
-                      output_dir, style,
+                      output_dir,
+                      style,
                       use_xaringan = FALSE,
                       style_args = list()) {
 
