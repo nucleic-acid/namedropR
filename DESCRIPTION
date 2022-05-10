@@ -21,7 +21,6 @@ License: MIT + file LICENSE
 Imports: 
     htmltools,
     qrcode,
-    here,
     lubridate,
     webshot,
     bib2df,

@@ -67,7 +67,6 @@
 #' @import bib2df
 #' @import dplyr
 #' @importFrom htmltools tags save_html
-#' @importFrom here here
 #' @importFrom lubridate year ymd
 #' @importFrom webshot webshot
 #' @importFrom stringr str_detect

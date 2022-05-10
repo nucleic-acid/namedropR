@@ -156,5 +156,5 @@ test_that("use_xaringan sets the right folder-structure", {
     file.exists(file.path(tempdir(), "qr"))
   )
 
-  unlink(here::here("qr"))
+  unlink(normalizePath("qr"))
 })

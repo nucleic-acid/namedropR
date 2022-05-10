@@ -140,7 +140,7 @@ drop_html <- function(work_item,
               if (capabilities("cairo")) {
                 htmltools::capturePlot(
                   plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
+                  filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, ".svg")),
                   device = grDevices::svg, width = 2, height = 2
                 )
                 htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
@@ -150,7 +150,7 @@ drop_html <- function(work_item,
             } else if (include_qr == "link") {
               htmltools::capturePlot(
                 plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
+                filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, "_qr.png")),
                 width = qr_size, height = qr_size
               )
               htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
@@ -212,7 +212,7 @@ drop_html <- function(work_item,
               if (capabilities("cairo")) {
                 htmltools::capturePlot(
                   plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, ".svg")),
+                  filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, ".svg")),
                   device = grDevices::svg, width = 2, height = 2
                 )
                 htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
@@ -222,7 +222,7 @@ drop_html <- function(work_item,
             } else if (include_qr == "link") {
               htmltools::capturePlot(
                 plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                filename = here::here(qr_dir, paste0(work_item$BIBTEXKEY, "_qr.png")),
+                filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, "_qr.png")),
                 width = qr_size, height = qr_size
               )
               htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
