@@ -15,7 +15,7 @@ test_that("saving as html_full works as expected", {
     file.exists(write_vc(
       work_item = bib_tbl,
       export_as = "html_full",
-      output_dir = tempdir(),
+      output_dir = tempdir(check = TRUE),
       path_absolute = FALSE
     ))
   )
@@ -27,7 +27,7 @@ test_that("saving as html_full works as expected", {
       write_vc(
         work_item = bib_tbl,
         export_as = "html_full",
-        output_dir = tempdir(),
+        output_dir = tempdir(check = TRUE),
         path_absolute = TRUE
       )
     )
@@ -41,7 +41,7 @@ test_that("saving as html_full works as expected", {
       write_vc(
         work_item = bib_tbl,
         export_as = "html_full",
-        output_dir = tempdir(),
+        output_dir = tempdir(check = TRUE),
         path_absolute = TRUE
       ),
       n = 1
@@ -68,7 +68,7 @@ test_that("saving as html works as expected", {
     file.exists(write_vc(
       work_item = bib_tbl,
       export_as = "html",
-      output_dir = tempdir(),
+      output_dir = tempdir(check = TRUE),
       path_absolute = FALSE
     ))
   )
@@ -79,7 +79,7 @@ test_that("saving as html works as expected", {
       write_vc(
         work_item = bib_tbl,
         export_as = "html",
-        output_dir = tempdir(),
+        output_dir = tempdir(check = TRUE),
         path_absolute = TRUE
       )
     )
@@ -92,7 +92,7 @@ test_that("saving as html works as expected", {
       write_vc(
         work_item = bib_tbl,
         export_as = "html",
-        output_dir = tempdir(),
+        output_dir = tempdir(check = TRUE),
         path_absolute = FALSE
       ),
       n = 1
@@ -122,7 +122,7 @@ test_that("saving as png works as expected", {
       file.exists(write_vc(
         work_item = bib_tbl,
         export_as = "png",
-        output_dir = tempdir(),
+        output_dir = tempdir(check = TRUE),
         path_absolute = FALSE
       ))
     )
@@ -135,7 +135,7 @@ test_that("saving as png works as expected", {
         write_vc(
           work_item = bib_tbl,
           export_as = "png",
-          output_dir = tempdir(),
+          output_dir = tempdir(check = TRUE),
           path_absolute = TRUE
         )
       )
@@ -161,7 +161,7 @@ test_that("unknown output format is caught", {
     write_vc(
       work_item = bib_tbl,
       export_as = "wrong_format",
-      output_dir = tempdir(),
+      output_dir = tempdir(check = TRUE),
       path_absolute = FALSE
     )
   )
