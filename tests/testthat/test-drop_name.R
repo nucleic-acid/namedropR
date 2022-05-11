@@ -28,7 +28,7 @@ test_that("compact mode returns a correct file path", {
 
   expect_equal(
     drop_name(bib = slim_bib, cite_key = "Alice2022", output_dir = tempdir(), style = "compact"),
-    paste0(tempdir(), "/Alice2022.html")
+    file.path(tempdir(), "Alice2022.html")
   )
 })
 
@@ -39,7 +39,7 @@ test_that("biblatex files produce an output", {
   )
   expect_equal(
     drop_name(bib = bib_tbl, cite_key = "Alice2022", output_dir = tempdir()),
-    paste0(tempdir(), "/Alice2022.html")
+    file.path(tempdir(), "Alice2022.html")
   )
 
   bib_tbl2 <- dplyr::tribble(
@@ -50,8 +50,8 @@ test_that("biblatex files produce an output", {
   expect_equal(
     suppressMessages(drop_name(bib = bib_tbl2, output_dir = tempdir())),
     c(
-      paste0(tempdir(), "/Alice2022.html"),
-      paste0(tempdir(), "/Alice2023.html")
+      file.path(tempdir(), "Alice2022.html"),
+      file.path(tempdir(), "Alice2023.html")
     )
   )
 })
@@ -64,7 +64,7 @@ test_that("missing DOI and URL columns are properly handled", {
 
   expect_equal(
     drop_name(bib = slim_bib, cite_key = "Alice2022", output_dir = tempdir()),
-    paste0(tempdir(), "/Alice2022.html")
+    file.path(tempdir(), "Alice2022.html")
   )
 })
 
