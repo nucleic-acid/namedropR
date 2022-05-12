@@ -28,7 +28,7 @@ test_that("compact mode returns a correct file path", {
 
   expect_equal(
     drop_name(bib = slim_bib, cite_key = "Alice2022", output_dir = tempdir(), style = "compact"),
-    file.path(tempdir(), "Alice2022.html")
+    normalizePath(file.path(tempdir(), "Alice2022.html"))
   )
 })
 
