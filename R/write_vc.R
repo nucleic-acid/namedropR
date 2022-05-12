@@ -21,6 +21,21 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
 
   # EXPORT RESULT(s)
 
+  # create output directory, if needed
+  if (!dir.exists(output_dir)) {
+    tryCatch(
+      expr = dir.create(output_dir, recursive = TRUE),
+      error = function(e) {
+        message("Could not create the output directory. Check file permissions.")
+        print(e)
+      },
+      warning = function(w) {
+        message("Having difficulties creating the output directory:")
+        print(w)
+      }
+    )
+  }
+
   output_file <- file.path(normalizePath(output_dir), paste0(work_item$BIBTEXKEY, ".html"))
   # browser()
 
