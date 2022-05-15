@@ -1,5 +1,5 @@
 test_that("saving as html_full works as expected", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE) # check and (if needed) create temp dir before running this test
 
   VCS <- htmltools::tagList(
     htmltools::div(
@@ -64,7 +64,7 @@ test_that("saving as html_full works as expected", {
 
 
 test_that("saving as html works as expected", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
 
   VCS <- htmltools::tagList(
     htmltools::div(
@@ -129,7 +129,7 @@ test_that("saving as html works as expected", {
 })
 
 test_that("saving as png works as expected", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
 
   VCS <- htmltools::tagList(
     htmltools::div(
@@ -176,7 +176,7 @@ test_that("saving as png works as expected", {
 
 
 test_that("unknown output format is caught", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
 
   VCS <- htmltools::tagList(
     htmltools::div(
