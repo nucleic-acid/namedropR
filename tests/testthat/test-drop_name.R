@@ -1,6 +1,6 @@
 # CHECK INPUTS
 test_that("Bibliographies are correctly read ", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
 
   empty_bib <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI
@@ -38,7 +38,7 @@ test_that("Bibliographies are correctly read ", {
 })
 
 test_that("compact mode returns a correct file path", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
   slim_bib <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE,
     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
@@ -56,7 +56,7 @@ test_that("compact mode returns a correct file path", {
 })
 
 test_that("biblatex files produce an output", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
 
   bib_tbl <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNALTITLE, ~BIBTEXKEY, ~DATE, ~URL,
@@ -80,6 +80,7 @@ test_that("biblatex files produce an output", {
     "Some 2023", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2023", NA, "2023", "https://en.wikipedia.org"
   )
 
+  new <- tempdir(check = TRUE)
   withr::with_dir(
     new = new,
     code = {
@@ -95,7 +96,7 @@ test_that("biblatex files produce an output", {
 })
 
 test_that("missing DOI and URL columns are properly handled", {
-  new <- tempdir()
+  new <- tempdir(check = TRUE)
   slim_bib <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~DATE,
     "Some 2022", c("Alice", "Bob", "Charlie"), "Journal of Unnecessary R Packages", "Alice2022", "2022"
@@ -113,18 +114,26 @@ test_that("missing DOI and URL columns are properly handled", {
 })
 
 test_that("all required columns are enforced", {
+  new <- tempdir()
   missing_cols <- dplyr::tribble(
     ~TITLE, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
     "One", "Three", "Four", "2021", "Six"
   )
 
   # Authors missing
-  expect_error(drop_name(missing_cols, cite_key = "Four"))
+  withr::with_dir(
+    new = new,
+    code = {
+      expect_error(drop_name(missing_cols, cite_key = "Four"))
+    })
+
 })
 
 
 
 test_that("bulk operations work properly", {
+  new <- tempdir()
+
   bulk_data <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
     "Title1", c("Alice1", "Bob1", "Charlie1"), "JoURP1", "Alice2021", "2021", "someDOI1",
@@ -133,35 +142,41 @@ test_that("bulk operations work properly", {
     "Title4", c("Alice4", "Bob4", "Charlie4"), "JoURP4", "Alice2024", "2024", "someDOI4"
   )
 
-  # no cite_key given, 4 VCs should be created/4 paths returned
-  bulk_res1 <- evaluate_promise(drop_name(bib = bulk_data, output_dir = tempdir()))
-  expect_equal(length(bulk_res1$result), 4)
-  expect_message(drop_name(bib = bulk_data, output_dir = tempdir()), "No cite_key specified.")
+  withr::with_dir(
+    new = new,
+    code = {
+      # no cite_key given, 4 VCs should be created/4 paths returned
+      bulk_res1 <- evaluate_promise(drop_name(bib = bulk_data, output_dir = "drop_name05"))
+      expect_equal(length(bulk_res1$result), 4)
+      expect_message(drop_name(bib = bulk_data, output_dir = "drop_name05"), "No cite_key specified.")
 
-  # vector of 2 cite_keys returns 2 paths
-  bulk_res2 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Alice2021", "Alice2023"), output_dir = tempdir()))
-  expect_equal(length(bulk_res2$result), 2)
+      # vector of 2 cite_keys returns 2 paths
+      bulk_res2 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Alice2021", "Alice2023"), output_dir = "drop_name05"))
+      expect_equal(length(bulk_res2$result), 2)
 
-  # vector of 3 cite_keys with one false key returns 2, throws warning
-  bulk_res3 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Alice2022", "Alice2024", "Bob2019"), output_dir = tempdir()))
-  expect_equal(length(bulk_res3$result), 2)
-  expect_true(bulk_res3$warnings == "The following cite_key items were not found in the provided library: Bob2019")
+      # vector of 3 cite_keys with one false key returns 2, throws warning
+      bulk_res3 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Alice2022", "Alice2024", "Bob2019"), output_dir = "drop_name05"))
+      expect_equal(length(bulk_res3$result), 2)
+      expect_true(bulk_res3$warnings == "The following cite_key items were not found in the provided library: Bob2019")
 
-  # vector of only 3 false keys is supplied
-  bulk_res4 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Bob1", "Bob2", "Bob3"), output_dir = tempdir()))
-  expect_equal(bulk_res4$warnings[2], "No reference matches the given cite_keys. Please check that citation key(s) are correct.")
+      # vector of only 3 false keys is supplied
+      bulk_res4 <- evaluate_promise(drop_name(bib = bulk_data, cite_key = c("Bob1", "Bob2", "Bob3"), output_dir = "drop_name05"))
+      expect_equal(bulk_res4$warnings[2], "No reference matches the given cite_keys. Please check that citation key(s) are correct.")
 
-  # vector of type 'numerical' throws an error
-  expect_error(drop_name(bib = bulk_data, cite_key = c(1, 1, 2, 3, 5, 8), output_dir = tempdir()), "cite_key must be of type 'caracter'")
+      # vector of type 'numerical' throws an error
+      expect_error(drop_name(bib = bulk_data, cite_key = c(1, 1, 2, 3, 5, 8), output_dir = "drop_name05"), "cite_key must be of type 'caracter'")
 
-  # library with non-unique BIBTEXKEYs
-  bulk_data_dup <- dplyr::tribble(
-    ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
-    "Title1", c("Alice1", "Bob1", "Charlie1"), "JoURP1", "Alice2021", "2021", "someDOI1",
-    "Title1", c("Alice2", "Bob2", "Charlie2"), "JoURP1", "Alice2021", "2021", "someDOI3",
+      # library with non-unique BIBTEXKEYs
+      bulk_data_dup <- dplyr::tribble(
+        ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
+        "Title1", c("Alice1", "Bob1", "Charlie1"), "JoURP1", "Alice2021", "2021", "someDOI1",
+        "Title1", c("Alice2", "Bob2", "Charlie2"), "JoURP1", "Alice2021", "2021", "someDOI3",
+      )
+
+      expect_warning(drop_name(bib = bulk_data_dup, cite_key = "Alice2021", output_dir = "drop_name05"), "BIBTEX keys are not unique")
+    }
   )
 
-  expect_warning(drop_name(bib = bulk_data_dup, cite_key = "Alice2021", output_dir = tempdir()), "BIBTEX keys are not unique")
 })
 
 test_that("output_dir is properly checked", {
@@ -184,25 +199,39 @@ test_that("use_xaringan is properly checked", {
 })
 
 test_that("use_xaringan creates the correct folders (qr/ in working dir)", {
+  new <- tempdir(check = TRUE)
+
   sample_data <- dplyr::tribble(
     ~TITLE, ~AUTHOR, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~DOI,
     "Title1", c("Alice1", "Bob1", "Charlie1"), "JoURP1", "Alice2021", "2021", "someDOI1",
   )
-  # remove possibly preexisting folders
-  unlink(normalizePath("visual_citations"), recursive = TRUE)
-  unlink(normalizePath("qr"), recursive = TRUE)
+  withr::with_dir(
+    new = new,
+    code = {
+      # remove possibly preexisting qr and visual_citations folders within tempdir
+      unlink("qr", recursive = TRUE, force = TRUE)
+      unlink("visual_citations", recursive = TRUE, force = TRUE)
 
-  drop_name(bib = sample_data, export_as = "html", cite_key = "Alice2021", use_xaringan = TRUE)
-  expect_true(dir.exists(normalizePath("visual_citations")))
-  expect_true(dir.exists(normalizePath("qr")))
+      # run function
+      drop_name(bib = sample_data, export_as = "html", cite_key = "Alice2021", use_xaringan = TRUE)
+      # check if folders were correctly created
+      expect_true(dir.exists("visual_citations"))
+      expect_true(dir.exists("qr"))
+    }
+  )
 
-  unlink(normalizePath("visual_citations"), recursive = TRUE)
-  unlink(normalizePath("qr"), recursive = TRUE)
+  withr::with_dir(
+    new = new,
+    code = {
+      # remove possibly preexisting qr and visual_citations folders within tempdir
+      unlink("qr", recursive = TRUE, force = TRUE)
+      unlink("visual_citations", recursive = TRUE, force = TRUE)
 
-  drop_name(bib = sample_data, export_as = "html_full", cite_key = "Alice2021", use_xaringan = TRUE)
-  expect_true(dir.exists(normalizePath("visual_citations")))
-  expect_true(dir.exists(normalizePath("qr")))
-
-  unlink(normalizePath("visual_citations"), recursive = TRUE)
-  unlink(normalizePath("qr"), recursive = TRUE)
+      # run function
+      drop_name(bib = sample_data, export_as = "html_full", cite_key = "Alice2021", use_xaringan = TRUE)
+      # check if folders were correctly created
+      expect_true(dir.exists("visual_citations"))
+      expect_true(dir.exists("qr"))
+    }
+  )
 })
