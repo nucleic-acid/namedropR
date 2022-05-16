@@ -130,15 +130,8 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
 
   return_path_html <- ifelse(
     path_absolute,
-    normalizePath(output_file),
-    file.path(
-      output_dir,
-      sub(
-        pattern = "^[\\/]",
-        replacement = "",
-        sub(normalizePath(output_dir), replacement = "", output_file)
-      )
-    )
+    R.utils::getAbsolutePath(output_file),
+    R.utils::getRelativePath(output_file)
   )
 
   return(return_path_html)
