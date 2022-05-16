@@ -27,7 +27,6 @@ Imports:
     dplyr,
     readr,
     stringr,
-    withr,
     R.utils
 Encoding: UTF-8
 LazyData: false
@@ -37,6 +36,7 @@ RoxygenNote: 7.1.2
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
+    withr,
     rmarkdown
 Config/testthat/edition: 3
 VignetteBuilder: knitr
