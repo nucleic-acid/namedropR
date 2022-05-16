@@ -36,7 +36,7 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
     )
   }
 
-  output_file <- file.path(normalizePath(output_dir), paste0(work_item$BIBTEXKEY, ".html"))
+  output_file <- file.path(output_dir, paste0(work_item$BIBTEXKEY, ".html"))
   # browser()
 
   if (export_as == "html_full") {
