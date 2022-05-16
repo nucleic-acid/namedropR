@@ -27,7 +27,8 @@ Imports:
     dplyr,
     readr,
     stringr,
-    withr
+    withr,
+    R.utils
 Encoding: UTF-8
 LazyData: false
 BugReports: https://github.com/nucleic-acid/namedropR/issues
