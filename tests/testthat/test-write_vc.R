@@ -149,12 +149,14 @@ test_that("saving as png works as expected", {
     code = {
       expect_true(
         suppressMessages(
-          file.exists(write_vc(
-            work_item = bib_tbl,
-            export_as = "png",
-            output_dir = "visual_citations1",
-            path_absolute = FALSE
-          ))
+          file.exists(
+            write_vc(
+              work_item = bib_tbl,
+              export_as = "png",
+              output_dir = "visual_citations1",
+              path_absolute = FALSE
+            )
+          )
         )
       )
 
