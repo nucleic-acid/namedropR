@@ -109,6 +109,7 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
 
       # to point to the png instead return its filepath
       png_out <- paste0(output_file, ".png")
+      print(png_out)
 
       return_path_png <- ifelse(
           path_absolute,

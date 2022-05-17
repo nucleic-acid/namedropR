@@ -150,11 +150,13 @@ test_that("saving as png works as expected", {
       expect_true(
         suppressMessages(
           file.exists(
-            write_vc(
-              work_item = bib_tbl,
-              export_as = "png",
-              output_dir = "visual_citations1",
-              path_absolute = FALSE
+            normalizePath(
+              write_vc(
+                work_item = bib_tbl,
+                export_as = "png",
+                output_dir = "visual_citations1",
+                path_absolute = FALSE
+              )
             )
           )
         )
@@ -166,7 +168,7 @@ test_that("saving as png works as expected", {
     new = new,
     code = {
       expect_true(
-        suppressMessages(
+        # suppressMessages(
           file.exists(
             write_vc(
               work_item = bib_tbl,
@@ -175,7 +177,7 @@ test_that("saving as png works as expected", {
               path_absolute = TRUE
             )
           )
-        )
+        # )
       )
     }
   )
