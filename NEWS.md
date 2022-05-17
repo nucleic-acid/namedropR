@@ -1,6 +1,6 @@
 # namedropR 2.3.3
 
-* Fixes critical error previously missed by unit tests when working with file paths
+* Fixes critical error previously missed by unit tests when working with file paths. This broke the basic functionality on some systems when working outside of projects.
 * Removes dependency on the {here} package
 
 # namedropR 2.3.2
