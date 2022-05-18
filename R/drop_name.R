@@ -36,9 +36,9 @@
 #' @param qr_color Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
-#' @param ... Allows for custom style arguments within. Supported are: author_size, author_font,
+#' @param ... Allows for custom style arguments to override predefined styles. Supported are: author_size, author_font,
 #' author_weight, author_color, title_size, title_font, title_weight, title_color,
-#' journal_size, journal_font, journal_weight, journal_color
+#' journal_size, journal_font, journal_weight, journal_color. Fonts need to be installed on the system.
 #' @return A character string with the file path to the created visual citation in the specified output format.
 #'
 #' @examples
@@ -59,7 +59,21 @@
 #'   export_as = "png",
 #'   max_authors = 2,
 #'   style = "clean",
-#'   output_dir = tempdir()
+#'   output_dir = "visual_citations",
+#'   author_color = "#FF0000",
+#'   author_weight = "normal",
+#'   author_size = "12pt",
+#'   author_font = "Roboto",
+#'   title_color = "#00FF00",
+#'   title_weight = "bold",
+#'   title_size = "2.5rem",
+#'   title_font = "Playfair Display",
+#'   journal_color = "#0000FF",
+#'   journal_weight = "bold",
+#'   journal_size = "8pt",
+#'   journal_font = "Fira Sans",
+#'   qr_size = 150,
+#'   qr_color = "#AAAAAA"
 #' )
 #' }
 #'

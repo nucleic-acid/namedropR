@@ -69,9 +69,9 @@ relative to the rendered presentation, not relative to the visual citation.}
 \item{clean_strings}{Removes curly braces {} from titles and journal names, as they are often present in
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.}
 
-\item{...}{Allows for custom style arguments within. Supported are: author_size, author_font,
+\item{...}{Allows for custom style arguments to override predefined styles. Supported are: author_size, author_font,
 author_weight, author_color, title_size, title_font, title_weight, title_color,
-journal_size, journal_font, journal_weight, journal_color}
+journal_size, journal_font, journal_weight, journal_color. Fonts need to be installed on the system.}
 }
 \value{
 A character string with the file path to the created visual citation in the specified output format.
@@ -97,7 +97,21 @@ drop_name(
   export_as = "png",
   max_authors = 2,
   style = "clean",
-  output_dir = tempdir()
+  output_dir = "visual_citations",
+  author_color = "#FF0000",
+  author_weight = "normal",
+  author_size = "12pt",
+  author_font = "Roboto",
+  title_color = "#00FF00",
+  title_weight = "bold",
+  title_size = "2.5rem",
+  title_font = "Playfair Display",
+  journal_color = "#0000FF",
+  journal_weight = "bold",
+  journal_size = "8pt",
+  journal_font = "Fira Sans",
+  qr_size = 150,
+  qr_color = "#AAAAAA"
 )
 }
 
