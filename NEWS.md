@@ -14,7 +14,7 @@
 * changes lazy data loading to false (no relevant datasets are included)
 * tested with R 4.2
 
-# namedropR 2.3.0
+namedropR 2.3.0
 
 * Adds option to specify QR code color.
 * Adds several options to adjust stylistic elements like font, color, size and weight for title, journal and authors.
