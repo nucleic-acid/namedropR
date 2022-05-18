@@ -129,9 +129,9 @@ relative to the rendered presentation, not relative to the visual citation.</p><
 <dd><p>Removes curly braces  from titles and journal names, as they are often present in
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the  are needed.</p></dd>
 <dt>...</dt>
-<dd><p>Allows for custom style arguments within. Supported are: author_size, author_font,
+<dd><p>Allows for custom style arguments to override predefined styles. Supported are: author_size, author_font,
 author_weight, author_color, title_size, title_font, title_weight, title_color,
-journal_size, journal_font, journal_weight, journal_color</p></dd>
+journal_size, journal_font, journal_weight, journal_color. Fonts need to be installed on the system.</p></dd>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -157,7 +157,21 @@ journal_size, journal_font, journal_weight, journal_color</p></dd>
 <span class="r-in">  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
 <span class="r-in">  max_authors <span class="op">=</span> <span class="fl">2</span>,</span>
 <span class="r-in">  style <span class="op">=</span> <span class="st">"clean"</span>,</span>
-<span class="r-in">  output_dir <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
+<span class="r-in">  output_dir <span class="op">=</span> <span class="st">"visual_citations"</span>,</span>
+<span class="r-in">  author_color <span class="op">=</span> <span class="st">"#FF0000"</span>,</span>
+<span class="r-in">  author_weight <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span class="r-in">  author_size <span class="op">=</span> <span class="st">"12pt"</span>,</span>
+<span class="r-in">  author_font <span class="op">=</span> <span class="st">"Roboto"</span>,</span>
+<span class="r-in">  title_color <span class="op">=</span> <span class="st">"#00FF00"</span>,</span>
+<span class="r-in">  title_weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span class="r-in">  title_size <span class="op">=</span> <span class="st">"2.5rem"</span>,</span>
+<span class="r-in">  title_font <span class="op">=</span> <span class="st">"Playfair Display"</span>,</span>
+<span class="r-in">  journal_color <span class="op">=</span> <span class="st">"#0000FF"</span>,</span>
+<span class="r-in">  journal_weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span class="r-in">  journal_size <span class="op">=</span> <span class="st">"8pt"</span>,</span>
+<span class="r-in">  journal_font <span class="op">=</span> <span class="st">"Fira Sans"</span>,</span>
+<span class="r-in">  qr_size <span class="op">=</span> <span class="fl">150</span>,</span>
+<span class="r-in">  qr_color <span class="op">=</span> <span class="st">"#AAAAAA"</span></span>
 <span class="r-in"><span class="op">)</span></span>
 <span class="r-in"><span class="op">}</span></span>
 <span class="r-in"></span>
