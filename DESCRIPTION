@@ -32,11 +32,12 @@ Encoding: UTF-8
 LazyData: false
 BugReports: https://github.com/nucleic-acid/namedropR/issues
 URL: https://github.com/nucleic-acid/namedropR
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.0
 Suggests: 
     testthat (>= 3.0.0),
     knitr,
     withr,
-    rmarkdown
+    rmarkdown,
+    rcrossref
 Config/testthat/edition: 3
 VignetteBuilder: knitr
