@@ -24,6 +24,10 @@ drop_name_crossref <- function(dois, ...) {
                   TITLE = x$title, BIBTEXKEY = paste(author_last, x$created$`date-parts`[1]), DOI = x$DOI)
   }
 
+  if (length(dois) == 1) {
+    ref <- list(ref)
+  }
+
   df <- dplyr::bind_rows(lapply(ref, to_df))
 
   #Use names of DOIs as keys where provided
