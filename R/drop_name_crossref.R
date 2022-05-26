@@ -5,6 +5,8 @@
 #' @param dois One or several dois to create visual citations for. If they are named, these names are used as filenames; otherwise they are generated based on authors and years.
 #' @inheritDotParams drop_name -bib -cite_key
 #'
+#' @return A character string with the file path to the created visual citation in the specified output format.
+#'
 #' @export
 
 drop_name_crossref <- function(dois, ...) {
@@ -15,7 +17,15 @@ drop_name_crossref <- function(dois, ...) {
 
   stopifnot(is.character(dois))
 
-  ref <-  rcrossref::cr_cn(dois, "citeproc-json")
+  ref <-  tryCatch(rcrossref::cr_cn(dois, "citeproc-json"),
+    error=function(cond) {
+      message('rcrossref failed to retrieve the requested data.\n
+      You might need to provide your email address to crossref: \n run file.edit("~/.Renviron"), then add crossref_email= "name@example.com"
+      You might also want to check the status of the crossref API on http://status.crossref.org')
+      message("\nHere's the original error message:")
+      stop(cond, call. = FALSE)
+    })
+
 
   to_df <- function(x) {
     authors <- dplyr::pull(dplyr::mutate(x$author, name = paste0(family, ", ", given)))
@@ -28,6 +38,10 @@ drop_name_crossref <- function(dois, ...) {
     ref <- list(ref)
   }
 
+  ref <- ref[!sapply(ref, is.null)] #NULLs result from invalid DOIs
+
+  if (length(ref) == 0) stop("No results found - check your DOIs or crossref connection")
+
   df <- dplyr::bind_rows(lapply(ref, to_df))
 
   #Use names of DOIs as keys where provided
@@ -37,9 +51,7 @@ drop_name_crossref <- function(dois, ...) {
 
   #Ensure BIBTEXKEY are unique
   letters_blank <- c("", letters)
-  df <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(df, BIBTEXKEY), BIBTEXKEY = paste0(BIBTEXKEY, letters_blank[1:dplyr::n()])))
-
-
+  df <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(df, BIBTEXKEY), BIBTEXKEY = stringr::str_replace_all(paste0(BIBTEXKEY, letters_blank[1:dplyr::n()]), " ", "_")))
 
   drop_name(df, ...)
 
