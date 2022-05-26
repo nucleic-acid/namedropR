@@ -7,6 +7,11 @@
 #'
 #' @return A character string with the file path to the created visual citation in the specified output format.
 #'
+#'@examples
+#' \dontrun{
+#' drop_name_crossref(c(cite1 = "10.1126/science.169.3946.635", cite2 = "10.1111/joms.12670"))
+#' }
+#'
 #' @export
 
 drop_name_crossref <- function(dois, ...) {
