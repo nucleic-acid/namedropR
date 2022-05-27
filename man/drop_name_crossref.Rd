@@ -7,7 +7,7 @@
 drop_name_crossref(dois, ...)
 }
 \arguments{
-\item{dois}{One or several dois to create visual citations for}
+\item{dois}{One or several dois to create visual citations for. If they are named, these names are used as filenames; otherwise they are generated based on authors and years.}
 
 \item{...}{
   Arguments passed on to \code{\link[=drop_name]{drop_name}}
@@ -41,6 +41,15 @@ BibTeX strings, but not needed for the rendering. TRUE by default, but can be se
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
   }}
 }
+\value{
+A character string with the file path to the created visual citation in the specified output format.
+}
 \description{
 Takes one or several dois and extracts information from Crossref, then processes them into visual citations with \code{\link{drop_name}}
+}
+\examples{
+\dontrun{
+drop_name_crossref(c(cite1 = "10.1126/science.169.3946.635", cite2 = "10.1111/joms.12670"))
+}
+
 }
