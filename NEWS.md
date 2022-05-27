@@ -1,3 +1,7 @@
+# namedropR (development version)
+
+* adds drop_name_crossref() function.
+
 # namedropR 2.3.3
 
 * Fixes critical error previously missed by unit tests when working with file paths. This broke the basic functionality on some systems when working outside of projects.
