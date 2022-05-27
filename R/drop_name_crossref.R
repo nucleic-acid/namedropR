@@ -16,7 +16,7 @@
 
 drop_name_crossref <- function(dois, ...) {
 
-  if (!"rcrossref" %in% rownames(installed.packages())) {
+  if (!"rcrossref" %in% rownames(utils::installed.packages())) {
     stop("This function requires the rcrossref package. Please install and retry.")
   }
 
@@ -33,10 +33,10 @@ drop_name_crossref <- function(dois, ...) {
 
 
   to_df <- function(x) {
-    authors <- dplyr::pull(dplyr::mutate(x$author, name = paste0(family, ", ", given)))
+    authors <- dplyr::pull(dplyr::mutate(x$author, name = paste0(x$author$family, ", ", x$author$given)))
     author_last <- x$author$family[1]
     dplyr::tibble(YEAR = x$created$`date-parts`[1], JOURNAL = x$`container-title`, AUTHOR = list(authors),
-                  TITLE = x$title, BIBTEXKEY = paste(author_last, x$created$`date-parts`[1]), DOI = x$DOI)
+                  TITLE = x$title, `BIBTEXKEY` = paste(author_last, x$created$`date-parts`[1]), DOI = x$DOI)
   }
 
   if (length(dois) == 1) {
@@ -56,7 +56,7 @@ drop_name_crossref <- function(dois, ...) {
 
   #Ensure BIBTEXKEY are unique
   letters_blank <- c("", letters)
-  df <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(df, BIBTEXKEY), BIBTEXKEY = stringr::str_replace_all(paste0(BIBTEXKEY, letters_blank[1:dplyr::n()]), " ", "_")))
+  df <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(df, .data$BIBTEXKEY), `BIBTEXKEY` = stringr::str_replace_all(paste0(.data$BIBTEXKEY, letters_blank[1:dplyr::n()]), " ", "_")))
 
   drop_name(df, ...)
 
