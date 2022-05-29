@@ -46,6 +46,9 @@ manage_authors <- function(authors, max_authors, style = "any") {
     authors <- paste(authors[1:length(authors)], collapse = "; ")
   }
 
+  # if author list is empty in the end, replace "NA" with empty string.
+  if(authors == "NA") authors = ""
+
   # curly braces are often present in bibtex entries
   # removing them from the authors' names is probably save
   # as no technical necessity is expected within the scope of this package.

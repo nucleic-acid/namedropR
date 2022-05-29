@@ -52,20 +52,17 @@ drop_html <- function(work_item,
   # SUBSTITUTE MISSING
   if (is.na(work_item$TITLE)) {
     message(paste0("Empty title in: ", work_item$BIBTEXKEY))
-    work_item$TITLE <- "Title missing"
+    work_item$TITLE <- ""
   }
   if (is.na(work_item$JOURNAL)) {
     message(paste0("Empty JOURNAL in: ", work_item$BIBTEXKEY))
-    work_item$JOURNAL <- "Unkown Journal"
+    work_item$JOURNAL <- ""
   }
   if (is.na(work_item$YEAR)) {
     message(paste0("Empty YEAR in: ", work_item$BIBTEXKEY))
     work_item$YEAR <- "n.d."
   }
-  if (is.na(work_item$authors_collapsed)) {
-    message(paste0("Empty title in: ", work_item$BIBTEXKEY))
-    work_item$AUTHOR <- "Unknown Author(s)"
-  }
+  # missing authors are handled in manage_authors()
 
   # OBTAIN CSS STYLE
   css_styles <- get_css_styles(style = style, custom_style = style_args)
