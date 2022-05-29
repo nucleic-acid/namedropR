@@ -54,10 +54,6 @@ drop_name_crossref <- function(dois, ...) {
     df$BIBTEXKEY[stringr::str_length(names(dois))>0] <- names(dois)[stringr::str_length(names(dois))>0]
   }
 
-  #Ensure BIBTEXKEY are unique
-  letters_blank <- c("", letters)
-  df <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(df, .data$BIBTEXKEY), `BIBTEXKEY` = stringr::str_replace_all(paste0(.data$BIBTEXKEY, letters_blank[1:dplyr::n()]), " ", "_")))
-
   drop_name(df, ...)
 
 }
