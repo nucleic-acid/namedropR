@@ -94,11 +94,11 @@ test_that("inputs are correct", {
     include_qr = "embed",
     output_dir = tempdir(), style = "modern", use_xaringan = FALSE
   ))
-  expect_message(drop_html(
-    wrong_authors[2, ],
-    include_qr = "embed",
-    output_dir = tempdir(), style = "modern", use_xaringan = FALSE
-  ))
+  # expect_message(drop_html(
+  #   wrong_authors[2, ],
+  #   include_qr = "embed",
+  #   output_dir = tempdir(), style = "modern", use_xaringan = FALSE
+  # ))
 
   wrong_journal <- dplyr::tribble(
     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~QR,
