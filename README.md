@@ -65,6 +65,8 @@ There is also a less intrusive, compact style, as seen on the left.
 
 ## Basic Usage
 
+### Working with bibtex bibliographies
+
 This package accepts bibliographic information as ‘BibTeX’ and
 ‘BibLaTeX’ references and includes a QR code pointing to the
 [‘DOI’](https://www.doi.org). If the ‘DOI’ is not available in the
@@ -126,6 +128,34 @@ drop_name(
   style = "clean"
 )
 #> renders all entries within the specified bibliography file
+```
+
+### Pulling data from CrossRef
+
+If you don’t have a \*.bib file, but DOIs instead, you can pass them to
+`drop_name_crossref()` which pulls the data from
+[CrossRef](https://crossref.org) and passes the downloaded data on to
+`drop_name()`.
+
+``` r
+# DOIs can be named vectors...
+drop_name_crossref(c(cite1 = "10.1126/science.169.3946.635", cite2 = "10.1111/joms.12670"))
+
+# ...or unnamed vectors
+drop_name_crossref(c("10.1126/science.169.3946.635", "10.1111/joms.12670"))
+```
+
+All options, that can be passed to `drop_name()`, can also be specified
+in `drop_name_crossref()`, for example the following call pulls data for
+two references from CrossRef and renders them as PNG files with the
+‘newspaper’ style:
+
+``` r
+drop_name_crossref(
+  c(cite1 = "10.1126/science.169.3946.635", cite2 = "10.1111/joms.12670"),
+  export_as = "png",
+  style = "newspaper"
+)
 ```
 
 ## Options
