@@ -83,7 +83,7 @@
 #' @importFrom htmltools tags save_html
 #' @importFrom lubridate year ymd
 #' @importFrom webshot webshot
-#' @importFrom stringr str_detect
+#' @importFrom stringr str_detect str_remove_all str_trunc str_replace_all
 
 drop_name <- function(bib, cite_key,
                       output_dir = "visual_citations",
