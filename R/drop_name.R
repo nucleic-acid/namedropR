@@ -248,16 +248,24 @@ drop_name <- function(bib, cite_key,
 
   # the remaining URLs will be created below, after condensing the authors lists
 
+  # select required columns only and add missing BIBTEXKEYs:
+  clean_bib <- dplyr::select(bib_data, .data$YEAR, .data$AUTHOR, .data$JOURNAL, .data$TITLE, .data$BIBTEXKEY, .data$QR) %>%
+    dplyr::mutate(
+      `BIBTEXKEY` = ifelse(
+        is.na(.data$BIBTEXKEY),
+        stringr::str_remove_all(paste0(stringr::str_trunc(.data$TITLE, 10, ellipsis = ""), stringr::str_trunc(.data$JOURNAL, 10, ellipsis = ""), .data$YEAR), " "),
+        .data$BIBTEXKEY
+      )
+    )
 
   # check for duplicate cite_keys
   if (any(dplyr::count(bib_data, .data$BIBTEXKEY)$n > 1)) {
-    warning("BIBTEX keys are not unique in this bibliography. Duplicates are dropped before proceding.")
+    warning("There are duplicated bibtex keys / citation keys in this bibliography. I'll try to still render all selected entries. Make sure to check, whether the visual citations are as expected.")
   }
 
-  # drop rows without BIBTEXKEY and select required columns only:
-  clean_bib <- dplyr::distinct(bib_data, .data$BIBTEXKEY, .keep_all = TRUE) %>%
-    dplyr::filter(!is.na(.data$BIBTEXKEY)) %>%
-    dplyr::select(.data$YEAR, .data$AUTHOR, .data$JOURNAL, .data$TITLE, .data$BIBTEXKEY, .data$QR)
+  # Ensure BIBTEXKEY are unique.
+  letters_blank <- c("", letters)
+  clean_bib <- dplyr::ungroup(dplyr::mutate(dplyr::group_by(clean_bib, .data$BIBTEXKEY), `BIBTEXKEY_2` = stringr::str_replace_all(paste0(.data$BIBTEXKEY, letters_blank[1:dplyr::n()]), " ", "_")))
 
 
   # create output directory, if needed
@@ -313,7 +321,8 @@ drop_name <- function(bib, cite_key,
 
   work_list <- work_list %>%
     dplyr::mutate(
-      authors_collapsed = authors_collapsed,
+      authors_collapsed = authors_collapsed, # add collapsed authors
+      `BIBTEXKEY` = .data$BIBTEXKEY_2 # replace duplicated keys with deduplicated keys
     )
 
   # now create QR URLs for remaining missing entries with short author list
