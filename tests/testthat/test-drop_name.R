@@ -173,7 +173,7 @@ test_that("bulk operations work properly", {
         "Title1", c("Alice2", "Bob2", "Charlie2"), "JoURP1", "Alice2021", "2021", "someDOI3",
       )
 
-      expect_warning(drop_name(bib = bulk_data_dup, cite_key = "Alice2021", output_dir = "drop_name05"), "BIBTEX keys are not unique")
+      expect_warning(drop_name(bib = bulk_data_dup, cite_key = "Alice2021", output_dir = "drop_name05"), "There are duplicated bibtex keys")
     }
   )
 
