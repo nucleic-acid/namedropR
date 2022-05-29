@@ -47,7 +47,7 @@
     
     <a class="navbar-brand me-2" href="index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.3.9001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.3.9002</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -129,6 +129,9 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <div class="section level2">
 <h2 id="basic-usage">Basic Usage<a class="anchor" aria-label="anchor" href="#basic-usage"></a>
 </h2>
+<div class="section level3">
+<h3 id="working-with-bibtex-bibliographies">Working with bibtex bibliographies<a class="anchor" aria-label="anchor" href="#working-with-bibtex-bibliographies"></a>
+</h3>
 <p>This package accepts bibliographic information as ‘BibTeX’ and ‘BibLaTeX’ references and includes a QR code pointing to the <a href="https://www.doi.org" class="external-link">‘DOI’</a>. If the ‘DOI’ is not available in the bibliography entry, but a ‘URL’ field instead, this is used. If neither is given, the QR code points to a search call at <a href="https://scholar.google.com" class="external-link uri">https://scholar.google.com</a> with the available data as search terms.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">bib_path</span> <span class="op">&lt;-</span> <span class="st">"path/to/bibliography_file.bib"</span>
@@ -174,12 +177,31 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <span class="op">)</span>
 <span class="co">#&gt; renders all entries within the specified bibliography file</span></code></pre></div>
 </div>
+<div class="section level3">
+<h3 id="pulling-data-from-crossref">Pulling data from CrossRef<a class="anchor" aria-label="anchor" href="#pulling-data-from-crossref"></a>
+</h3>
+<p>If you don’t have a *.bib file, but DOIs instead, you can pass them to <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code> which pulls the data from <a href="https://crossref.org" class="external-link">CrossRef</a> and passes the downloaded data on to <code><a href="reference/drop_name.html">drop_name()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="co"># DOIs can be named vectors...</span>
+<span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span>
+
+<span class="co"># ...or unnamed vectors</span>
+<span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10.1126/science.169.3946.635"</span>, <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<p>All options, that can be passed to <code><a href="reference/drop_name.html">drop_name()</a></code>, can also be specified in <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code>, for example the following call pulls data for two references from CrossRef and renders them as PNG files with the ‘newspaper’ style:</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span>
+  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span>,
+  export_as <span class="op">=</span> <span class="st">"png"</span>,
+  style <span class="op">=</span> <span class="st">"newspaper"</span>
+<span class="op">)</span></code></pre></div>
+</div>
+</div>
 <div class="section level2">
 <h2 id="options">Options<a class="anchor" aria-label="anchor" href="#options"></a>
 </h2>
 <p>It is possible to specify output format (HTML or PNG), style, size of the QR code and much more. See the vignettes for all options.</p>
 <p>These are some frequently used options:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="co"># create a visual citation as PNG with 'modern' design</span>
 <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"modern"</span><span class="op">)</span>
 
