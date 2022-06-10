@@ -37,6 +37,7 @@ relative to the rendered presentation, not relative to the visual citation.}
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.}
     \item{\code{qr_size}}{Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.}
     \item{\code{qr_color}}{Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".}
+    \item{\code{qr_hyperlink}}{Logical. Should the QR code be a hyperlink?}
     \item{\code{vc_width}}{Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}
   }}

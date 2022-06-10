@@ -13,6 +13,7 @@ drop_name(
   include_qr = "link",
   qr_size = 250,
   qr_color = "#000000",
+  qr_hyperlink = FALSE,
   vc_width = 600,
   style = "modern",
   path_absolute = FALSE,
@@ -49,6 +50,8 @@ For webshot you need to install phantomJS once (see 'webshot' documentation).}
 \item{qr_size}{Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.}
 
 \item{qr_color}{Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".}
+
+\item{qr_hyperlink}{Logical. Should the QR code be a hyperlink?}
 
 \item{vc_width}{Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px}

@@ -18,6 +18,7 @@
 #' relative to the rendered presentation, not relative to the visual citation.
 #' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
 #' @param qr_color Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00".
+#' @param qr_hyperlink Logical. Should the QR code be a hyperlink?
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
 #' @param style_args Custom style arguments can be passed by drop_name for individual styles. These are passed on to get_css_styles(). Style arguments are combinations of 'author_', 'title_', 'journal_' with either one of: 'font', 'size', 'weight' and 'color'. E.g. 'author_weight = "bold"'.
@@ -31,6 +32,7 @@ drop_html <- function(work_item,
                       include_qr,
                       qr_size = 250,
                       qr_color = "#000000",
+                      qr_hyperlink = FALSE,
                       vc_width = 600,
                       output_dir,
                       style,
@@ -48,6 +50,7 @@ drop_html <- function(work_item,
   stopifnot(is.character(output_dir))
   stopifnot(is.character(style))
   stopifnot(is.logical(use_xaringan))
+  stopifnot(is.logical(qr_hyperlink))
 
   # SUBSTITUTE MISSING
   if (is.na(work_item$TITLE)) {
@@ -117,42 +120,13 @@ drop_html <- function(work_item,
             )
           ),
           htmltools::tags$td(
-            if (include_qr == "embed") {
-              if (capabilities("cairo")) {
-                htmltools::plotTag(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  device = grDevices::svg, width = qr_size, height = qr_size, pixelratio = 1 / 72,
-                  mimeType = "image/svg+xml"
-                )
-              } else {
-                message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
-                htmltools::plotTag(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  width = qr_size, height = qr_size
-                )
-              }
-            } else if (include_qr == "link_svg") {
-              if (capabilities("cairo")) {
-                htmltools::capturePlot(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, ".svg")),
-                  device = grDevices::svg, width = 2, height = 2
-                )
-                htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
-              } else {
-                message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
-              }
-            } else if (include_qr == "link") {
-              htmltools::capturePlot(
-                plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, "_qr.png")),
-                width = qr_size, height = qr_size
+            if (qr_hyperlink) {
+              htmltools::a(
+                href = work_item$QR,
+                make_qr_img(work_item, include_qr, qr_size, qr_color, qr_dir)
               )
-              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
             } else {
-              message("No QR code will be created.")
+              make_qr_img(work_item, include_qr, qr_size, qr_color, qr_dir)
             }
           )
         )
@@ -189,46 +163,63 @@ drop_html <- function(work_item,
             )
           ),
           htmltools::tags$td(
-            if (include_qr == "embed") {
-              if (capabilities("cairo")) {
-                htmltools::plotTag(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  device = grDevices::svg, width = qr_size, height = qr_size, pixelratio = 1 / 72,
-                  mimeType = "image/svg+xml"
-                )
-              } else {
-                message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
-                htmltools::plotTag(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
-                  width = qr_size, height = qr_size
-                )
-              }
-            } else if (include_qr == "link_svg") {
-              if (capabilities("cairo")) {
-                htmltools::capturePlot(
-                  plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                  filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, ".svg")),
-                  device = grDevices::svg, width = 2, height = 2
-                )
-                htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
-              } else {
-                message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
-              }
-            } else if (include_qr == "link") {
-              htmltools::capturePlot(
-                plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
-                filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, "_qr.png")),
-                width = qr_size, height = qr_size
+            if (qr_hyperlink) {
+              htmltools::a(
+                href = work_item$QR,
+                make_qr_img(work_item, include_qr, qr_size, qr_color, qr_dir)
               )
-              htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
             } else {
-              message("No QR code will be created.")
+              make_qr_img(work_item, include_qr, qr_size, qr_color, qr_dir)
             }
           )
         )
       )
     )
+  }
+}
+
+make_qr_img <- function(
+    work_item,
+    include_qr,
+    qr_size,
+    qr_color,
+    qr_dir
+) {
+  if (include_qr == "embed") {
+    if (capabilities("cairo")) {
+      htmltools::plotTag(
+        plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
+        alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+        device = grDevices::svg, width = qr_size, height = qr_size, pixelratio = 1 / 72,
+        mimeType = "image/svg+xml"
+      )
+    } else {
+      message("Embedding as SVG is not supported on this device. Try setting up Cairo SVG properly if SVG is desired. Embedding as PNG.")
+      htmltools::plotTag(
+        plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
+        alt = paste0("A QR code linking to the paper of ", work_item$authors_collapsed, " ", as.character(work_item$YEAR)),
+        width = qr_size, height = qr_size
+      )
+    }
+  } else if (include_qr == "link_svg") {
+    if (capabilities("cairo")) {
+      htmltools::capturePlot(
+        plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
+        filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, ".svg")),
+        device = grDevices::svg, width = 2, height = 2
+      )
+      htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, ".svg")))
+    } else {
+      message("SVG export for QR not supported on this device. Try setting up Cairo SVG properly.")
+    }
+  } else if (include_qr == "link") {
+    htmltools::capturePlot(
+      plot(generate_qr(url = work_item$QR), col = c("white", qr_color)),
+      filename = file.path(normalizePath(qr_dir), paste0(work_item$BIBTEXKEY, "_qr.png")),
+      width = qr_size, height = qr_size
+    )
+    htmltools::tags$img(src = file.path("qr", paste0(work_item$BIBTEXKEY, "_qr.png")), alt = "QR code")
+  } else {
+    message("No QR code will be created.")
   }
 }
