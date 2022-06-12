@@ -34,6 +34,7 @@
 #' BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the {} are needed.
 #' @param qr_size Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.
 #' @param qr_color Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".
+#' @param qr_hyperlink Logical. Should the QR code be a hyperlink?
 #' @param vc_width Specifies the width of the text part of the visual citation in px.
 #' This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px
 #' @param ... Allows for custom style arguments to override predefined styles. Supported are: author_size, author_font,
@@ -92,6 +93,7 @@ drop_name <- function(bib, cite_key,
                       include_qr = "link",
                       qr_size = 250,
                       qr_color = "#000000",
+                      qr_hyperlink = FALSE,
                       vc_width = 600,
                       style = "modern",
                       path_absolute = FALSE,
@@ -128,6 +130,7 @@ drop_name <- function(bib, cite_key,
   # style content is not further checked, as unknown styles will be handled as "none" in get_css_styles()
   stopifnot(is.logical(path_absolute))
   stopifnot(is.logical(use_xaringan))
+  stopifnot(is.logical(qr_hyperlink))
   stopifnot(is.logical(clean_strings))
 
   # READ AND CHECK BIB FILE or BIBENTRY
@@ -353,6 +356,7 @@ drop_name <- function(bib, cite_key,
     use_xaringan = ifelse(export_as == "png", FALSE, use_xaringan),
     qr_size = qr_size,
     qr_color = qr_color,
+    qr_hyperlink = qr_hyperlink,
     vc_width = vc_width,
     style_args = style_args
   )
