@@ -66,6 +66,7 @@
   <span class="va">include_qr</span>,
   qr_size <span class="op">=</span> <span class="fl">250</span>,
   qr_color <span class="op">=</span> <span class="st">"#000000"</span>,
+  qr_hyperlink <span class="op">=</span> <span class="cn">FALSE</span>,
   vc_width <span class="op">=</span> <span class="fl">600</span>,
   <span class="va">output_dir</span>,
   <span class="va">style</span>,
@@ -79,35 +80,58 @@
     <dl><dt>work_item</dt>
 <dd><p>A data.frame or tibble with nrow(work_item) == 1 containing the
 data for one reference to create the visual citation.</p></dd>
+
+
 <dt>include_qr</dt>
 <dd><p>Character string specifying the way the QR code should be included or if no QR code should be included.
 'embed' results in a stand alone &lt;img&gt; tag within the HTML object, other options are ignored for the time being.
 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML &lt;img&gt; tag links to this file then.
 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML &lt;img&gt; tag links to this file then.
 'none' creates no QR code.</p></dd>
+
+
 <dt>qr_size</dt>
 <dd><p>Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.</p></dd>
+
+
 <dt>qr_color</dt>
 <dd><p>Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00".</p></dd>
+
+
+<dt>qr_hyperlink</dt>
+<dd><p>Logical. Should the QR code be a hyperlink?</p></dd>
+
+
 <dt>vc_width</dt>
 <dd><p>Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px</p></dd>
+
+
 <dt>output_dir</dt>
 <dd><p>A string specifying the relative path, where the rendered output files should be stored.</p></dd>
+
+
 <dt>style</dt>
 <dd><p>A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "none". If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for &lt;div&gt; classes "top-row", "title-row" and "author-row".</p></dd>
+
+
 <dt>use_xaringan</dt>
 <dd><p>Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 relative to the rendered presentation, not relative to the visual citation.</p></dd>
+
+
 <dt>style_args</dt>
 <dd><p>Custom style arguments can be passed by drop_name for individual styles. These are passed on to get_css_styles(). Style arguments are combinations of 'author_', 'title_', 'journal_' with either one of: 'font', 'size', 'weight' and 'color'. E.g. 'author_weight = "bold"'.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A htmltools taglist containing the visual citation as HTML representation including style.</p>
+    
+
+<p>A htmltools taglist containing the visual citation as HTML representation including style.</p>
     </div>
 
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
@@ -119,7 +143,7 @@ relative to the rendered presentation, not relative to the visual citation.</p><
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>

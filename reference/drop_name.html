@@ -70,6 +70,7 @@
   include_qr <span class="op">=</span> <span class="st">"link"</span>,
   qr_size <span class="op">=</span> <span class="fl">250</span>,
   qr_color <span class="op">=</span> <span class="st">"#000000"</span>,
+  qr_hyperlink <span class="op">=</span> <span class="cn">FALSE</span>,
   vc_width <span class="op">=</span> <span class="fl">600</span>,
   style <span class="op">=</span> <span class="st">"modern"</span>,
   path_absolute <span class="op">=</span> <span class="cn">FALSE</span>,
@@ -85,33 +86,55 @@
 <dd><p>Accepts one of the following:
 1) A data.frame or tibble containing the columns YEAR, JOURNAL, AUTHOR, TITLE, BIBTEXKEY (all mandatory) and DOI, URL (optional).
 2) A file path to a bibliography file in BibTeX/BibLaTeX format (usually *.bib file).</p></dd>
+
+
 <dt>cite_key</dt>
 <dd><p>If given, either a character string or a vector of strings are accepted.
 Specifies the reference items within the bibliography for which visual citations should be created.
 If no key is specified, a visual citation is created for ALL reference items within the bibliography.
 In other words, either one, many or no BibTeX citation keys can be specified.</p></dd>
+
+
 <dt>output_dir</dt>
 <dd><p>A string specifying the relative path, where the rendered output files should be stored.</p></dd>
+
+
 <dt>export_as</dt>
 <dd><p>A string specifying the desired output format. For now supports PNG and HTML.
 Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file including &lt;head&gt; etc.
 The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
 For webshot you need to install phantomJS once (see 'webshot' documentation).</p></dd>
+
+
 <dt>max_authors</dt>
 <dd><p>Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.</p></dd>
+
+
 <dt>include_qr</dt>
 <dd><p>Character string specifying the way the QR code should be included or if no QR code should be included.
 'embed' results in a stand alone &lt;img&gt; tag within the HTML object, other options are ignored for the time being.
 'link' (default) creates a PNG of the QR code and stores it in a subfolder of the HTML file's location. The HTML &lt;img&gt; tag links to this file then.
 'link_svg' creates a SVG of the QR code and stores it in a subfolder of the HTML file's location. The HTML &lt;img&gt; tag links to this file then.
 'none' creates no QR code.</p></dd>
+
+
 <dt>qr_size</dt>
 <dd><p>Specifies the height/width of the rendered QR code in px. Default: 250px, minimum: 150px. Ignored for SVG output.</p></dd>
+
+
 <dt>qr_color</dt>
 <dd><p>Specifies the foreground color of the QR code as hex-string, e.g. "#00FF00"; default is black: "#000000".</p></dd>
+
+
+<dt>qr_hyperlink</dt>
+<dd><p>Logical. Should the QR code be a hyperlink?</p></dd>
+
+
 <dt>vc_width</dt>
 <dd><p>Specifies the width of the text part of the visual citation in px.
 This can be adjusted to accommodate e.g. untypically long or short titles. Default: 600px</p></dd>
+
+
 <dt>style</dt>
 <dd><p>A string specifying the desired style for the visual citation. Possible values are:
 "modern", "classic", "clean", "fancy", "newspaper", "compact" and "none".
@@ -119,23 +142,34 @@ If "compact" is given, the rendered VC contains
 only the last name of the first author and the publication year, next to the QR code.
 If "none" is given, the returned html can use a custom css file provided by the user.
 This custom CSS file must specify styles for &lt;div&gt; classes "top-row", "title-row" and "author-row". (see vignette)</p></dd>
+
+
 <dt>path_absolute</dt>
 <dd><p>Boolean to specify, whether the returned output path is a relative path or an absolute path.</p></dd>
+
+
 <dt>use_xaringan</dt>
 <dd><p>Boolean to specify if an HTML output is intended to be included in an HTML presentation (like e.g. xaringan) or not.
 When including the visual citation via htmltools::includeHTML(), the QR code needs to be in a subfolder
 relative to the rendered presentation, not relative to the visual citation.</p></dd>
+
+
 <dt>clean_strings</dt>
 <dd><p>Removes curly braces  from titles and journal names, as they are often present in
 BibTeX strings, but not needed for the rendering. TRUE by default, but can be set to FALSE, if the  are needed.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>Allows for custom style arguments to override predefined styles. Supported are: author_size, author_font,
 author_weight, author_color, title_size, title_font, title_weight, title_color,
 journal_size, journal_font, journal_weight, journal_color. Fonts need to be installed on the system.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A character string with the file path to the created visual citation in the specified output format.</p>
+    
+
+<p>A character string with the file path to the created visual citation in the specified output format.</p>
     </div>
 
     <div class="section level2">
@@ -186,7 +220,7 @@ journal_size, journal_font, journal_weight, journal_color. Fonts need to be inst
 </div>
 
 <div class="pkgdown-footer-right">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
 </div>
 
     </footer></div>
