@@ -20,7 +20,7 @@ Description: Provides 'visual citations' containing the metadata of a scientific
 License: MIT + file LICENSE
 Imports: 
     htmltools,
-    qrcode,
+    qrcode (>= 0.1.4),
     lubridate,
     webshot,
     bib2df,
