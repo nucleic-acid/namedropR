@@ -6,7 +6,7 @@
 \alias{namedropR-package}
 \title{namedropR: Create Visual Citations for Presentation Slides}
 \description{
-\if{html}{\figure{logo.png}{options: align='right' alt='logo' width='120'}}
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
 
 Provides 'visual citations' containing the metadata of a scientific paper and a 'QR' code. A 'visual citation' is a banner containing title, authors, journal and year of a publication. This package can create such banners based on 'BibTeX' and 'BibLaTeX' references and includes a QR code pointing to the 'DOI'. The resulting HTML object or PNG image can be included in a presentation to point the audience to good resources for further reading. Styling is possible via predefined designs or via custom 'CSS'. This package is not intended as replacement for proper reference manager packages, but a tool to enrich scientific presentation slides.
 }
@@ -20,6 +20,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Christian A. Gebhard \email{christian.gebhard@posteo.de} (\href{https://orcid.org/0000-0002-8792-565X}{ORCID})
+
+Other contributors:
+\itemize{
+  \item Lukas Wallrich \email{l.wallrich@bbk.ac.uk} (\href{https://orcid.org/0000-0003-2121-5177}{ORCID}) [contributor]
+}
 
 }
 \keyword{internal}

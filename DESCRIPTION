@@ -7,7 +7,12 @@ Authors@R: c(
            family = "Gebhard",
            role = c("aut", "cre"),
            email = "christian.gebhard@posteo.de",
-           comment = c(ORCID = "0000-0002-8792-565X"))
+           comment = c(ORCID = "0000-0002-8792-565X")),
+    person(given = "Lukas",
+            family = "Wallrich",
+            role = "ctb",
+            email = "l.wallrich@bbk.ac.uk",
+            comment = c(ORCID = "0000-0003-2121-5177"))
     )
 Description: Provides 'visual citations' containing the metadata of a scientific paper and a 'QR' code.
     A 'visual citation' is a banner containing title, authors, journal and year of a publication.
