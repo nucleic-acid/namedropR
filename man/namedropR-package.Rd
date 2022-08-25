@@ -24,6 +24,7 @@ Useful links:
 Other contributors:
 \itemize{
   \item Lukas Wallrich \email{l.wallrich@bbk.ac.uk} (\href{https://orcid.org/0000-0003-2121-5177}{ORCID}) [contributor]
+  \item Matthew T. Warkentin \email{warkentin@lunenfeld.ca} (\href{https://orcid.org/0000-0001-8730-3511}{ORCID}) [contributor]
 }
 
 }
