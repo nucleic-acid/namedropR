@@ -1,6 +1,8 @@
 # namedropR (development version)
 
-* adds drop_name_crossref() function.
+* Adds drop_name_crossref() function (thanks to Lukas Wallrich)
+* Adds the ability to turn a QR code into a hyperlink (thanks to Matt Warkentin)
+* Rebuilds documentaion using latest roxygen2 version to use adhere to HTML5 standards
 
 # namedropR 2.3.3
 
