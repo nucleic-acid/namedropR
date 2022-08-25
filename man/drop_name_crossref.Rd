@@ -46,7 +46,7 @@ This can be adjusted to accommodate e.g. untypically long or short titles. Defau
 A character string with the file path to the created visual citation in the specified output format.
 }
 \description{
-Takes one or several dois and extracts information from Crossref, then processes them into visual citations with \code{\link{drop_name}}
+Takes one or several dois and extracts information from Crossref, then processes them into visual citations with \code{\link{drop_name}}. Requires {rcrossref} > v1.1, see README for further details.
 }
 \examples{
 \dontrun{
