@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Use in Rmarkdown">
 <meta property="og:description" content="namedropR">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 </h2>
 <p>The package can be loaded in a code chunk within the Rmarkdown file:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">namedropR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">namedropR</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="a-sample-bibliography">A sample Bibliography<a class="anchor" aria-label="anchor" href="#a-sample-bibliography"></a>
 </h3>
@@ -127,25 +127,25 @@
 </code></pre>
 </details><p>The file can be read and converted to a tibble using the {bib2df} package like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load required packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/bib2df" class="external-link">bib2df</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-
-<span class="co"># read the file</span>
-<span class="va">bib_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata"</span>, <span class="st">"library.bib"</span>, package <span class="op">=</span> <span class="st">"namedropR"</span><span class="op">)</span>
-<span class="va">bib</span> <span class="op">&lt;-</span> <span class="fu">bib2df</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/bib2df/reference/bib2df.html" class="external-link">bib2df</a></span><span class="op">(</span><span class="va">bib_file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">BIBTEXKEY</span>, <span class="va">AUTHOR</span>, <span class="va">YEAR</span>, <span class="va">TITLE</span>, <span class="va">JOURNAL</span>, <span class="va">URL</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># load required packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/bib2df" class="external-link">bib2df</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read the file</span></span>
+<span><span class="va">bib_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata"</span>, <span class="st">"library.bib"</span>, package <span class="op">=</span> <span class="st">"namedropR"</span><span class="op">)</span></span>
+<span><span class="va">bib</span> <span class="op">&lt;-</span> <span class="fu">bib2df</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/bib2df/reference/bib2df.html" class="external-link">bib2df</a></span><span class="op">(</span><span class="va">bib_file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">BIBTEXKEY</span>, <span class="va">AUTHOR</span>, <span class="va">YEAR</span>, <span class="va">TITLE</span>, <span class="va">JOURNAL</span>, <span class="va">URL</span><span class="op">)</span></span></code></pre></div>
 <p>Let’s have a glimpse of the the resulting tibble:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">bib</span><span class="op">)</span>
-<span class="co">#&gt; Rows: 3</span>
-<span class="co">#&gt; Columns: 6</span>
-<span class="co">#&gt; $ BIBTEXKEY <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "doe2024", "active2021", "fantastic1998"</span>
-<span class="co">#&gt; $ AUTHOR    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> &lt;"Doe, John", "Sample, Susan"&gt;, &lt;"Active, Alice", "Boring, B…</span>
-<span class="co">#&gt; $ YEAR      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2024, 2021, 1998</span>
-<span class="co">#&gt; $ TITLE     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "When Inspiration Meets Passion: Translating Ideas into Pra…</span>
-<span class="co">#&gt; $ JOURNAL   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Journal of Unneccessary R Packages", "Journal of Unneccessa…</span>
-<span class="co">#&gt; $ URL       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://nucleic-acid.github.io/namedropR/", "https://nuclei…</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="va">bib</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 3</span></span>
+<span><span class="co">#&gt; Columns: 6</span></span>
+<span><span class="co">#&gt; $ BIBTEXKEY <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "doe2024", "active2021", "fantastic1998"</span></span>
+<span><span class="co">#&gt; $ AUTHOR    <span style="color: #949494; font-style: italic;">&lt;list&gt;</span> &lt;"Doe, John", "Sample, Susan"&gt;, &lt;"Active, Alice", "Boring, B…</span></span>
+<span><span class="co">#&gt; $ YEAR      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 2024, 2021, 1998</span></span>
+<span><span class="co">#&gt; $ TITLE     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "When Inspiration Meets Passion: Translating Ideas into Pra…</span></span>
+<span><span class="co">#&gt; $ JOURNAL   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Journal of Unneccessary R Packages", "Journal of Unneccessa…</span></span>
+<span><span class="co">#&gt; $ URL       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "https://nucleic-acid.github.io/namedropR/", "https://nuclei…</span></span></code></pre></div>
 <p>The references are successfully read to a tibble for further usage.</p>
 <p><strong>Note:</strong> It is possible to directly pass the *.bib file to the drop_name() function which reads and extracts the necessary data. However, when the bibliography is large and visual citations are rendered frequently, there might be significant performance improvements by reading the bibliography only once (like above) and pass the tibble to drop_name().</p>
 </div>
@@ -159,7 +159,7 @@
 </h3>
 <p>One way of embedding <em>visual citations</em> as PNG is <code><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">knitr::include_graphics()</a></code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"doe2021"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">knitr</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/knitr/man/include_graphics.html" class="external-link">include_graphics</a></span><span class="op">(</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"doe2021"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>Using <a href="https://yihui.org/knitr/" class="external-link">knitr</a> has the advantage, that it works well with ‘bulk dropping’. This means, that you can pass the entire bibliography (or a subset thereof) to the function and knitr embeds all resulting PNG files one after another, using one line of code:</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="co"># all entries</span></span>
 <span id="cb6-2"><a href="#cb6-2"></a>knitr<span class="op">::</span><span class="kw">include_graphics</span>(<span class="kw">drop_name</span>(bib, <span class="dt">export_as =</span> <span class="st">"png"</span>))</span>
@@ -172,18 +172,18 @@
 </h3>
 <p>Another way to embed PNG ‘visual citations’ is <code><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">htmltools::img()</a></code>, which creates an HTML <code>&lt;img&gt;</code> tag that points to the PNG file:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span>
-  src <span class="op">=</span> <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"active2021"</span>, style <span class="op">=</span> <span class="st">"classic"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span>
-  <span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span></span>
+<span>  src <span class="op">=</span> <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"active2021"</span>, style <span class="op">=</span> <span class="st">"classic"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
 <p>In the above example we pass the output of <code><a href="../reference/drop_name.html">drop_name()</a></code>, which is the file path to the rendered ‘visual citation’ as source string of the <code>&lt;img&gt;</code> tag.</p>
 <p><br></p>
 <p>With <code><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">htmltools::img()</a></code> ‘bulk dropping’ is <em>not</em> possible, but there is another <strong>significant advantage:</strong> It is possible to style the embedded image further using ‘CSS’ code. One idea could be to draw a frame / border around the image, another is drawing a tiny shadow around the ‘visual citation’, to give it the impression of floating slightly above the document or slide.</p>
 <p>The ‘CSS’ style needs to be applied to a <code>&lt;div&gt;</code> tag around the actual <code>&lt;img&gt;</code> tag:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">div</a></span><span class="op">(</span>
-  style <span class="op">=</span> <span class="st">"box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;"</span>,
-  <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span>src <span class="op">=</span> <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">div</a></span><span class="op">(</span></span>
+<span>  style <span class="op">=</span> <span class="st">"box-shadow: 5px 5px 6px grey;border: solid;border-color: #EEEEEE; border-width: 1px;"</span>,</span>
+<span>  <span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span>src <span class="op">=</span> <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>, cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>, export_as <span class="op">=</span> <span class="st">"png"</span><span class="op">)</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>The above example draws a thin light-gray border around the ‘visual citation’ and a shadow at the bottom and right edges, which gives a floating impression in the rendered document.</p>
 <p>If you are experienced in ‘CSS’ there should be no limits in how the embedded image should be set apart from the surrounding content.</p>
 </div>
@@ -202,13 +202,13 @@
 <p>The second format supported by <code>namedropR</code> is ‘HTML’. While this doesn’t provide raster graphics (that could be used in other places as well), this reduces the file size of the rendered document, as they only consist of ‘HTML’ code. Another advantage is the possibility to apply custom ‘CSS’ to the ‘visual citation’ itself, not just the way it is embedded. For details of custom CSS styles, please refer to the main vignette.</p>
 <p>Embedding a ‘visual citation’ as ‘HTML’ can be achieved like so:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span>
-  <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>,
-    cite_key <span class="op">=</span> <span class="st">"active2021"</span>,
-    export_as <span class="op">=</span> <span class="st">"html"</span>,
-    use_xaringan <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib</span>,</span>
+<span>    cite_key <span class="op">=</span> <span class="st">"active2021"</span>,</span>
+<span>    export_as <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    use_xaringan <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p><strong>NOTE 1:</strong> When using <code><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">htmltools::includeHTML()</a></code>, the HTML file is actually integrated into the knitted Rmarkdown output. Hence the default function call would break the VC, as the original VC embeds the QR via a relative link to the QR-subfolder of the <em>original</em> output path. <code>use_xaringan = TRUE</code> handles this by storing the QR code directly in a subfolder of the working directory, so the relative link to the QR code (after integration of the ‘VC’ to the knitted output points to the right place.</p>
 <p><strong>NOTE 2:</strong> This relative path management should be necessary for all Rmarkdown HTML documents, not only xaringan slides. The options name is a result of the initial focus of this package.</p>
 </div>
@@ -225,7 +225,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

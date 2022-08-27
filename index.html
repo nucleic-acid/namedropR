@@ -21,8 +21,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="apple-touch-icon-60x60.png">
 <script src="deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Visual Citations for Presentation Slides">
 <meta property="og:description" content="Provides visual citations containing the metadata of a scientific paper and a QR code.
@@ -47,7 +47,7 @@
     
     <a class="navbar-brand me-2" href="index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,11 +103,11 @@
 </h2>
 <p>To install, simply run:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"namedropR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"namedropR"</span><span class="op">)</span></span></code></pre></div>
 <p>You can install the development version of namedropR from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># install.packages("remotes")</span>
-<span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nucleic-acid/namedropR"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># install.packages("remotes")</span></span>
+<span><span class="fu">remotes</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"nucleic-acid/namedropR"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="visual-citations">Visual Citations<a class="anchor" aria-label="anchor" href="#visual-citations"></a>
@@ -134,66 +134,67 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 </h3>
 <p>This package accepts bibliographic information as ‘BibTeX’ and ‘BibLaTeX’ references and includes a QR code pointing to the <a href="https://www.doi.org" class="external-link">‘DOI’</a>. If the ‘DOI’ is not available in the bibliography entry, but a ‘URL’ field instead, this is used. If neither is given, the QR code points to a search call at <a href="https://scholar.google.com" class="external-link uri">https://scholar.google.com</a> with the available data as search terms.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="va">bib_path</span> <span class="op">&lt;-</span> <span class="st">"path/to/bibliography_file.bib"</span>
-
-<span class="co"># load the package</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">'namedropR'</a></span><span class="op">)</span>
-
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">bib_path</span> <span class="op">&lt;-</span> <span class="st">"path/to/bibliography_file.bib"</span></span>
+<span></span>
+<span><span class="co"># load the package</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="st"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">'namedropR'</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span><span class="op">)</span></span></code></pre></div>
 <p><code><a href="reference/drop_name.html">drop_name()</a></code> by default returns the file path, where the visual citation was stored as character string. Within an Rmarkdown/HTML presentation you can render the VC and directly pass the path to <a href="https://github.com/rstudio/htmltools" class="external-link">htmltools</a> to include the banner:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># PNG</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span>
-  src <span class="op">=</span> <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-    <span class="va">bib_path</span>,
-    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,
-    export_as <span class="op">=</span> <span class="st">"png"</span>
-  <span class="op">)</span>
-<span class="op">)</span>
-
-<span class="co"># HTML (note the recommended option use_xaringan, see documentation for details)</span>
-<span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span>
-  <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-    <span class="va">bib_path</span>,
-    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,
-    export_as <span class="op">=</span> <span class="st">"html"</span>,
-    use_xaringan <span class="op">=</span> <span class="cn">TRUE</span>
-  <span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># PNG</span></span>
+<span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/builder.html" class="external-link">img</a></span><span class="op">(</span></span>
+<span>  src <span class="op">=</span> <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>    <span class="va">bib_path</span>,</span>
+<span>    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,</span>
+<span>    export_as <span class="op">=</span> <span class="st">"png"</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># HTML (note the recommended option use_xaringan, see documentation for details)</span></span>
+<span><span class="fu">htmltools</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmltools/man/include.html" class="external-link">includeHTML</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>    <span class="va">bib_path</span>,</span>
+<span>    cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>,</span>
+<span>    export_as <span class="op">=</span> <span class="st">"html"</span>,</span>
+<span>    use_xaringan <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <p>To <strong>bulk-create</strong> VCs to include in another kind of document / presentation slides you can pass a vector of citation keys or pass no keys at all to render some or all bibliography entries respectively:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-  <span class="va">bib_path</span>,
-  cite_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SomeAuthor2010"</span>, <span class="st">"SomeOther2011"</span>, <span class="st">"YetAnother2012"</span><span class="op">)</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  style <span class="op">=</span> <span class="st">"clean"</span>
-<span class="op">)</span>
-<span class="co">#&gt; renders the three specified banners</span>
-
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-  <span class="va">bib_path</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  style <span class="op">=</span> <span class="st">"clean"</span>
-<span class="op">)</span>
-<span class="co">#&gt; renders all entries within the specified bibliography file</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>  <span class="va">bib_path</span>,</span>
+<span>  cite_key <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"SomeAuthor2010"</span>, <span class="st">"SomeOther2011"</span>, <span class="st">"YetAnother2012"</span><span class="op">)</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  style <span class="op">=</span> <span class="st">"clean"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; renders the three specified banners</span></span>
+<span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>  <span class="va">bib_path</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  style <span class="op">=</span> <span class="st">"clean"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; renders all entries within the specified bibliography file</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pulling-data-from-crossref">Pulling data from CrossRef<a class="anchor" aria-label="anchor" href="#pulling-data-from-crossref"></a>
 </h3>
-<p>If you don’t have a *.bib file, but DOIs instead, you can pass them to <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code> which pulls the data from <a href="https://crossref.org" class="external-link">CrossRef</a> and passes the downloaded data on to <code><a href="reference/drop_name.html">drop_name()</a></code>.</p>
+<p>If you don’t have a *.bib file, but DOIs instead, you can pass them to <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code> which pulls the data from <a href="https://www.crossref.org" class="external-link">CrossRef</a> and passes the downloaded data on to <code><a href="reference/drop_name.html">drop_name()</a></code>.</p>
+<p><strong>TEMPORARY NOTE:</strong> <em>Due to recent API changes in CrossRef you need to have {rcrossref} version &gt; 1.1 installed. As long as {rcrossref} v1.2 is not yet available on CRAN, installing the development version &gt;= v1.1.0.99 might avoid error messages. If you don’t feel comfortable with installing development versions (use at your own risk!), this function will only work with CRAN version of {rcrossref} &gt;= v1.2 installed.</em></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># DOIs can be named vectors...</span>
-<span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span>
-
-<span class="co"># ...or unnamed vectors</span>
-<span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10.1126/science.169.3946.635"</span>, <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># DOIs can be named vectors...</span></span>
+<span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># ...or unnamed vectors</span></span>
+<span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10.1126/science.169.3946.635"</span>, <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>All options, that can be passed to <code><a href="reference/drop_name.html">drop_name()</a></code>, can also be specified in <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code>, for example the following call pulls data for two references from CrossRef and renders them as PNG files with the ‘newspaper’ style:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span>
-  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  style <span class="op">=</span> <span class="st">"newspaper"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  style <span class="op">=</span> <span class="st">"newspaper"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 <div class="section level2">
@@ -202,17 +203,17 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <p>It is possible to specify output format (HTML or PNG), style, size of the QR code and much more. See the vignettes for all options.</p>
 <p>These are some frequently used options:</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># create a visual citation as PNG with 'modern' design</span>
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"modern"</span><span class="op">)</span>
-
-<span class="co"># create a visual citation as HTML with 'compact' design</span>
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"html"</span>, style <span class="op">=</span> <span class="st">"compact"</span><span class="op">)</span>
-
-<span class="co"># set a smaller QR code size, default is 250 (pixels)</span>
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, qr_size <span class="op">=</span> <span class="fl">150</span><span class="op">)</span>
-
-<span class="co"># set a wider text area for long titles or long author lists, default is 600 (pixels)</span>
-<span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, vc_width <span class="op">=</span> <span class="fl">800</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># create a visual citation as PNG with 'modern' design</span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, style <span class="op">=</span> <span class="st">"modern"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># create a visual citation as HTML with 'compact' design</span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"html"</span>, style <span class="op">=</span> <span class="st">"compact"</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set a smaller QR code size, default is 250 (pixels)</span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, qr_size <span class="op">=</span> <span class="fl">150</span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># set a wider text area for long titles or long author lists, default is 600 (pixels)</span></span>
+<span><span class="fu"><a href="reference/drop_name.html">drop_name</a></span><span class="op">(</span><span class="va">bib_path</span>, cite_key <span class="op">=</span> <span class="st">"SomeAuthor2010"</span>, export_as <span class="op">=</span> <span class="st">"png"</span>, vc_width <span class="op">=</span> <span class="fl">800</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="styles">Styles<a class="anchor" aria-label="anchor" href="#styles"></a>
@@ -311,6 +312,7 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <h2 data-toc-skip>Developers</h2>
 <ul class="list-unstyled">
 <li>Christian A. Gebhard <br><small class="roles"> Author, maintainer </small> <a href="https://orcid.org/0000-0002-8792-565X" target="orcid.widget" aria-label="ORCID" class="external-link"><span class="fab fa-orcid orcid" aria-hidden="true"></span></a> </li>
+<li><a href="authors.html">More about authors...</a></li>
 </ul>
 </div>
 
@@ -335,7 +337,7 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>

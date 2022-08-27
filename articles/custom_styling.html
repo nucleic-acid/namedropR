@@ -14,8 +14,8 @@
 <link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
 <link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.1.0/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.1.0/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
+<link href="../deps/bootstrap-5.1.3/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Custom Styling">
 <meta property="og:description" content="namedropR">
@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.3.3.9002</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.4.0</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -95,7 +95,7 @@
 </h2>
 <p>The package can be loaded in a code chunk within the Rmarkdown file:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">namedropR</a></span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/nucleic-acid/namedropR" class="external-link">namedropR</a></span><span class="op">)</span></span></code></pre></div>
 <p>As sample references we’ll use three fictional BibTeX entries stored in a file called ‘library.bib’.</p>
 <details><p><summary><i>see sample entries in ‘library.bib’</i></summary></p>
 <pre><code>@article{doe2024,
@@ -124,14 +124,14 @@
 </code></pre>
 <p>The file can be read and converted to a tibble using the {bib2df} package like this:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="co"># load required packages</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/bib2df" class="external-link">bib2df</a></span><span class="op">)</span>
-<span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span>
-
-<span class="co"># read the file</span>
-<span class="va">bib_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata"</span>, <span class="st">"library.bib"</span>, package <span class="op">=</span> <span class="st">"namedropR"</span><span class="op">)</span>
-<span class="va">bib</span> <span class="op">&lt;-</span> <span class="fu">bib2df</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/bib2df/reference/bib2df.html" class="external-link">bib2df</a></span><span class="op">(</span><span class="va">bib_file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> 
-  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">BIBTEXKEY</span>, <span class="va">AUTHOR</span>, <span class="va">YEAR</span>, <span class="va">TITLE</span>, <span class="va">JOURNAL</span>, <span class="va">URL</span><span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="co"># load required packages</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://docs.ropensci.org/bib2df" class="external-link">bib2df</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="co"># read the file</span></span>
+<span><span class="va">bib_file</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata"</span>, <span class="st">"library.bib"</span>, package <span class="op">=</span> <span class="st">"namedropR"</span><span class="op">)</span></span>
+<span><span class="va">bib</span> <span class="op">&lt;-</span> <span class="fu">bib2df</span><span class="fu">::</span><span class="fu"><a href="https://docs.ropensci.org/bib2df/reference/bib2df.html" class="external-link">bib2df</a></span><span class="op">(</span><span class="va">bib_file</span><span class="op">)</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="va">BIBTEXKEY</span>, <span class="va">AUTHOR</span>, <span class="va">YEAR</span>, <span class="va">TITLE</span>, <span class="va">JOURNAL</span>, <span class="va">URL</span><span class="op">)</span></span></code></pre></div>
 </details>
 </div>
 <div class="section level2">
@@ -157,14 +157,14 @@
 </h2>
 <p>If you want to specify <em>all</em> options, you can do so (see final example below). To avoid long function calls, you can also chose one of the predefined styles and <em>override</em> the style of selected items to match your taste:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-  <span class="va">bib</span>,
-  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  style <span class="op">=</span> <span class="st">"clean"</span>, 
-  author_color <span class="op">=</span> <span class="st">"FF00FF"</span>,
-  title_font <span class="op">=</span> <span class="st">"Playfair Display"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>  <span class="va">bib</span>,</span>
+<span>  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  style <span class="op">=</span> <span class="st">"clean"</span>, </span>
+<span>  author_color <span class="op">=</span> <span class="st">"FF00FF"</span>,</span>
+<span>  title_font <span class="op">=</span> <span class="st">"Playfair Display"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 <div class="section level3">
 <h3 id="notes">Notes<a class="anchor" aria-label="anchor" href="#notes"></a>
 </h3>
@@ -177,39 +177,39 @@
 </h2>
 <p>You can specify the QR code size (as integer, representing the width in pixels) and the foreground color as hex code.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-  <span class="va">bib</span>,
-  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  style <span class="op">=</span> <span class="st">"modern"</span>,
-  qr_size <span class="op">=</span> <span class="fl">150</span>,
-  qr_color <span class="op">=</span> <span class="st">"#AAAAAA"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>  <span class="va">bib</span>,</span>
+<span>  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  style <span class="op">=</span> <span class="st">"modern"</span>,</span>
+<span>  qr_size <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  qr_color <span class="op">=</span> <span class="st">"#AAAAAA"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="complete-example">Complete Example<a class="anchor" aria-label="anchor" href="#complete-example"></a>
 </h2>
 <p>An example using all possible custom styling options would be:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span>
-  <span class="va">bib</span>,
-  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,
-  export_as <span class="op">=</span> <span class="st">"png"</span>,
-  author_color <span class="op">=</span> <span class="st">"#FF0000"</span>,
-  author_weight <span class="op">=</span> <span class="st">"normal"</span>,
-  author_size <span class="op">=</span> <span class="st">"12pt"</span>,
-  author_font <span class="op">=</span> <span class="st">"Roboto"</span>,
-  title_color <span class="op">=</span> <span class="st">"#00FF00"</span>,
-  title_weight <span class="op">=</span> <span class="st">"bold"</span>,
-  title_size <span class="op">=</span> <span class="st">"2.5rem"</span>,
-  title_font <span class="op">=</span> <span class="st">"Playfair Display"</span>,
-  journal_color <span class="op">=</span> <span class="st">"#0000FF"</span>,
-  journal_weight <span class="op">=</span> <span class="st">"bold"</span>,
-  journal_size <span class="op">=</span> <span class="st">"8pt"</span>,
-  journal_font <span class="op">=</span> <span class="st">"Fira Sans"</span>,
-  qr_size <span class="op">=</span> <span class="fl">150</span>,
-  qr_color <span class="op">=</span> <span class="st">"#AAAAAA"</span>
-<span class="op">)</span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">namedropR</span><span class="fu">::</span><span class="fu"><a href="../reference/drop_name.html">drop_name</a></span><span class="op">(</span></span>
+<span>  <span class="va">bib</span>,</span>
+<span>  cite_key <span class="op">=</span> <span class="st">"fantastic1998"</span>,</span>
+<span>  export_as <span class="op">=</span> <span class="st">"png"</span>,</span>
+<span>  author_color <span class="op">=</span> <span class="st">"#FF0000"</span>,</span>
+<span>  author_weight <span class="op">=</span> <span class="st">"normal"</span>,</span>
+<span>  author_size <span class="op">=</span> <span class="st">"12pt"</span>,</span>
+<span>  author_font <span class="op">=</span> <span class="st">"Roboto"</span>,</span>
+<span>  title_color <span class="op">=</span> <span class="st">"#00FF00"</span>,</span>
+<span>  title_weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>  title_size <span class="op">=</span> <span class="st">"2.5rem"</span>,</span>
+<span>  title_font <span class="op">=</span> <span class="st">"Playfair Display"</span>,</span>
+<span>  journal_color <span class="op">=</span> <span class="st">"#0000FF"</span>,</span>
+<span>  journal_weight <span class="op">=</span> <span class="st">"bold"</span>,</span>
+<span>  journal_size <span class="op">=</span> <span class="st">"8pt"</span>,</span>
+<span>  journal_font <span class="op">=</span> <span class="st">"Fira Sans"</span>,</span>
+<span>  qr_size <span class="op">=</span> <span class="fl">150</span>,</span>
+<span>  qr_color <span class="op">=</span> <span class="st">"#AAAAAA"</span></span>
+<span><span class="op">)</span></span></code></pre></div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
     </nav></aside>
@@ -224,7 +224,7 @@
 
 <div class="pkgdown-footer-right">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
 </div>
 
     </footer>
