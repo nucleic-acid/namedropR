@@ -1,13 +1,23 @@
 Package: namedropR
 Type: Package
 Title: Create Visual Citations for Presentation Slides
-Version: 2.3.3.9002
+Version: 2.3.3.9004
 Authors@R: c(
     person(given = c("Christian", "A."),
            family = "Gebhard",
            role = c("aut", "cre"),
            email = "christian.gebhard@posteo.de",
-           comment = c(ORCID = "0000-0002-8792-565X"))
+           comment = c(ORCID = "0000-0002-8792-565X")),
+    person(given = "Lukas",
+            family = "Wallrich",
+            role = c("ctb"),
+            email = "l.wallrich@bbk.ac.uk",
+            comment = c(ORCID = "0000-0003-2121-5177")),
+    person(given = "Matthew T.",
+           family = "Warkentin",
+           role = c("ctb"),
+           email = "warkentin@lunenfeld.ca",
+           comment = c(ORCID = "0000-0001-8730-3511"))
     )
 Description: Provides 'visual citations' containing the metadata of a scientific paper and a 'QR' code.
     A 'visual citation' is a banner containing title, authors, journal and year of a publication.
@@ -32,7 +42,7 @@ Encoding: UTF-8
 LazyData: false
 BugReports: https://github.com/nucleic-acid/namedropR/issues
 URL: https://github.com/nucleic-acid/namedropR
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 Suggests: 
     testthat (>= 3.0.0),
     knitr,

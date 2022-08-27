@@ -134,8 +134,15 @@ drop_name(
 
 If you don’t have a \*.bib file, but DOIs instead, you can pass them to
 `drop_name_crossref()` which pulls the data from
-[CrossRef](https://crossref.org) and passes the downloaded data on to
-`drop_name()`.
+[CrossRef](https://www.crossref.org) and passes the downloaded data on
+to `drop_name()`.
+
+**TEMPORARY NOTE:** *Due to recent API changes in CrossRef you need to
+have {rcrossref} version \> 1.1 installed. As long as {rcrossref} v1.2
+is not yet available on CRAN, installing the development version \>=
+v1.1.0.99 might avoid error messages. If you don’t feel comfortable with
+installing development versions (use at your own risk!), this function
+will only work with CRAN version of {rcrossref} \>= v1.2 installed.*
 
 ``` r
 # DOIs can be named vectors...

@@ -1,6 +1,6 @@
 #' Create visual citation from Crossref data
 #'
-#' Takes one or several dois and extracts information from Crossref, then processes them into visual citations with \code{\link{drop_name}}
+#' Takes one or several dois and extracts information from Crossref, then processes them into visual citations with \code{\link{drop_name}}. Requires {rcrossref} > v1.1, see README for further details.
 #'
 #' @param dois One or several dois to create visual citations for. If they are named, these names are used as filenames; otherwise they are generated based on authors and years.
 #' @inheritDotParams drop_name -bib -cite_key
