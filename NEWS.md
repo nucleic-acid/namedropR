@@ -1,4 +1,4 @@
-# namedropR (development version)
+# namedropR 2.4.0
 
 * Adds drop_name_crossref() function (thanks to Lukas Wallrich)
 * Adds the ability to turn a QR code into a hyperlink (thanks to Matt Warkentin)
