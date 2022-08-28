@@ -130,14 +130,14 @@ drop_name(
 #> renders all entries within the specified bibliography file
 ```
 
-### Pulling data from CrossRef
+### Pulling data from Crossref
 
 If you don’t have a \*.bib file, but DOIs instead, you can pass them to
 `drop_name_crossref()` which pulls the data from
-[CrossRef](https://www.crossref.org) and passes the downloaded data on
+[Crossref](https://www.crossref.org) and passes the downloaded data on
 to `drop_name()`.
 
-**TEMPORARY NOTE:** *Due to recent API changes in CrossRef you need to
+**TEMPORARY NOTE:** *Due to recent API changes in Crossref you need to
 have {rcrossref} version \> 1.1 installed. As long as {rcrossref} v1.2
 is not yet available on CRAN, installing the development version \>=
 v1.1.0.99 might avoid error messages. If you don’t feel comfortable with
@@ -154,7 +154,7 @@ drop_name_crossref(c("10.1126/science.169.3946.635", "10.1111/joms.12670"))
 
 All options, that can be passed to `drop_name()`, can also be specified
 in `drop_name_crossref()`, for example the following call pulls data for
-two references from CrossRef and renders them as PNG files with the
+two references from Crossref and renders them as PNG files with the
 ‘newspaper’ style:
 
 ``` r
