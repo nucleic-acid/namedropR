@@ -5,14 +5,17 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="Provides visual citations containing the metadata of a scientific paper and a QR code.
-    A visual citation is a banner containing title, authors, journal and year of a publication.
-    This package can create such banners based on BibTeX and BibLaTeX references or call the 
-    reference metadata from CrossRef. The banners include a QR code pointing to the DOI.
-    The resulting HTML object or PNG image can be included in a presentation to point the audience to good resources for further reading.
-    Styling is possible via predefined designs or via custom CSS.
-    This package is not intended as replacement for proper reference manager packages, 
-    but a tool to enrich scientific presentation slides and conference posters.">
+<meta name="description" content="Provides visual citations containing the metadata of a
+    scientific paper and a QR code.  A visual citation is a banner
+    containing title, authors, journal and year of a publication.  This
+    package can create such banners based on BibTeX and BibLaTeX
+    references or call the reference metadata from Crossref-API. The
+    banners include a QR code pointing to the DOI.  The resulting HTML
+    object or PNG image can be included in a presentation to point the
+    audience to good resources for further reading.  Styling is possible
+    via predefined designs or via custom CSS.  This package is not
+    intended as replacement for proper reference manager packages, but a
+    tool to enrich scientific presentation slides and conference posters.">
 <title>Create Visual Citations for Presentations and Posters • namedropR</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
@@ -25,14 +28,17 @@
 <script src="deps/bootstrap-5.1.3/bootstrap.bundle.min.js"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous">
 <!-- bootstrap-toc --><script src="https://cdn.rawgit.com/afeld/bootstrap-toc/v1.0.1/dist/bootstrap-toc.min.js"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script><!-- search --><script src="https://cdnjs.cloudflare.com/ajax/libs/fuse.js/6.4.6/fuse.js" integrity="sha512-zv6Ywkjyktsohkbp9bb45V6tEMoWhzFzXis+LrMehmJZZSys19Yxf1dopHx7WzIKxr5tK2dVcYmaCk2uqdjF4A==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/autocomplete.js/0.38.0/autocomplete.jquery.min.js" integrity="sha512-GU9ayf+66Xx2TmpxqJpliWbT5PiGYxpaG8rfnBEk1LL8l1KGkRShhngwdXK1UgqhAzWpZHSiYPc09/NwDQIGyg==" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/mark.min.js" integrity="sha512-5CYOlHXGh6QpOFA/TeTylKLWfB3ftPsde7AnmhuitiTX4K5SqCLBeKro6sPS8ilsz1Q4NRx3v8Ko2IBiszzdww==" crossorigin="anonymous"></script><!-- pkgdown --><script src="pkgdown.js"></script><meta property="og:title" content="Create Visual Citations for Presentations and Posters">
-<meta property="og:description" content="Provides visual citations containing the metadata of a scientific paper and a QR code.
-    A visual citation is a banner containing title, authors, journal and year of a publication.
-    This package can create such banners based on BibTeX and BibLaTeX references or call the 
-    reference metadata from CrossRef. The banners include a QR code pointing to the DOI.
-    The resulting HTML object or PNG image can be included in a presentation to point the audience to good resources for further reading.
-    Styling is possible via predefined designs or via custom CSS.
-    This package is not intended as replacement for proper reference manager packages, 
-    but a tool to enrich scientific presentation slides and conference posters.">
+<meta property="og:description" content="Provides visual citations containing the metadata of a
+    scientific paper and a QR code.  A visual citation is a banner
+    containing title, authors, journal and year of a publication.  This
+    package can create such banners based on BibTeX and BibLaTeX
+    references or call the reference metadata from Crossref-API. The
+    banners include a QR code pointing to the DOI.  The resulting HTML
+    object or PNG image can be included in a presentation to point the
+    audience to good resources for further reading.  Styling is possible
+    via predefined designs or via custom CSS.  This package is not
+    intended as replacement for proper reference manager packages, but a
+    tool to enrich scientific presentation slides and conference posters.">
 <meta property="og:image" content="/logo.png">
 <!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script><!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -47,7 +53,7 @@
     
     <a class="navbar-brand me-2" href="index.html">namedropR</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.4.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -178,17 +184,17 @@ There is also a less intrusive, compact style, as seen on the left.</p>
 <span><span class="co">#&gt; renders all entries within the specified bibliography file</span></span></code></pre></div>
 </div>
 <div class="section level3">
-<h3 id="pulling-data-from-crossref">Pulling data from CrossRef<a class="anchor" aria-label="anchor" href="#pulling-data-from-crossref"></a>
+<h3 id="pulling-data-from-crossref">Pulling data from Crossref<a class="anchor" aria-label="anchor" href="#pulling-data-from-crossref"></a>
 </h3>
-<p>If you don’t have a *.bib file, but DOIs instead, you can pass them to <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code> which pulls the data from <a href="https://www.crossref.org" class="external-link">CrossRef</a> and passes the downloaded data on to <code><a href="reference/drop_name.html">drop_name()</a></code>.</p>
-<p><strong>TEMPORARY NOTE:</strong> <em>Due to recent API changes in CrossRef you need to have {rcrossref} version &gt; 1.1 installed. As long as {rcrossref} v1.2 is not yet available on CRAN, installing the development version &gt;= v1.1.0.99 might avoid error messages. If you don’t feel comfortable with installing development versions (use at your own risk!), this function will only work with CRAN version of {rcrossref} &gt;= v1.2 installed.</em></p>
+<p>If you don’t have a *.bib file, but DOIs instead, you can pass them to <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code> which pulls the data from <a href="https://www.crossref.org" class="external-link">Crossref</a> and passes the downloaded data on to <code><a href="reference/drop_name.html">drop_name()</a></code>.</p>
+<p><strong>TEMPORARY NOTE:</strong> <em>Due to recent API changes in Crossref you need to have {rcrossref} version &gt; 1.1 installed. As long as {rcrossref} v1.2 is not yet available on CRAN, installing the development version &gt;= v1.1.0.99 might avoid error messages. If you don’t feel comfortable with installing development versions (use at your own risk!), this function will only work with CRAN version of {rcrossref} &gt;= v1.2 installed.</em></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># DOIs can be named vectors...</span></span>
 <span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></span>
 <span></span>
 <span><span class="co"># ...or unnamed vectors</span></span>
 <span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"10.1126/science.169.3946.635"</span>, <span class="st">"10.1111/joms.12670"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p>All options, that can be passed to <code><a href="reference/drop_name.html">drop_name()</a></code>, can also be specified in <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code>, for example the following call pulls data for two references from CrossRef and renders them as PNG files with the ‘newspaper’ style:</p>
+<p>All options, that can be passed to <code><a href="reference/drop_name.html">drop_name()</a></code>, can also be specified in <code><a href="reference/drop_name_crossref.html">drop_name_crossref()</a></code>, for example the following call pulls data for two references from Crossref and renders them as PNG files with the ‘newspaper’ style:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="reference/drop_name_crossref.html">drop_name_crossref</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>cite1 <span class="op">=</span> <span class="st">"10.1126/science.169.3946.635"</span>, cite2 <span class="op">=</span> <span class="st">"10.1111/joms.12670"</span><span class="op">)</span>,</span>
