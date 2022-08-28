@@ -128,56 +128,56 @@ test_that("saving as html works as expected", {
   )
 })
 
-test_that("saving as png works as expected", {
-  new <- tempdir(check = TRUE)
-
-  VCS <- htmltools::tagList(
-    htmltools::div(
-      class = "visual-citation",
-      htmltools::span("Lorem_ipsum")
-    )
-  )
-  bib_tbl <- dplyr::tribble(
-    ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~vcs,
-    "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
-  )
-
-  # writes a file, this test can only be run, if phantomJS is installed:
-  if(webshot::is_phantomjs_installed()) {
-    withr::with_dir(
-      new = new,
-      code = {
-        expect_true(
-          file.exists(
-            write_vc(
-              work_item = bib_tbl,
-              export_as = "png",
-              output_dir = "visual_citations1",
-              path_absolute = FALSE
-            )
-          )
-        )
-      }
-    )
-
-    withr::with_dir(
-      new = new,
-      code = {
-        expect_true(
-          file.exists(
-            write_vc(
-              work_item = bib_tbl,
-              export_as = "png",
-              output_dir = "visual_citations2",
-              path_absolute = TRUE
-            )
-          )
-        )
-      }
-    )
-  }
-
-})
+# test_that("saving as png works as expected", {
+#   new <- tempdir(check = TRUE)
+#
+#   VCS <- htmltools::tagList(
+#     htmltools::div(
+#       class = "visual-citation",
+#       htmltools::span("Lorem_ipsum")
+#     )
+#   )
+#   bib_tbl <- dplyr::tribble(
+#     ~TITLE, ~authors_collapsed, ~JOURNAL, ~BIBTEXKEY, ~YEAR, ~vcs,
+#     "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
+#   )
+#
+#   # writes a file, this test can only be run, if phantomJS is installed:
+#   if(webshot::is_phantomjs_installed()) {
+#     withr::with_dir(
+#       new = new,
+#       code = {
+#         expect_true(
+#           file.exists(
+#             write_vc(
+#               work_item = bib_tbl,
+#               export_as = "png",
+#               output_dir = "visual_citations1",
+#               path_absolute = FALSE
+#             )
+#           )
+#         )
+#       }
+#     )
+#
+#     withr::with_dir(
+#       new = new,
+#       code = {
+#         expect_true(
+#           file.exists(
+#             write_vc(
+#               work_item = bib_tbl,
+#               export_as = "png",
+#               output_dir = "visual_citations2",
+#               path_absolute = TRUE
+#             )
+#           )
+#         )
+#       }
+#     )
+#   }
+#
+# })
 
 
 test_that("unknown output format is caught", {
