@@ -1,3 +1,7 @@
+# namedropR (development version)
+
+* Solves issue of failing tests in CRAN checks.
+
 # namedropR 2.4.0
 
 * Adds drop_name_crossref() function (thanks to Lukas Wallrich)
