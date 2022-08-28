@@ -9,5 +9,9 @@
   checking for detritus in the temp directory ... NOTE
   Found the following files/directories:
     'lastMiKTeXException'
+    
+> On Fedora Linux, R-devel, clang, gfortran
+  checking HTML version of manual ... NOTE
+  Skipping checking HTML validation: no command 'tidy' found
 
-0 errors ✓ | 0 warnings ✓ | 1 note x
+0 errors ✓ | 0 warnings ✓ | 2 notes x
