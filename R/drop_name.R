@@ -193,7 +193,7 @@ drop_name <- function(bib, cite_key,
         dplyr::mutate(JOURNAL = ifelse(is.na(.data$JOURNAL), .data$JOURNALTITLE, .data$JOURNAL))
     } else {
       bib_data <- bib_data %>%
-        dplyr::rename(JOURNAL = .data$JOURNALTITLE)
+        dplyr::rename(JOURNAL = "JOURNALTITLE")
     }
     # message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
   }
@@ -252,7 +252,7 @@ drop_name <- function(bib, cite_key,
   # the remaining URLs will be created below, after condensing the authors lists
 
   # select required columns only and add missing BIBTEXKEYs:
-  clean_bib <- dplyr::select(bib_data, .data$YEAR, .data$AUTHOR, .data$JOURNAL, .data$TITLE, .data$BIBTEXKEY, .data$QR) %>%
+  clean_bib <- dplyr::select(bib_data, "YEAR", "AUTHOR", "JOURNAL", "TITLE", "BIBTEXKEY", "QR") %>%
     dplyr::mutate(
       `BIBTEXKEY` = ifelse(
         is.na(.data$BIBTEXKEY),
