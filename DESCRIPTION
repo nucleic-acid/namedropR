@@ -1,7 +1,7 @@
 Type: Package
 Package: namedropR
 Title: Create Visual Citations for Presentations and Posters
-Version: 2.4.1
+Version: 2.4.1.9000
 Authors@R: c(
     person(c("Christian", "A."), "Gebhard", , "christian.gebhard@posteo.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8792-565X")),

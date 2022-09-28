@@ -1,3 +1,5 @@
+# namedropR (development version)
+
 # namedropR 2.4.1
 
 * Solves issue of failing tests in CRAN checks.
