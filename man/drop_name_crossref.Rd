@@ -16,6 +16,7 @@ drop_name_crossref(dois, ...)
 Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file including <head> etc.
 The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
 For webshot you need to install phantomJS once (see 'webshot' documentation).}
+    \item{\code{to_clipboard}}{Should visual citation be copied to clipboard?}
     \item{\code{output_dir}}{A string specifying the relative path, where the rendered output files should be stored.}
     \item{\code{max_authors}}{Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.}
     \item{\code{include_qr}}{Character string specifying the way the QR code should be included or if no QR code should be included.

@@ -5,6 +5,7 @@
 #' @param bib Accepts one of the following:
 #' 1) A data.frame or tibble containing the columns YEAR, JOURNAL, AUTHOR, TITLE, BIBTEXKEY (all mandatory) and DOI, URL (optional).
 #' 2) A file path to a bibliography file in BibTeX/BibLaTeX format (usually *.bib file).
+#' 3) A string containing one or more BibTeX citations (must start with `@`)
 #' @param cite_key If given, either a character string or a vector of strings are accepted.
 #' Specifies the reference items within the bibliography for which visual citations should be created.
 #' If no key is specified, a visual citation is created for ALL reference items within the bibliography.
@@ -13,6 +14,7 @@
 #' Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file including <head> etc.
 #' The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
 #' For webshot you need to install phantomJS once (see 'webshot' documentation).
+#' @param to_clipboard Should visual citation be copied to clipboard?
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
 #' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
@@ -89,6 +91,7 @@
 drop_name <- function(bib, cite_key,
                       output_dir = "visual_citations",
                       export_as = "html",
+                      to_clipboard = FALSE,
                       max_authors = 3,
                       include_qr = "link",
                       qr_size = 250,
@@ -107,6 +110,7 @@ drop_name <- function(bib, cite_key,
   stopifnot(is.character(output_dir))
   stopifnot(is.character(export_as))
   stopifnot(export_as %in% c("html", "html_full", "png"))
+  stopifnot(is.logical(to_clipboard))
   stopifnot(is.numeric(max_authors))
   stopifnot(max_authors >= 0)
   stopifnot(is.character(include_qr))
@@ -142,6 +146,14 @@ drop_name <- function(bib, cite_key,
   if (is.data.frame(bib)) {
     bib_data <- bib
   } else if (is.character(bib)) {
+    bib_file <- NULL #Track whether new file was created
+    if(substr(bib, 1, 1) == "@") {
+      bib <- gsub("(?<=\\w{1})\\=\\{", " \\= \\{", bib, perl = TRUE) # To deal with Google Scholar parsing issue - https://github.com/nucleic-acid/namedropR/issues/49
+      bib_file <- tempfile(fileext = ".bib")
+      writeLines(bib, bib_file)
+      writeLines(bib, "test.bib")
+      bib <- bib_file
+    }
     if (file.exists(bib)) {
       bib_data <- suppressMessages(suppressWarnings(bib2df::bib2df(file = bib)))
       if ("YEAR" %in% colnames(bib_data)) {
@@ -149,6 +161,9 @@ drop_name <- function(bib, cite_key,
           bib_data$YEAR <- as.character(bib_data$YEAR)
           message("Years coerced to string format.")
         }
+      }
+      if(!is.null(bib_file)) {
+        file.remove(bib_file)
       }
       message("Bibliography file successfully read.")
     } else {
@@ -367,10 +382,11 @@ drop_name <- function(bib, cite_key,
     )
 
   file_paths <- apply(work_list, 1,
-    FUN = write_vc,
-    output_dir = output_dir,
-    path_absolute = path_absolute,
-    export_as = export_as
+                      FUN = write_vc,
+                      output_dir = output_dir,
+                      path_absolute = path_absolute,
+                      export_as = export_as,
+                      to_clipboard = to_clipboard
   )
 
   return(file_paths)
