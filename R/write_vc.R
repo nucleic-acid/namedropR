@@ -15,7 +15,7 @@
 #' }
 #'
 #' @importFrom htmltools tags save_html
-#' @importFrom webshot webshot
+#' @importFrom webshot2 webshot
 
 write_vc <- function(work_item, path_absolute, output_dir, export_as) {
 
@@ -73,10 +73,7 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
       }
     )
   } else if (export_as == "png") {
-    if (!webshot::is_phantomjs_installed()) {
-      message("You need to download and install phantomJS to save output as PNG. Try running 'webshot::install_phantomjs()' once.")
-    } else {
-      # renders as "complete" html to get the white background for PNG snapshot.
+       # renders as "complete" html to get the white background for PNG snapshot.
       tryCatch(
         expr = {
           htmltools::save_html(work_item$vcs, file = output_file)
@@ -91,10 +88,9 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
         }
       )
 
-
       tryCatch(
         expr = {
-          webshot::webshot(output_file, paste0(output_file, ".png"), selector = ".visual-citation", zoom = 2)
+          webshot2::webshot(output_file, paste0(output_file, ".png"), selector = ".visual-citation", zoom = 2)
         },
         error = function(e) {
           message("Could not take a screenshot of the intermediate HTML.")
@@ -116,7 +112,7 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
           R.utils::getRelativePath(png_out)
           )
       return(return_path_png)
-    }
+
   } else {
     stop("Output format unknown")
   }

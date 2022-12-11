@@ -1,53 +1,48 @@
-Package: namedropR
 Type: Package
+Package: namedropR
 Title: Create Visual Citations for Presentations and Posters
 Version: 2.4.1
 Authors@R: c(
-    person(given = c("Christian", "A."),
-           family = "Gebhard",
-           role = c("aut", "cre"),
-           email = "christian.gebhard@posteo.de",
+    person(c("Christian", "A."), "Gebhard", , "christian.gebhard@posteo.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0002-8792-565X")),
-    person(given = "Lukas",
-            family = "Wallrich",
-            role = c("ctb"),
-            email = "l.wallrich@bbk.ac.uk",
-            comment = c(ORCID = "0000-0003-2121-5177")),
-    person(given = "Matthew T.",
-           family = "Warkentin",
-           role = c("ctb"),
-           email = "warkentin@lunenfeld.ca",
+    person("Lukas", "Wallrich", , "l.wallrich@bbk.ac.uk", role = "ctb",
+           comment = c(ORCID = "0000-0003-2121-5177")),
+    person("Matthew T.", "Warkentin", , "warkentin@lunenfeld.ca", role = "ctb",
            comment = c(ORCID = "0000-0001-8730-3511"))
-    )
-Description: Provides 'visual citations' containing the metadata of a scientific paper and a 'QR' code.
-    A 'visual citation' is a banner containing title, authors, journal and year of a publication.
-    This package can create such banners based on 'BibTeX' and 'BibLaTeX' references or call the 
-    reference metadata from 'Crossref'-API. The banners include a QR code pointing to the 'DOI'.
-    The resulting HTML object or PNG image can be included in a presentation to point the audience to good resources for further reading.
-    Styling is possible via predefined designs or via custom 'CSS'.
-    This package is not intended as replacement for proper reference manager packages, 
-    but a tool to enrich scientific presentation slides and conference posters.
+  )
+Description: Provides 'visual citations' containing the metadata of a
+    scientific paper and a 'QR' code.  A 'visual citation' is a banner
+    containing title, authors, journal and year of a publication.  This
+    package can create such banners based on 'BibTeX' and 'BibLaTeX'
+    references or call the reference metadata from 'Crossref'-API. The
+    banners include a QR code pointing to the 'DOI'.  The resulting HTML
+    object or PNG image can be included in a presentation to point the
+    audience to good resources for further reading.  Styling is possible
+    via predefined designs or via custom 'CSS'.  This package is not
+    intended as replacement for proper reference manager packages, but a
+    tool to enrich scientific presentation slides and conference posters.
 License: MIT + file LICENSE
+URL: https://github.com/nucleic-acid/namedropR
+BugReports: https://github.com/nucleic-acid/namedropR/issues
 Imports: 
-    htmltools,
-    qrcode (>= 0.1.4),
-    lubridate,
-    webshot,
     bib2df,
     dplyr,
+    htmltools,
+    lubridate,
+    qrcode (>= 0.1.4),
+    R.utils,
     readr,
     stringr,
-    R.utils
+    webshot2
+Suggests: 
+    knitr,
+    rcrossref,
+    rmarkdown,
+    testthat (>= 3.0.0),
+    withr
+VignetteBuilder: 
+    knitr
+Config/testthat/edition: 3
 Encoding: UTF-8
 LazyData: false
-BugReports: https://github.com/nucleic-acid/namedropR/issues
-URL: https://github.com/nucleic-acid/namedropR
 RoxygenNote: 7.2.1
-Suggests: 
-    testthat (>= 3.0.0),
-    knitr,
-    withr,
-    rmarkdown,
-    rcrossref
-Config/testthat/edition: 3
-VignetteBuilder: knitr

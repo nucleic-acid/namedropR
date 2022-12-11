@@ -11,8 +11,7 @@
 #' In other words, either one, many or no BibTeX citation keys can be specified.
 #' @param export_as A string specifying the desired output format. For now supports PNG and HTML.
 #' Use "html" to include the 'bare' taglist (recommended for inclusion in Rmarkdown documents) or "html_full" to write a standalone .html file including <head> etc.
-#' The PNG is a screenshot of the rendered HTML via the 'webshot' package. The filename represents this two step approach on purpose.
-#' For webshot you need to install phantomJS once (see 'webshot' documentation).
+#' The PNG is a screenshot of the rendered HTML via the 'webshot2' package. The filename represents this two step approach on purpose.
 #' @param output_dir A string specifying the relative path, where the rendered output files should be stored.
 #' @param max_authors Integer number of maximum authors to print. If the number of authors exceeds this, the list is cropped accordingly.
 #' @param include_qr Character string specifying the way the QR code should be included or if no QR code should be included.
@@ -83,7 +82,7 @@
 #' @import dplyr
 #' @importFrom htmltools tags save_html
 #' @importFrom lubridate year ymd
-#' @importFrom webshot webshot
+#' @importFrom webshot2 webshot
 #' @importFrom stringr str_detect str_remove_all str_trunc str_replace_all
 
 drop_name <- function(bib, cite_key,
@@ -193,7 +192,7 @@ drop_name <- function(bib, cite_key,
         dplyr::mutate(JOURNAL = ifelse(is.na(.data$JOURNAL), .data$JOURNALTITLE, .data$JOURNAL))
     } else {
       bib_data <- bib_data %>%
-        dplyr::rename(JOURNAL = .data$JOURNALTITLE)
+        dplyr::rename(JOURNAL = "JOURNALTITLE")
     }
     # message("One or more references had BibLaTeX field 'JOURNALTITLE' and were transformed to 'JOURNAL'.")
   }
@@ -252,7 +251,7 @@ drop_name <- function(bib, cite_key,
   # the remaining URLs will be created below, after condensing the authors lists
 
   # select required columns only and add missing BIBTEXKEYs:
-  clean_bib <- dplyr::select(bib_data, .data$YEAR, .data$AUTHOR, .data$JOURNAL, .data$TITLE, .data$BIBTEXKEY, .data$QR) %>%
+  clean_bib <- dplyr::select(bib_data, "YEAR", "AUTHOR", "JOURNAL", "TITLE", "BIBTEXKEY", "QR") %>%
     dplyr::mutate(
       `BIBTEXKEY` = ifelse(
         is.na(.data$BIBTEXKEY),
