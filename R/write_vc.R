@@ -15,7 +15,7 @@
 #' }
 #'
 #' @importFrom htmltools tags save_html
-#' @importFrom webshot webshot
+#' @importFrom webshot2 webshot
 
 write_vc <- function(work_item, path_absolute, output_dir, export_as) {
 
