@@ -33,10 +33,10 @@ Imports:
     R.utils,
     readr,
     stringr,
-    webshot
+    webshot2
 Suggests: 
     knitr,
-    rcrossref,
+    rcrossref (>= 1.2),
     rmarkdown,
     testthat (>= 3.0.0),
     withr
