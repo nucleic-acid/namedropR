@@ -142,11 +142,7 @@ test_that("saving as html works as expected", {
 #     "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
 #   )
 #
-<<<<<<< HEAD
 #   # writes a file, this test can only be run, if a chromium browser is installed:
-=======
-#   # writes a file, this test can only be run, if a chromium browser is installed
->>>>>>> 7cf2526520982023deee1feb342faca1d1023a08
 #   if(!is.null(chromote::find_chrome())) {
 #     withr::with_dir(
 #       new = new,
