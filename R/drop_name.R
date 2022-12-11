@@ -292,7 +292,9 @@ drop_name <- function(bib, cite_key,
   # handle different input options for bibtex keys
   if (missing(cite_key)) {
     n_bib <- nrow(clean_bib)
-    message(paste0("No cite_key specified. Working through all possible ", n_bib, " entries in the bibliography."))
+    if (n_bib > 1) {
+      message(paste0("No cite_key specified. Working through all possible ", n_bib, " entries in the bibliography."))
+    }
     work_list <- clean_bib
   } else if (!is.character(cite_key)) {
     stop("cite_key must be of type 'caracter'.")
