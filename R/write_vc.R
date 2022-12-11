@@ -6,6 +6,7 @@
 #' @param output_dir A relative path (in regard to the working directory) where the visual citations should be 'dropped'. (type: character)
 #' @param path_absolute A logical parameter specifying, whether eventually a relative or absolute path should be returned.
 #' @param export_as Defines the file format of the returned visual citation (see drop_name() for more).
+#' @param to_clipboard Should the citation be copied to clipboard (as a png image)?
 #' @return The path to the written file as character.
 #'
 #' @examples
@@ -17,7 +18,7 @@
 #' @importFrom htmltools tags save_html
 #' @importFrom webshot webshot
 
-write_vc <- function(work_item, path_absolute, output_dir, export_as) {
+write_vc <- function(work_item, path_absolute, output_dir, export_as, to_clipboard = FALSE) {
 
   # EXPORT RESULT(s)
 
@@ -36,8 +37,22 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
     )
   }
 
+
+
   output_file <- file.path(output_dir, paste0(work_item$BIBTEXKEY, ".html"))
   # browser()
+
+  return_path <- ifelse(
+    export_as == "png",
+    "png",
+    "html"
+  )
+
+  if (!export_as == "png" && to_clipboard == TRUE) {
+    return_path
+    message("To copy the citation to clipboard, we also need to create a png file.")
+    export_as = "png"
+  }
 
   if (export_as == "html_full") {
     tryCatch(
@@ -111,21 +126,31 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
       png_out <- paste0(output_file, ".png")
 
       return_path_png <- ifelse(
-          path_absolute,
-          R.utils::getAbsolutePath(png_out),
-          R.utils::getRelativePath(png_out)
-          )
-      return(return_path_png)
+        path_absolute,
+        R.utils::getAbsolutePath(png_out),
+        R.utils::getRelativePath(png_out)
+      )
+      if (!return_path == "html") {
+         return_path <- return_path_png
+      }
+
     }
   } else {
     stop("Output format unknown")
   }
 
-  return_path_html <- ifelse(
-    path_absolute,
-    R.utils::getAbsolutePath(output_file),
-    R.utils::getRelativePath(output_file)
-  )
+  if (to_clipboard == TRUE) {
+    to_clipboard(R.utils::getAbsolutePath(png_out))
+  }
 
-  return(return_path_html)
+  if (return_path == "html") {
+
+    return_path <- ifelse(
+      path_absolute,
+      R.utils::getAbsolutePath(output_file),
+      R.utils::getRelativePath(output_file)
+    )
+  }
+
+  return(return_path)
 }

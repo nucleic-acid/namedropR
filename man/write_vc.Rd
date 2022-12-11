@@ -4,7 +4,7 @@
 \alias{write_vc}
 \title{write_vc}
 \usage{
-write_vc(work_item, path_absolute, output_dir, export_as)
+write_vc(work_item, path_absolute, output_dir, export_as, to_clipboard = FALSE)
 }
 \arguments{
 \item{work_item}{A data.frame or tibble with a single row, passed by drop_name()}
@@ -14,6 +14,8 @@ write_vc(work_item, path_absolute, output_dir, export_as)
 \item{output_dir}{A relative path (in regard to the working directory) where the visual citations should be 'dropped'. (type: character)}
 
 \item{export_as}{Defines the file format of the returned visual citation (see drop_name() for more).}
+
+\item{to_clipboard}{Should the citation be copied to clipboard (as a png image)?}
 }
 \value{
 The path to the written file as character.
