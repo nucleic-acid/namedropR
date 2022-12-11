@@ -86,6 +86,7 @@ write_vc <- function(work_item, path_absolute, output_dir, export_as) {
           message("Having difficulties saving the intermediate HTML output:")
           print(w)
         }
+      )
 
       tryCatch(
         expr = {
