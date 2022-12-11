@@ -5,6 +5,7 @@
 #' @param bib Accepts one of the following:
 #' 1) A data.frame or tibble containing the columns YEAR, JOURNAL, AUTHOR, TITLE, BIBTEXKEY (all mandatory) and DOI, URL (optional).
 #' 2) A file path to a bibliography file in BibTeX/BibLaTeX format (usually *.bib file).
+#' 3) A string containing one or more BibTeX citations (must start with `@`)
 #' @param cite_key If given, either a character string or a vector of strings are accepted.
 #' Specifies the reference items within the bibliography for which visual citations should be created.
 #' If no key is specified, a visual citation is created for ALL reference items within the bibliography.
@@ -142,6 +143,14 @@ drop_name <- function(bib, cite_key,
   if (is.data.frame(bib)) {
     bib_data <- bib
   } else if (is.character(bib)) {
+    bib_file <- NULL #Track whether new file was created
+    if(substr(bib, 1, 1) == "@") {
+      bib <- gsub("(?<=\\w{1})\\=\\{", " \\= \\{", bib, perl = TRUE) # To deal with Google Scholar parsing issue - https://github.com/nucleic-acid/namedropR/issues/49
+      bib_file <- tempfile(fileext = ".bib")
+      writeLines(bib, bib_file)
+      writeLines(bib, "test.bib")
+      bib <- bib_file
+    }
     if (file.exists(bib)) {
       bib_data <- suppressMessages(suppressWarnings(bib2df::bib2df(file = bib)))
       if ("YEAR" %in% colnames(bib_data)) {
@@ -149,6 +158,9 @@ drop_name <- function(bib, cite_key,
           bib_data$YEAR <- as.character(bib_data$YEAR)
           message("Years coerced to string format.")
         }
+      }
+      if(!is.null(bib_file)) {
+        file.remove(bib_file)
       }
       message("Bibliography file successfully read.")
     } else {
