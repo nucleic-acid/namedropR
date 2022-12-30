@@ -142,8 +142,8 @@ test_that("saving as html works as expected", {
 #     "Some 2023", "Alice; Bob; Charlie", "Journal of Unnecessary R Packages", "Alice2023", "2023", VCS
 #   )
 #
-#   # writes a file, this test can only be run, if phantomJS is installed:
-#   if(webshot::is_phantomjs_installed()) {
+#   # writes a file, this test can only be run, if a chromium browser is installed:
+#   if(!is.null(chromote::find_chrome())) {
 #     withr::with_dir(
 #       new = new,
 #       code = {
