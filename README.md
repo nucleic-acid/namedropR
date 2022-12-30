@@ -43,9 +43,9 @@ journal and year of a publication (s. example below).
 
 One might want to include this in a presentation
 
--   to back up one’s claims,
--   to drop an important name,
--   to boast about a publication in a ‘high impact journal’.
+- to back up one’s claims,
+- to drop an important name,
+- to boast about a publication in a ‘high impact journal’.
 
 *Some might even use this to genuinely **point the audience to good
 resources** for further reading.*
@@ -138,11 +138,7 @@ If you don’t have a \*.bib file, but DOIs instead, you can pass them to
 to `drop_name()`.
 
 **TEMPORARY NOTE:** *Due to recent API changes in Crossref you need to
-have {rcrossref} version \> 1.1 installed. As long as {rcrossref} v1.2
-is not yet available on CRAN, installing the development version \>=
-v1.1.0.99 might avoid error messages. If you don’t feel comfortable with
-installing development versions (use at your own risk!), this function
-will only work with CRAN version of {rcrossref} \>= v1.2 installed.*
+have {rcrossref} version \>= 1.2 installed.*
 
 ``` r
 # DOIs can be named vectors...
@@ -226,12 +222,11 @@ By contributing to this project, you agree to abide by its terms.
 
 ## Notes
 
--   This package is not intended as replacement for proper reference
-    manager packages, but a tool to enrich scientific presentation
-    slides. Hence the functionality is quite limited to this specific
-    use case.
--   previous versions (before v2.0) allowed passing
-    `RefManageR::BibEntry()` objects. This option was removed to
-    eliminate dependency on the orphaned `{bibtex}` package. This might
-    break code for users of initial releases of the package, but was
-    needed to allow for CRAN submission.
+- This package is not intended as replacement for proper reference
+  manager packages, but a tool to enrich scientific presentation slides.
+  Hence the functionality is quite limited to this specific use case.
+- previous versions (before v2.0) allowed passing
+  `RefManageR::BibEntry()` objects. This option was removed to eliminate
+  dependency on the orphaned `{bibtex}` package. This might break code
+  for users of initial releases of the package, but was needed to allow
+  for CRAN submission.
