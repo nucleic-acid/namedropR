@@ -1,5 +1,7 @@
 # namedropR (development version)
 
+* Minor syntax changes to comply with changes in {dplyr}
+
 # namedropR 2.4.1
 
 * Solves issue of failing tests in CRAN checks.
